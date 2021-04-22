@@ -1,13 +1,13 @@
 # BLINKOR L-INT License V1
 
-# Although this license is primarily used to gureentee software integrity between developers and users,
+# Although this license is primarily used to guarantee software integrity between developers and users,
 # contents of this software is also allowed to be implemented in other software.
 
 > Version 1.5, February 2021
 
 > Copyright 2021 wyeDev
 
-Everyone is permitted to copy this unmodified license document verbatim. Modifications may be
+Everyone is permitted to copy this unmodified license document verbatim. MODIFICATIONS may be
 appended as long as this license is renamed.
 
 TERMS OF USE FOR DISTRIBUTION AND MODIFICATION
@@ -19,7 +19,7 @@ this software as an end user, you agree to the following warranty's terms.
 
 (II) COPYRIGHT: Copying and/or republishing this software under a different name is not allowed. If you
 plan to use a major section of this software's code in your own work, contacting the source code's developer
-is required for futher permission and information.
+is required for further permission and information.
 
 (III) DISTRIBUTION: Although this software's source is released mainly for user trust and integrity, you are
 allowed to use minor sections of this software for insparation or copied directly to improve or write your 
@@ -30,5 +30,5 @@ own software. A COPY OF THIS LICENSE IS REQUIRED TO BE DISTRIBUTED WITH YOUR SOF
 	DISTRIBUTE YOUR SOFTWARE IF YOU PLAN TO MAKE ANY MONETARY GAIN.
 
 (IV) ERRORS: In case if any errors in your software show relating to this source code, you may open a new issue after
-debugging your own software yourself. Note: NO WARRANTY OR GURANTEE IS PROVIDED THAT SAID ISSUE WOULD BE FIXED.
+debugging your own software yourself. Note: NO WARRANTY OR guarantee IS PROVIDED THAT SAID ISSUE WOULD BE FIXED.
 
