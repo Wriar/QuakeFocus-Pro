@@ -12,7 +12,7 @@ If there is a code issue, please create a new issue in the "ISSUES" tab and mark
 
 If you would like to contribute, please create a new pull request and provide a summary with the changes given.
 
-##Resolving Issues
+## Resolving Issues
 
 Errors/Warnings will be logged inside the logs folder stored within the application path. Please upload the full logs as they contain detailed information.
 Please do not modify or alter any of the assets stored in the "/assets" folder, as the contain important strong-motion calibration and storage data on NIED
@@ -28,6 +28,9 @@ Specific issues will have specific termination errors, such as the following:
 
 Specific fatal errors, such as code errors, will force the application to shutdown to prevent future errors. It is very important
 to **create a new issue** to let developers know about the bug. 
+
+**Unknown Other Warnings:** This application uses dependencies from other projects whom handle their own errors. If you don't see an error pane that looks like it was generated and handled by QuakeFocus Pro, please create an issue. The default error pane is attached within the PDF or setupguide.md file you received. Please note that such related issues may not be resolved immediately as cooperation and collaboration between two service providers will be needed before the error is resolved. 
+
 
 ## 初期リリースのテスター用
 
@@ -67,6 +70,12 @@ QuakeFocus strong-motion monitoring application and issue tracking
 
 > This project is not yet completed, this text will be removed once the finished product has been uploaded.
 
+## About:
+This application is written in a BASIC language so others can read and develop off this framework. It is easily converted to ``C#`` projects and is developed under the ``.NET`` environment for Windows PCs. It can send and receive webhooks and is very customizable and appealing. 
+
+User configuration files can be edited in a text editor or editing within the application setting pane itself. 
+
+
 ## Project Roadmap:
 
 | Feature | Date Created | Date Completed |
@@ -76,3 +85,7 @@ QuakeFocus strong-motion monitoring application and issue tracking
 | Basic UI & Map Controls       |  9/23/2020            |   5/57/2021             |
 | DmDATA Wave Monitor API | 8/1/2021 | IN PROGRESS
 | PLUM Type Forecasting | TBD | N/A
+
+### Open Source Licenses:
+
+Open source licenses can be found in the open source license folder, respective to their language. (LICENSE_E and LICENSE_J)
