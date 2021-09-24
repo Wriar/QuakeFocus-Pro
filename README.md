@@ -90,4 +90,4 @@ User configuration files can be edited in a text editor or editing within the ap
 
 ### Open Source Licenses:
 
-Open source licenses can be found in the open source license folder, respective to their language. (LICENSE_E and LICENSE_J)
+Open source licenses can be found in the open source license folder, respective to their language. (``LICENSE_E`` and ``LICENSE_J``)
