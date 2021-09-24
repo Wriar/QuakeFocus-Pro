@@ -5,6 +5,8 @@ encounter any issues, please consult that guide before creating a new issue.
 
 **IF YOU DID NOT RECEIVE THE PDF FILE, READ THE ``setupguide.md`` file!**
 
+**UPDATE:** Please only download code or packages from the MAIN branch. Code or packages from the unstable/development branch may not function properly and are not formatted for use.
+
 If there is a translation issue, please create a new issue in the "ISSUES" tab and mark it with the "translation"
 tag. 
 
