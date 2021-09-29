@@ -1,9 +1,11 @@
 # 初期リリースの開発者の皆様へ - ATTENTION BETA TESTERS
 
+### [VIEW ADVANCED SETUP GUIDE HERE! ](https://quakefocusdev.gitbook.io/quakefocus-pro/)
 You should have received an email that contains a PDF file detailing the operation of this service. If you
 encounter any issues, please consult that guide before creating a new issue.
 
 **IF YOU DID NOT RECEIVE THE PDF FILE, READ THE ``setupguide.md`` file!**
+
 
 **UPDATE:** Please only download code or packages from the MAIN branch. Code or packages from the unstable/development branch may not function properly and are not formatted for use.
 
