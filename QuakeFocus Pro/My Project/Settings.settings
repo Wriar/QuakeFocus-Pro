@@ -1,0 +1,69 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="prefixLang" Type="System.String" Scope="User">
+      <Value Profile="(Default)">en</Value>
+    </Setting>
+    <Setting Name="pastEventID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">unknown</Value>
+    </Setting>
+    <Setting Name="soundLang" Type="System.String" Scope="User">
+      <Value Profile="(Default)">en</Value>
+    </Setting>
+    <Setting Name="soundSpeaker" Type="System.String" Scope="User">
+      <Value Profile="(Default)">male</Value>
+    </Setting>
+    <Setting Name="pastEventVal" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="nhkD" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="nhkL" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="nhkG" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="lmsAutoAlertThreshold" Type="System.String" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="alertTimeoutSec" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="serverDelay" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="rewindTime" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="privateImgDateTime" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="privateImgDate" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="dataChannel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://www.kmoni.bosai.go.jp/data/map_img</Value>
+    </Setting>
+    <Setting Name="altDataChannel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://smi.lmoniexp.bosai.go.jp/data/map_img</Value>
+    </Setting>
+    <Setting Name="userLocalPointX" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">228</Value>
+    </Setting>
+    <Setting Name="userLocalPointY" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">259</Value>
+    </Setting>
+    <Setting Name="dataImgChannel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://www.kmoni.bosai.go.jp/</Value>
+    </Setting>
+    <Setting Name="currentMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">live</Value>
+    </Setting>
+    <Setting Name="lmsPrefAutoAlertThreshold" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

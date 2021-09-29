@@ -1,0 +1,1869 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>KyoshinMonitorLib</name>
+    </assembly>
+    <members>
+        <member name="T:KyoshinMonitorLib.Api">
+            <summary>
+            APIのベースクラス
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.Api.Timeout">
+            <summary>
+            APIを呼ぶのにあたってのタイムアウト時間
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.Api.GetJsonObject``1(System.String)">
+            <summary>
+            GETリクエストを送信し、Jsonをデシリアライズした結果を取得します。
+            </summary>
+            <typeparam name="T">デシリアライズする型</typeparam>
+            <param name="url">使用するURL</param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Api.GetBytes(System.String)">
+            <summary>
+            GETリクエストを送信し、生のbyte配列を取得します。
+            </summary>
+            <param name="url">使用するURL</param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Api.Dispose">
+            <summary>
+            オブジェクトの破棄を行います。
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.ApiResult`1">
+            <summary>
+            APIの実行結果を表します。
+            </summary>
+            <typeparam name="TResult">実行結果の型</typeparam>
+        </member>
+        <member name="M:KyoshinMonitorLib.ApiResult`1.#ctor(System.Net.HttpStatusCode,`0)">
+            <summary>
+            APIの実行結果を初期化します。
+            </summary>
+            <param name="statusCode">HTTPステータスコード</param>
+            <param name="data">実行結果の値</param>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult`1.StatusCode">
+            <summary>
+            HTTPステータスコード
+            <para>nullの場合はタイムアウトを示します。</para>
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult`1.Data">
+            <summary>
+            API実行結果
+            <para>実行に失敗した場合nullが代入されます。</para>
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.ApiResult.AppApi.EstShindo">
+            <summary>
+            予想震度
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EstShindo.List">
+            <summary>
+            震度情報
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EstShindo.DataTime">
+            <summary>
+            時間
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EstShindo.HypoType">
+            <summary>
+            地震の種類?
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EstShindo.BaseData">
+            <summary>
+            ベースとなるメッシュのデータ
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EstShindo.StartMesh">
+            <summary>
+            メッシュの開始位置?
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EstShindo.StartMeshIdx">
+            <summary>
+            メッシュのidxの開始位置
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EstShindo.SerialNo">
+            <summary>
+            シリアルID
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EstShindo.Security">
+            <summary>
+            セキュリティ情報
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EstShindo.Result">
+            <summary>
+            リザルト
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.ApiResult.AppApi.Hypo">
+            <summary>
+            複数の緊急地震速報の情報
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.Hypo.DataTime">
+            <summary>
+            時間
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.Hypo.Eews">
+            <summary>
+            緊急地震速報
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.Hypo.Result">
+            <summary>
+            リザルト
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.Hypo.Security">
+            <summary>
+            セキュリティ情報
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.ApiResult.AppApi.EewInfo">
+            <summary>
+            緊急地震速報の情報
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.ReportTime">
+            <summary>
+            発報時間
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.RegionCodeString">
+            <summary>
+            震源の地点コード(生の値)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.RegionCode">
+            <summary>
+            震源の地点コード(変換済み)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.RegionName">
+            <summary>
+            震源名
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.LongitudeString">
+            <summary>
+            経度(生の値)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.Longitude">
+            <summary>
+            経度(変換済)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.IsCancelString">
+            <summary>
+            キャンセル報かどうか(生の値)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.IsCancel">
+            <summary>
+            キャンセル報かどうか(変換済)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.DepthString">
+            <summary>
+            深さ(生の値)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.Depth">
+            <summary>
+            深さ(変換済)
+            <para>変換できなかった場合nullが返されます。</para>
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.CalcintensityString">
+            <summary>
+            予想最大震度(生の値)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.Calcintensity">
+            <summary>
+            予想最大震度(変換済)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.IsFinalString">
+            <summary>
+            最終報かどうか(生の値)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.IsFinal">
+            <summary>
+            最終法かどうか(変換済)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.IsTrainingString">
+            <summary>
+            訓練報かどうか(生の値)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.IsTraining">
+            <summary>
+            訓練報かどうか(変換済)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.LatitudeString">
+            <summary>
+            緯度(生の値)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.Latitude">
+            <summary>
+            緯度(変換済み)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.OriginTime">
+            <summary>
+            発生時刻
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.MagnitudeString">
+            <summary>
+            マグニチュード(生の値)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.Magnitude">
+            <summary>
+            マグニチュード(変換済み)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.ReportNumString">
+            <summary>
+            発報番号(生の値)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.ReportNum">
+            <summary>
+            発報番号(変換済み)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.EewInfo.ReportId">
+            <summary>
+            EEWID?
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.ApiResult.AppApi.MeshList">
+            <summary>
+            メッシュ情報
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.MeshList.Items">
+            <summary>
+            データ
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.MeshList.DataTime">
+            <summary>
+            時間
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.MeshList.SerialNo">
+            <summary>
+            シリアル番号
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.MeshList.Result">
+            <summary>
+            リザルト
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.ApiResult.AppApi.PSWave">
+            <summary>
+            緊急地震速報の揺れの広がり
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.PSWave.DataTime">
+            <summary>
+            時間
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.PSWave.HypoType">
+            <summary>
+            地震の種類?
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.PSWave.Items">
+            <summary>
+            揺れの広がり
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.PSWave.Result">
+            <summary>
+            リザルト
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.PSWave.Security">
+            <summary>
+            セキュリティ情報
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.ApiResult.AppApi.PSWaveItem">
+            <summary>
+            揺れの広がり
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.PSWaveItem.LatitudeString">
+            <summary>
+            緯度(string)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.PSWaveItem.Latitude">
+            <summary>
+            緯度
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.PSWaveItem.LongitudeString">
+            <summary>
+            経度(string)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.PSWaveItem.Longitude">
+            <summary>
+            経度
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.PSWaveItem.PWaveRadiusString">
+            <summary>
+            P波の範囲
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.PSWaveItem.SWaveRadiusString">
+            <summary>
+            S波の範囲
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.ApiResult.AppApi.RealtimeData">
+            <summary>
+            リアルタイムデータ
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.RealtimeData.DateTime">
+            <summary>
+            時間
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.RealtimeData.PacketType">
+            <summary>
+            情報の種類?
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.RealtimeData.KyoshinType">
+            <summary>
+            強震の種類
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.RealtimeData.BaseData">
+            <summary>
+            ベースとなるデータ?
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.RealtimeData.BaseSerialNo">
+            <summary>
+            観測点一覧用のID
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.RealtimeData.Items">
+            <summary>
+            実際のデータ
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.RealtimeData.Result">
+            <summary>
+            リザルト
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.RealtimeData.Security">
+            <summary>
+            セキュリティ情報
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.ApiResult.AppApi.SiteList">
+            <summary>
+            観測点一覧
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.SiteList.Sites">
+            <summary>
+            観測点一覧
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.SiteList.Security">
+            <summary>
+            セキュリティ情報
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.SiteList.DataTime">
+            <summary>
+            時間
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.SiteList.Result">
+            <summary>
+            リザルト
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.SiteList.SerialNo">
+            <summary>
+            シリアル番号
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.ApiResult.AppApi.Site">
+            <summary>
+            APIの観測点
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.Site.Muni">
+            <summary>
+            不明(内部ID？)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.Site.Siteidx">
+            <summary>
+            RealtimeDataでのインデックス
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.Site.PrefefectureId">
+            <summary>
+            都道府県ID
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.Site.Prefefecture">
+            <summary>
+            都道府県
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.Site.SiteId">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.Site.Lat">
+            <summary>
+            緯度
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.Site.Lng">
+            <summary>
+            経度
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.ApiResult.AppApi.PrefectureNameAttribute">
+            <summary>
+            都道府県の名前
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.ApiResult.AppApi.PrefectureNameAttribute.#ctor(System.String,System.String)">
+            <summary>
+            初期化
+            </summary>
+            <param name="shortName"></param>
+            <param name="longName"></param>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.PrefectureNameAttribute.ShortName">
+            <summary>
+            短縮名
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.AppApi.PrefectureNameAttribute.LongName">
+            <summary>
+            正式名称
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.ApiResult.AppApi.Prefecture">
+            <summary>
+            都道府県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Other">
+            <summary>
+            その他
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Hokkaido">
+            <summary>
+            北海道
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Aomori">
+            <summary>
+            青森県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Iwate">
+            <summary>
+            岩手県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Miyagi">
+            <summary>
+            宮城県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Akita">
+            <summary>
+            秋田県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Yamagata">
+            <summary>
+            山形県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Fukushima">
+            <summary>
+            福島県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Ibaraki">
+            <summary>
+            茨城県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Tochigi">
+            <summary>
+            栃木県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Gunma">
+            <summary>
+            群馬県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Saitama">
+            <summary>
+            埼玉県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Chiba">
+            <summary>
+            千葉県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Tokyo">
+            <summary>
+            東京都
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Kanagawa">
+            <summary>
+            神奈川県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Niigata">
+            <summary>
+            新潟県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Toyama">
+            <summary>
+            富山県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Ishikawa">
+            <summary>
+            石川県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Fukui">
+            <summary>
+            福井県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Yamanashi">
+            <summary>
+            山梨県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Nagano">
+            <summary>
+            長野県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Gifu">
+            <summary>
+            岐阜県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Shizuoka">
+            <summary>
+            静岡県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Aichi">
+            <summary>
+            愛知県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Mie">
+            <summary>
+            三重県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Shiga">
+            <summary>
+            滋賀県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Kyouto">
+            <summary>
+            京都府
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Osaka">
+            <summary>
+            大阪府
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Hyogo">
+            <summary>
+            兵庫県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Nara">
+            <summary>
+            奈良県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Wakayama">
+            <summary>
+            和歌山県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Tottori">
+            <summary>
+            鳥取県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Shimane">
+            <summary>
+            島根県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Okayama">
+            <summary>
+            岡山県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Hiroshima">
+            <summary>
+            広島県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Yamaguchi">
+            <summary>
+            山口県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Tokushima">
+            <summary>
+            徳島県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Kagawa">
+            <summary>
+            香川県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Ehime">
+            <summary>
+            愛媛県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Kouchi">
+            <summary>
+            高知県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Fukuoka">
+            <summary>
+            福岡県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Saga">
+            <summary>
+            佐賀県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Nagasaki">
+            <summary>
+            長崎県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Kumamoto">
+            <summary>
+            熊本県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Oita">
+            <summary>
+            大分県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Miyazaki">
+            <summary>
+            宮崎県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Kagoshima">
+            <summary>
+            鹿児島県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Okinawa">
+            <summary>
+            沖縄県
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ApiResult.AppApi.Prefecture.Unknown">
+            <summary>
+            不明
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.ApiResult.AppApi.PrefectureExtensions">
+            <summary>
+            都道府県のenumに対する拡張
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.ApiResult.AppApi.PrefectureExtensions.GetLongName(KyoshinMonitorLib.ApiResult.AppApi.Prefecture)">
+            <summary>
+            正式名称を取得する
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.ApiResult.AppApi.PrefectureExtensions.GetShortName(KyoshinMonitorLib.ApiResult.AppApi.Prefecture)">
+            <summary>
+            短縮名を取得する
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.ApiResult.Result">
+            <summary>
+            リザルト
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.Result.Status">
+            <summary>
+            ステータス
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.Result.Message">
+            <summary>
+            メッセージ
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.ApiResult.Security">
+            <summary>
+            セキュリティ情報
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.Security.Realm">
+            <summary>
+            realm
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.Security.Hash">
+            <summary>
+            ハッシュ
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.ApiResult.WebApi.Eew">
+            <summary>
+            Web版APIでの緊急地震速報の情報
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.Result">
+            <summary>
+            リザルト
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.ReportTimeString">
+            <summary>
+            発報時間
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.ReportTime">
+            <summary>
+            発報時間
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.RegionCode">
+            <summary>
+            地域コード
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.RequestTime">
+            <summary>
+            リクエスト時間
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.RegionName">
+            <summary>
+            地域名
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.LongitudeString">
+            <summary>
+            経度(デシリアライズ用)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.Longitude">
+            <summary>
+            経度
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.IsCancelRaw">
+            <summary>
+            キャンセル報か(デシリアライズ用)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.IsCancel">
+            <summary>
+            キャンセル報か
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.DepthString">
+            <summary>
+            震源の深さ(デシリアライズ用)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.Depth">
+            <summary>
+            震源の深さ
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.CalcintensityString">
+            <summary>
+            予想最大震度(デシリアライズ用)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.Calcintensity">
+            <summary>
+            予想最大震度
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.IsFinalRaw">
+            <summary>
+            最終報か(デシリアライズ用)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.IsFinal">
+            <summary>
+            最終報か
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.IsTrainingRaw">
+            <summary>
+            訓練報か(デシリアライズ用)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.IsTraining">
+            <summary>
+            訓練報か
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.LatitudeString">
+            <summary>
+            緯度(デシリアライズ用)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.Latitude">
+            <summary>
+            緯度
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.Location">
+            <summary>
+            震源の座標
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.OriginTimeString">
+            <summary>
+            発生時間(デシリアライズ用)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.OriginTime">
+            <summary>
+            発生時間
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.Security">
+            <summary>
+            セキュリティ情報
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.MagunitudeString">
+            <summary>
+            マグニチュード(デシリアライズ用)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.Magunitude">
+            <summary>
+            マグニチュード
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.ReportNumString">
+            <summary>
+            発報番号(デシリアライズ用)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.ReportNum">
+            <summary>
+            発報番号
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.RequestHypoType">
+            <summary>
+            なにこれ?
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.ReportId">
+            <summary>
+            地震ID
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.AlertFlag">
+            <summary>
+            警報 or 予報
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ApiResult.WebApi.Eew.IsAlert">
+            <summary>
+            警報か
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.AppApi">
+            <summary>
+            スマホアプリAPI
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.AppApi.SiteListCache">
+            <summary>
+            観測点情報のキャッシュ
+            <para>BaseSerialNoと観測点情報･idxに適合した情報のマッピング</para>
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.AppApi.#ctor(KyoshinMonitorLib.ObservationPoint[])">
+            <summary>
+            スマホアプリAPIを初期化します。
+            </summary>
+            <param name="observationPoints">結合時に使用する観測点情報</param>
+        </member>
+        <member name="M:KyoshinMonitorLib.AppApi.GetSiteList(System.String)">
+            <summary>
+            観測点一覧を取得します。
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.AppApi.GetRealtimeData(System.DateTime,KyoshinMonitorLib.UrlGenerator.RealtimeDataType,System.Boolean)">
+            <summary>
+            リアルタイムなデータを取得します。
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.AppApi.GetLinkedRealtimeData(System.DateTime,KyoshinMonitorLib.UrlGenerator.RealtimeDataType,System.Boolean)">
+            <summary>
+            観測点情報と結合済みのリアルタイムなデータを取得します。
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.AppApi.GetOrLinkObservationPoint(System.String)">
+            <summary>
+            観測点情報を結合もしくはキャッシュから取得します。
+            </summary>
+            <param name="serialNo">観測点一覧の番号</param>
+            <returns>結合された観測点情報 親となるリストが存在しない場合null</returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.AppApi.GetEewHypoInfo(System.DateTime)">
+            <summary>
+            緊急地震速報の情報を取得します。
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.AppApi.GetPSWave(System.DateTime)">
+            <summary>
+            緊急地震速報から算出された揺れの広がりを取得します。
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.AppApi.GetEstShindo(System.DateTime)">
+            <summary>
+            緊急地震速報から算出された予想震度のメッシュ情報を取得します。
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.AppApi.GetMeshes">
+            <summary>
+            メッシュ一覧を取得します。
+            非常に時間がかかるため、キャッシュしておくことを推奨します。
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.Extensions">
+            <summary>
+            拡張メソッドたち
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.Extensions.SaveToCsv(System.Collections.Generic.IEnumerable{KyoshinMonitorLib.ObservationPoint},System.String)">
+            <summary>
+            観測点情報をcsvに保存します。失敗した場合は例外がスローされます。
+            </summary>
+            <param name="points">書き込む観測点情報の配列</param>
+            <param name="path">書き込むpbfファイルのパス</param>
+        </member>
+        <member name="M:KyoshinMonitorLib.Extensions.SaveToMpk(System.Collections.Generic.IEnumerable{KyoshinMonitorLib.ObservationPoint},System.String,System.Boolean)">
+            <summary>
+            観測点情報をmpk形式で保存します。失敗した場合は例外がスローされます。
+            </summary>
+            <param name="path">書き込むmpkファイルのパス</param>
+            <param name="points">書き込む観測点情報の配列</param>
+            <param name="usingLz4">lz4で圧縮させるかどうか(させる場合は拡張子を.mpk.lz4にすることをおすすめします)</param>
+        </member>
+        <member name="M:KyoshinMonitorLib.Extensions.SaveToJson(System.Collections.Generic.IEnumerable{KyoshinMonitorLib.ObservationPoint},System.String)">
+            <summary>
+            観測点情報をJson形式で保存します。失敗した場合は例外がスローされます。
+            </summary>
+            <param name="path">書き込むJsonファイルのパス</param>
+            <param name="points">書き込む観測点情報の配列</param>
+        </member>
+        <member name="M:KyoshinMonitorLib.Extensions.ToBoolFromStringableBool(System.Text.Json.JsonElement)">
+            <summary>
+            nullの際何故か空白の文字列になってしまうJson要素の解析
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.JmaIntensity">
+            <summary>
+            気象庁震度階級 +α
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.JmaIntensity.Unknown">
+            <summary>
+            震度不明
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.JmaIntensity.Int0">
+            <summary>
+            震度1未満
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.JmaIntensity.Int1">
+            <summary>
+            震度1
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.JmaIntensity.Int2">
+            <summary>
+            震度2
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.JmaIntensity.Int3">
+            <summary>
+            震度3
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.JmaIntensity.Int4">
+            <summary>
+            震度4
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.JmaIntensity.Int5Lower">
+            <summary>
+            震度5弱
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.JmaIntensity.Int5Upper">
+            <summary>
+            震度5強
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.JmaIntensity.Int6Lower">
+            <summary>
+            震度6弱
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.JmaIntensity.Int6Upper">
+            <summary>
+            震度6強
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.JmaIntensity.Int7">
+            <summary>
+            震度7
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.JmaIntensity.Error">
+            <summary>
+            震度異常
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.JmaIntensityExtensions">
+            <summary>
+            JmaIntensityの拡張メソッド
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.JmaIntensityExtensions.ToJmaIntensity(System.Nullable{System.Single})">
+            <summary>
+            生の震度の値を気象庁震度階級に変換します。(float?版)
+            </summary>
+            <param name="intensity">変換対象の震度</param>
+            <returns>変換されたShindo</returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.JmaIntensityExtensions.ToJmaIntensity(System.Nullable{System.Double})">
+            <summary>
+            生の震度の値を気象庁震度階級に変換します。(double?版)
+            </summary>
+            <param name="intensity">変換対象の震度</param>
+            <returns>変換されたShindo</returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.JmaIntensityExtensions.ToJmaIntensity(System.Double)">
+            <summary>
+            生の震度の値を気象庁震度階級に変換します。(double版)
+            </summary>
+            <param name="intensity">変換対象の震度</param>
+            <returns>変換されたShindo</returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.JmaIntensityExtensions.ToShortString(KyoshinMonitorLib.JmaIntensity)">
+            <summary>
+            気象庁震度階級を短い形式の文字列に変換します。
+            </summary>
+            <param name="shindo">変換するShindo</param>
+            <returns>変換された文字列</returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.JmaIntensityExtensions.ToLongString(KyoshinMonitorLib.JmaIntensity)">
+            <summary>
+            気象庁震度階級を長い形式の文字列に変換します。
+            </summary>
+            <param name="shindo">変換するShindo</param>
+            <returns>変換された文字列</returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.JmaIntensityExtensions.ToJmaIntensity(System.String)">
+            <summary>
+            文字から気象庁震度階級に変換します。
+            <para>EewJsonぐらいでしか確認していません。</para>
+            </summary>
+            <param name="source">変換する文字列</param>
+            <returns>変換されたShindo</returns>
+        </member>
+        <member name="T:KyoshinMonitorLib.KyoshinMonitorException">
+            <summary>
+            強震モニタの処理に失敗したとき
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.KyoshinMonitorException.#ctor(System.String)">
+            <summary>
+            例外の初期化を行います。
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.KyoshinMonitorException.#ctor(System.String,System.Exception)">
+            <summary>
+            例外の初期化を行います。
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.LinkedObservationPoint">
+            <summary>
+            結合済みの観測点情報
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.LinkedObservationPoint.#ctor(KyoshinMonitorLib.ApiResult.AppApi.Site,KyoshinMonitorLib.ObservationPoint)">
+            <summary>
+            結合済みの観測点情報の初期化
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.LinkedObservationPoint.Site">
+            <summary>
+            強震モニタAPI上の観測地点情報
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.LinkedObservationPoint.Point">
+            <summary>
+            設定ファイルから読み込んだ観測地点情報
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.LinkedObservationPoint.Location">
+            <summary>
+            自動的に精度の高い方の緯度経度座標を取得する
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.LinkedRealtimeData">
+            <summary>
+            結合済みの観測情報
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.LinkedRealtimeData.#ctor(KyoshinMonitorLib.LinkedObservationPoint,System.Nullable{System.Single})">
+            <summary>
+            結合済みの観測情報の初期化
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.LinkedRealtimeData.ObservationPoint">
+            <summary>
+            結合済みの観測点情報
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.LinkedRealtimeData.Value">
+            <summary>
+            観測値
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.Location">
+            <summary>
+            地理座標
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.Location.#ctor">
+            <summary>
+            Locationを初期化します。
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.Location.#ctor(System.Single,System.Single)">
+            <summary>
+            初期値を指定してLocationを初期化します。
+            </summary>
+            <param name="latitude">緯度</param>
+            <param name="longitude">経度</param>
+        </member>
+        <member name="M:KyoshinMonitorLib.Location.FromMeters(System.Double,System.Double)">
+            <summary>
+            メートル座標を指定してLocationを初期化します。
+            </summary>
+            <param name="x">北緯方向への距離</param>
+            <param name="y">東経方向への距離</param>
+        </member>
+        <member name="P:KyoshinMonitorLib.Location.Latitude">
+            <summary>
+            緯度
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.Location.Longitude">
+            <summary>
+            経度
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.Location.ToString">
+            <summary>
+            文字化
+            </summary>
+            <returns>文字</returns>
+        </member>
+        <member name="T:KyoshinMonitorLib.Mesh">
+            <summary>
+            5kmメッシュ情報
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.Mesh.#ctor(System.String,KyoshinMonitorLib.Location,KyoshinMonitorLib.Location)">
+            <summary>
+            初期化
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.Mesh.#ctor(System.String,System.Double,System.Double)">
+            <summary>
+            初期化
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.Mesh.LoadFromMpk(System.String,System.Boolean)">
+            <summary>
+            メッシュ情報をmpkから読み込みます。失敗した場合は例外がスローされます。
+            </summary>
+            <param name="path">読み込むmpkファイルのパス</param>
+            <param name="useLz4">lz4で圧縮させるかどうか(させる場合は拡張子を.mpk.lz4にすることをおすすめします)</param>
+            <returns>読み込まれたメッシュ情報</returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Mesh.SaveToMpk(System.String,System.Collections.Generic.IEnumerable{KyoshinMonitorLib.Mesh},System.Boolean)">
+            <summary>
+            メッシュ情報をmpk形式で保存します。失敗した場合は例外がスローされます。
+            </summary>
+            <param name="path">書き込むmpkファイルのパス</param>
+            <param name="points">書き込むメッシュ情報の配列</param>
+            <param name="useLz4">lz4で圧縮させるかどうか(させる場合は拡張子を.mpk.lz4にすることをおすすめします)</param>
+        </member>
+        <member name="P:KyoshinMonitorLib.Mesh.Code">
+            <summary>
+            地点コード
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.Mesh.LocationLeftTop">
+            <summary>
+            座標(左上)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.Mesh.LocationRightBottom">
+            <summary>
+            座標(右下)
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.NtpAssistance">
+            <summary>
+            Ntpによる時刻取得を補助するクラス
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.NtpAssistance.GetNetworkTimeWithHttp(System.String,System.Double)">
+            <summary>
+            Http通信を使用してネットワーク上から時刻を取得します。
+            </summary>
+            <param name="url">要求するURL POSIX Timeが生で返されるURLである必要があります。</param>
+            <param name="timeout">タイムアウト時間(ミリ秒)</param>
+            <returns>取得された時刻 取得に失敗した場合はnullが返されます。</returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.NtpAssistance.GetNetworkTimeWithNtp(System.String,System.UInt16,System.Int32)">
+            <summary>
+            Ntp通信を使用してネットワーク上から時刻を取得します。
+            </summary>
+            <param name="hostName">ホスト名</param>
+            <param name="port">ポート番号 通常はデフォルトのままで構いません。</param>
+            <param name="timeout">タイムアウト時間(ミリ秒)</param>
+            <returns>取得された時刻 取得に失敗した場合はnullが返されます。</returns>
+        </member>
+        <member name="T:KyoshinMonitorLib.ObservationPoint">
+            <summary>
+            NIEDの観測点情報
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.ObservationPoint.LoadFromMpk(System.String,System.Boolean)">
+            <summary>
+            観測点情報をmpkから読み込みます。失敗した場合は例外がスローされます。
+            </summary>
+            <param name="path">読み込むmpkファイルのパス</param>
+            <param name="useLz4">lz4で圧縮させるかどうか(させる場合は拡張子を.mpk.lz4にすることをおすすめします)</param>
+            <returns>読み込まれた観測点情報</returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.ObservationPoint.SaveToMpk(System.String,System.Collections.Generic.IEnumerable{KyoshinMonitorLib.ObservationPoint},System.Boolean)">
+            <summary>
+            観測点情報をmpk形式で保存します。失敗した場合は例外がスローされます。
+            </summary>
+            <param name="path">書き込むmpkファイルのパス</param>
+            <param name="points">書き込む観測点情報の配列</param>
+            <param name="useLz4">lz4で圧縮させるかどうか(させる場合は拡張子を.mpk.lz4にすることをおすすめします)</param>
+        </member>
+        <member name="M:KyoshinMonitorLib.ObservationPoint.LoadFromJson(System.String)">
+            <summary>
+            観測点情報をJsonから読み込みます。失敗した場合は例外がスローされます。
+            </summary>
+            <param name="path">読み込むJsonファイルのパス</param>
+            <returns>読み込まれた観測点情報</returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.ObservationPoint.SaveToJson(System.String,System.Collections.Generic.IEnumerable{KyoshinMonitorLib.ObservationPoint})">
+            <summary>
+            観測点情報をJson形式で保存します。失敗した場合は例外がスローされます。
+            </summary>
+            <param name="path">書き込むJsonファイルのパス</param>
+            <param name="points">書き込む観測点情報の配列</param>
+        </member>
+        <member name="M:KyoshinMonitorLib.ObservationPoint.LoadFromCsv(System.String,System.Text.Encoding)">
+            <summary>
+            観測点情報をcsvから読み込みます。失敗した場合は例外がスローされます。
+            </summary>
+            <param name="path">読み込むcsvファイルのパス</param>
+            <param name="encoding">読み込むファイル文字コード 何も指定していない場合はUTF8が使用されます。</param>
+            <returns>list:読み込まれた観測点情報 success:読み込みに成功した項目のカウント error:読み込みに失敗した項目のカウント</returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.ObservationPoint.SaveToCsv(System.String,System.Collections.Generic.IEnumerable{KyoshinMonitorLib.ObservationPoint})">
+            <summary>
+            観測点情報をcsvに保存します。失敗した場合は例外がスローされます。
+            </summary>
+            <param name="path">書き込むcsvファイルのパス</param>
+            <param name="points">書き込む観測点情報の配列</param>
+        </member>
+        <member name="M:KyoshinMonitorLib.ObservationPoint.#ctor">
+            <summary>
+            ObservationPointを初期化します。
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ObservationPoint.Type">
+            <summary>
+            観測地点のネットワークの種類
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ObservationPoint.Code">
+            <summary>
+            観測点コード
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ObservationPoint.Name">
+            <summary>
+            観測点名
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ObservationPoint.Region">
+            <summary>
+            観測点広域名
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ObservationPoint.IsSuspended">
+            <summary>
+            観測地点が休止状態(無効)かどうか
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ObservationPoint.Location">
+            <summary>
+            地理座標
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ObservationPoint.OldLocation">
+            <summary>
+            地理座標(日本座標系)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ObservationPoint.Point">
+            <summary>
+            強震モニタ画像上での座標
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ObservationPoint.ClassificationId">
+            <summary>
+            緊急地震速報や震度速報で用いる区域のID(EqWatchインポート用)
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.ObservationPoint.PrefectureClassificationId">
+            <summary>
+            緊急地震速報で用いる府県予報区のID(EqWatchインポート用)
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.ObservationPoint.CompareTo(System.Object)">
+            <summary>
+            ObservationPoint同士を比較します。
+            </summary>
+            <param name="obj">比較対象のObservationPoint</param>
+            <returns></returns>
+        </member>
+        <member name="T:KyoshinMonitorLib.ObservationPointType">
+            <summary>
+            観測点のタイプ
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ObservationPointType.Unknown">
+            <summary>
+            不明(なるべく使用しないように)
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ObservationPointType.KiK_net">
+            <summary>
+            KiK-net
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.ObservationPointType.K_NET">
+            <summary>
+            K-NET
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.ObservationPointTypeExtensions">
+            <summary>
+            ObservationPointTypeの拡張メソッドたち
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.ObservationPointTypeExtensions.ToNaturalString(KyoshinMonitorLib.ObservationPointType)">
+            <summary>
+            人が読みやすい文字に変換します。
+            </summary>
+            <param name="type">変換させるObservationPointType</param>
+            <returns>変換された文字列</returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.ObservationPointTypeExtensions.ToObservationPointType(System.String)">
+            <summary>
+            EqWatchの観測点の種類からObservationPointTypeに変換します。
+            </summary>
+            <param name="str">変換元</param>
+            <returns>変換後</returns>
+        </member>
+        <member name="T:KyoshinMonitorLib.Point2">
+            <summary>
+            シリアライズ+四則演算をできるようにしたPointクラス
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Point2を初期化します。
+            </summary>
+            <param name="x">X</param>
+            <param name="y">Y</param>
+        </member>
+        <member name="P:KyoshinMonitorLib.Point2.X">
+            <summary>
+            X座標
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.Point2.Y">
+            <summary>
+            Y座標
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.ToString">
+            <summary>
+            文字にします。
+            </summary>
+            <returns>文字</returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.op_Addition(KyoshinMonitorLib.Point2,System.Int32)">
+            <summary>
+            整数とPoint2を足します。
+            </summary>
+            <param name="point"></param>
+            <param name="num"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.op_Subtraction(KyoshinMonitorLib.Point2,System.Int32)">
+            <summary>
+            Point2から整数を引きます。
+            </summary>
+            <param name="point"></param>
+            <param name="num"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.op_Addition(KyoshinMonitorLib.Point2,KyoshinMonitorLib.Point2)">
+            <summary>
+            Point2同士を足します。
+            </summary>
+            <param name="point1"></param>
+            <param name="point2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.op_Subtraction(KyoshinMonitorLib.Point2,KyoshinMonitorLib.Point2)">
+            <summary>
+            Point2同士を引きます。
+            </summary>
+            <param name="point1"></param>
+            <param name="point2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.op_Multiply(KyoshinMonitorLib.Point2,System.Int32)">
+            <summary>
+            Point2を整数で掛けます。
+            </summary>
+            <param name="point"></param>
+            <param name="num"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.op_Division(KyoshinMonitorLib.Point2,System.Int32)">
+            <summary>
+            Point2を整数で割ります。
+            </summary>
+            <param name="point"></param>
+            <param name="num"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.op_Multiply(KyoshinMonitorLib.Point2,KyoshinMonitorLib.Point2)">
+            <summary>
+            Point2同士を掛けます。
+            </summary>
+            <param name="point1"></param>
+            <param name="point2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.op_Division(KyoshinMonitorLib.Point2,KyoshinMonitorLib.Point2)">
+            <summary>
+            Point2同士を割ります。
+            </summary>
+            <param name="point1"></param>
+            <param name="point2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.op_Equality(KyoshinMonitorLib.Point2,KyoshinMonitorLib.Point2)">
+            <summary>
+            2つのPoint2が同じ値かどうかを判断します。
+            </summary>
+            <param name="point1"></param>
+            <param name="point2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.op_Inequality(KyoshinMonitorLib.Point2,KyoshinMonitorLib.Point2)">
+            <summary>
+            2つのPoint2が違う値かどうかを判断します。
+            </summary>
+            <param name="point1"></param>
+            <param name="point2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.Equals(System.Object)">
+            <summary>
+            Eq
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.GetHashCode">
+            <summary>
+            ハッシュコードを取得します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.op_Implicit(System.Drawing.Point)~KyoshinMonitorLib.Point2">
+            <summary>
+            PointからPoint2への自動キャスト
+            </summary>
+            <param name="point"></param>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.op_Implicit(KyoshinMonitorLib.Point2)~System.Drawing.Point">
+            <summary>
+            Point2からPointへの自動キャスト
+            </summary>
+            <param name="point"></param>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.op_Implicit(System.Drawing.Size)~KyoshinMonitorLib.Point2">
+            <summary>
+            SizeからPoint2への自動キャスト
+            </summary>
+            <param name="point"></param>
+        </member>
+        <member name="M:KyoshinMonitorLib.Point2.op_Implicit(KyoshinMonitorLib.Point2)~System.Drawing.Size">
+            <summary>
+            Point2からSizeへの自動キャスト
+            </summary>
+            <param name="point"></param>
+        </member>
+        <member name="T:KyoshinMonitorLib.UrlGenerator.AppApiUrlGenerator">
+            <summary>
+            強震モニタスマホアプリのURL生成器
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.AppApiUrlGenerator.RealtimeDataBase">
+            <summary>
+            リアルタイムJsonのベースURL
+            <para>0: 種別(jma_sなど)</para>
+            <para>1: s=地上 b=地下</para>
+            <para>2: yyyyMMdd</para>
+            <para>3: yyyyMMddHHmmss</para>
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.AppApiUrlGenerator.EewJsonBase">
+            <summary>
+            EEW関係のJsonのベースURL
+            <para>0: データタイプ(EstShindoJsonV2など)</para>
+            <para>1: yyyyMMdd</para>
+            <para>2: yyyyMMddHHmmss</para>
+            <para>3: データタイプの略称(estなど)</para>
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.AppApiUrlGenerator.SiteListBase">
+            <summary>
+            観測点一覧のベースURL
+            <para>0: baseSerialNo</para>
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.AppApiUrlGenerator.Meches">
+            <summary>
+            メッシュ一覧のURL
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.UrlGenerator.AppApiUrlGenerator.Generate(KyoshinMonitorLib.UrlGenerator.AppApiUrlType,System.DateTime,KyoshinMonitorLib.UrlGenerator.RealtimeDataType,System.Boolean)">
+            <summary>
+            与えられた値を使用してURLを生成します。
+            </summary>
+            <param name="urlType">生成するURLのタイプ</param>
+            <param name="datetime">生成するURLの時間</param>
+            <param name="realtimeShindoType">(UrlType=RealtimeDataの際に使用)取得するリアルタイム情報の種類</param>
+            <param name="isBerehole">(UrlType=RealtimeDataの際に使用)地中の情報を取得するかどうか</param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.UrlGenerator.AppApiUrlGenerator.Generate(System.String)">
+            <summary>
+            観測点一覧のURLを生成します。
+            </summary>
+            <param name="baseSerialNo">シリアル番号</param>
+            <returns></returns>
+        </member>
+        <member name="T:KyoshinMonitorLib.UrlGenerator.AppApiUrlType">
+            <summary>
+            生成するURLの種類(スマホアプリApi)
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.AppApiUrlType.RealtimeData">
+            <summary>
+            リアルタイム情報
+            <para>震度、加速度など</para>
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.AppApiUrlType.HypoInfoJson">
+            <summary>
+            緊急地震速報の到達予想震度
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.AppApiUrlType.PSWaveJson">
+            <summary>
+            緊急地震速報のP波、S波到達予想円
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.AppApiUrlType.EstShindoJson">
+            <summary>
+            緊急地震速報の予想震度
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.UrlGenerator.RealtimeDataType">
+            <summary>
+            リアルタイム画像の種類
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.RealtimeDataType.Shindo">
+            <summary>
+            震度
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.RealtimeDataType.Pga">
+            <summary>
+            最大加速度
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.RealtimeDataType.Pgv">
+            <summary>
+            最大速度
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.RealtimeDataType.Pgd">
+            <summary>
+            最大変位
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.RealtimeDataType.Response_0_125Hz">
+            <summary>
+            速度応答0.125Hz
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.RealtimeDataType.Response_0_25Hz">
+            <summary>
+            速度応答0.25Hz
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.RealtimeDataType.Response_0_5Hz">
+            <summary>
+            速度応答0.5Hz
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.RealtimeDataType.Response_1Hz">
+            <summary>
+            速度応答1Hz
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.RealtimeDataType.Response_2Hz">
+            <summary>
+            速度応答2Hz
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.RealtimeDataType.Response_4Hz">
+            <summary>
+            速度応答4Hz
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.UrlGenerator.RealtimeDataExtensions">
+            <summary>
+            RealtimeImgTypeの拡張メソッド
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.UrlGenerator.RealtimeDataExtensions.ToUrlString(KyoshinMonitorLib.UrlGenerator.RealtimeDataType)">
+            <summary>
+            URLに使用する文字列に変換する
+            </summary>
+            <param name="type">変換するRealtimeImgTypy</param>
+            <returns>変換された文字列</returns>
+        </member>
+        <member name="T:KyoshinMonitorLib.UrlGenerator.WebApiUrlGenerator">
+            <summary>
+            新強震モニタのURL生成器
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.WebApiUrlGenerator.JsonEewBase">
+            <summary>
+            JsonEewのベースURL
+            <para>0:時間</para>
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.WebApiUrlGenerator.PsWaveBase">
+            <summary>
+            PsWaveImgのベースURL
+            <para>0:日付</para>
+            <para>1:時間</para>
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.WebApiUrlGenerator.RealtimeBase">
+            <summary>
+            RealtimeImgのベースURL
+            <para>0:タイプ</para>
+            <para>1:地上(s)/地下(b)</para>
+            <para>2:日付</para>
+            <para>3:時間</para>
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.WebApiUrlGenerator.EstShindoBase">
+            <summary>
+            予想震度のベースURL
+            <para>0:日付</para>
+            <para>1:時間</para>
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.UrlGenerator.WebApiUrlGenerator.Generate(KyoshinMonitorLib.UrlGenerator.WebApiUrlType,System.DateTime,KyoshinMonitorLib.UrlGenerator.RealtimeDataType,System.Boolean)">
+            <summary>
+            与えられた値を使用してURLを生成します。
+            </summary>
+            <param name="urlType">生成するURLのタイプ</param>
+            <param name="datetime">生成するURLの時間</param>
+            <param name="realtimeShindoType">(UrlType=RealtimeImgの際に使用)取得するリアルタイム情報の種類</param>
+            <param name="isBerehole">(UrlType=RealtimeImgの際に使用)地中の情報を取得するかどうか</param>
+            <returns></returns>
+        </member>
+        <member name="T:KyoshinMonitorLib.UrlGenerator.WebApiUrlType">
+            <summary>
+            生成するURLの種類(WebApi)
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.WebApiUrlType.RealtimeImg">
+            <summary>
+            リアルタイム情報
+            <para>震度、加速度など</para>
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.WebApiUrlType.EstShindo">
+            <summary>
+            到達予想震度
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.WebApiUrlType.PSWave">
+            <summary>
+            P波、S波到達予想円
+            </summary>
+        </member>
+        <member name="F:KyoshinMonitorLib.UrlGenerator.WebApiUrlType.EewJson">
+            <summary>
+            緊急地震速報のJson
+            </summary>
+        </member>
+        <member name="T:KyoshinMonitorLib.WebApi">
+            <summary>
+            Webで使用されているAPI
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.WebApi.GetEewInfo(System.DateTime)">
+            <summary>
+            緊急地震速報の情報を取得します。
+            </summary>
+            <param name="time">取得する時間</param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.WebApi.GetRealtimeImageData(System.DateTime,KyoshinMonitorLib.UrlGenerator.RealtimeDataType,System.Boolean)">
+            <summary>
+            リアルタイム画像の生データを取得します。
+            </summary>
+            <param name="time">取得する時間</param>
+            <param name="dataType">取得する画像の種類</param>
+            <param name="isBehore">地下かどうか</param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.WebApi.GetEstShindoImageData(System.DateTime)">
+            <summary>
+            予測震度の画像を取得します。
+            </summary>
+            <param name="time">取得する時間</param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.WebApi.GetPSWaveImageData(System.DateTime)">
+            <summary>
+            P波、S波の広がりを示す円の画像を取得します。
+            </summary>
+            <param name="time">取得する時間</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

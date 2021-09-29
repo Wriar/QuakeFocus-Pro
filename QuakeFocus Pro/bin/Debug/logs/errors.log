@@ -1,0 +1,4 @@
+[2021/04/18 15:18:35] A FATAL ERROR HAS OCCURED. Please open a new issue on GitHub. Error Content: test
+[2021/07/19 21:25:20] A FATAL ERROR HAS OCCURED. Please view content:: Assets were either moved, renamed or deleted: master location table (/assets/pt-master.csv) DT: Index was outside the bounds of the array.
+[2021/07/19 21:25:37] A FATAL ERROR HAS OCCURED. Please view content:: Assets were either moved, renamed or deleted: master location table (/assets/pt-master.csv) DT: Index was outside the bounds of the array.
+[2021/07/20 17:44:41] A FATAL ERROR HAS OCCURED. Please view content:: Assets were either moved, renamed or deleted: master location table (/assets/pt-master.csv) DT: The process cannot access the file 'C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Debug\assets\pt-master.csv' because it is being used by another process.

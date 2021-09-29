@@ -1,0 +1,173 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+QuakeFocus Pro
+</name>
+</assembly>
+<members>
+<member name="T:QuakeFocus_Pro.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources._stop">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.bx_0">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.dkrender1">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.epicenter">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.hi_demo">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.JapanSvgCss">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.polbnda_jpn">
+<summary>
+  Looks up a localized resource of type System.Byte[].
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.r_render">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.replay">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.sampleimg">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.smp1">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="M:QuakeFocus_Pro.errorHandler.HandleError(System.String,System.String,System.Boolean)">
+ <summary>
+ Use Custom Error Handling.
+ errtype: (code, service, info)
+ errorContent: (use any string)
+ e (boolean), true-> require app shutdown.
+ </summary>
+ 
+</member>
+<member name="M:QuakeFocus_Pro.lightDetect.lightDetect_Load(System.Object,System.EventArgs)">
+ <summary>
+ 1. IMPORT TABLE INTO THE DATAGRID (IMPORT TABLE)
+ 2. RUN 10 ITERATIONS OF CURRENT DATA INTO TABLE (ADDTABLEDATA1)
+ 3. START TIMER FOR TUPLE AVERAGE LIST (ADDTOTUPLE)
+ 4. START TIMER TO IMPORT PIXEL VALUES (ADDTABLEDATA)
+ 5. START WATCHDOG TO MONITOR FOR TRUE INSIDE TUPLE
+ 
+ WATCHDOG:
+ 
+ IF NO TRUE IS SEEN INSIDE THE TUPLE, START THE ADDTOTUPLE TIMER. FLUSH THE INCREMENTAL VALUES.
+ 
+ IN CASE OF ALERT SEEN BY WATCHDOG (TRUE)
+ 
+ STOP IMPORT TABLE DATAGRID TIMER (IMPORT TABLE)
+ 
+ BEGIN INCREMENTING VALUE FOR COOLDOWN VALUE IN SETTINGS VALUE.
+ 
+ WHEN COOLDOWN VALUE IS EXCEEDED, START THE TABLE IMPORTER.
+ FLUSH THE INCREMENTAL VALUES.
+ 
+ 
+ 
+ </summary>
+</member>
+<member name="F:QuakeFocus_Pro.lightDetect.secElapsedSinceDetection">
+ <summary>
+ WATCHDOG:
+ 
+ IF NO TRUE IS SEEN INSIDE THE TUPLE, START THE ADDTOTUPLE TIMER. FLUSH THE INCREMENTAL VALUES.
+ 
+ IN CASE OF ALERT SEEN BY WATCHDOG (TRUE)
+ 
+ STOP IMPORT TABLE DATAGRID TIMER (IMPORT TABLE)
+ 
+ BEGIN INCREMENTING VALUE FOR COOLDOWN VALUE IN SETTINGS VALUE.
+ 
+ WHEN COOLDOWN VALUE IS EXCEEDED, START THE TABLE IMPORTER.
+ FLUSH THE INCREMENTAL VALUES.
+ 
+ 
+ </summary>
+</member>
+<member name="F:QuakeFocus_Pro.lmsVar.applicationPath">
+ <summary>
+ REALTIME LIGHT SHAKING DETECTION SYSTEM
+ </summary>
+</member>
+<member name="F:QuakeFocus_Pro.lmsVar.dataPoints">
+ <summary>
+ This is old analysis algorithm from another old project that relies heavily on a UI component.
+ 
+ A Alternative will be released in a new release.
+ 
+ 
+ process: analyze points. Real usable components are featured within a tuple list.
+ </summary>
+</member>
+<member name="M:QuakeFocus_Pro.nhkDownloader.loadIMG(System.String,System.Boolean)">
+ <summary>
+ Loads the Image into the image viewer.
+ Returns False if Error exists.
+ </summary>
+</member>
+<member name="M:QuakeFocus_Pro.viewPage.DrawMarker(System.Drawing.Graphics,System.Double,System.Double,System.String,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.String)">
+ <summary>
+ Plot graphics object on map. Marker types are:
+ Normal/Not-Measured/ -> realtime
+ Inner/Outer Circle Combo -> multi
+ Hybrid Expected Intensity -> hyex
+ Measured Intensity -> measured
+ 
+ </summary>
+ <param name="g">Graphics Type</param>
+ <param name="locX">Latitude of Point</param>
+ <param name="locY">Longitude of Point</param>
+ <param name="markerType">Marker Type (see summary)</param>
+ <param name="innerCircle">Color of Measured (For Multi)</param>
+ <param name="outerCircle">Color of expected (For Multi)</param>
+ <param name="defaultColor">Color of Realtime (For Single)/Hybrid Expec</param>
+ <param name="intensity">Measurement of Measured Intensity (use +/-)</param>
+ 
+</member>
+</members>
+</doc>

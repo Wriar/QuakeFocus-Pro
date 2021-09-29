@@ -1,0 +1,414 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DAC1FCED-3EFA-4F39-987B-52C1C5FC3A7E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>QuakeFocus_Pro.My.MyApplication</StartupObject>
+    <RootNamespace>QuakeFocus_Pro</RootNamespace>
+    <AssemblyName>QuakeFocus Pro</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>QuakeFocus Pro.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>QuakeFocus Pro.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr4.Runtime, Version=4.6.0.0, Culture=neutral, PublicKeyToken=09abb75b9ed49849, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr4.Runtime.4.6.6\lib\net45\Antlr4.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="ColorBar">
+      <HintPath>..\..\..\..\Documents\CBTest\CBTest\bin\Release\ColorBar.dll</HintPath>
+    </Reference>
+    <Reference Include="Dangl.Calculator, Version=1.4.0.0, Culture=neutral, PublicKeyToken=35bf74eac1c84f5d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dangl.Calculator.1.4.0\lib\net45\Dangl.Calculator.dll</HintPath>
+    </Reference>
+    <Reference Include="EGIS.Controls">
+      <HintPath>..\..\..\..\Documents\egis_dt_4_7_0\EGIS.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="EGIS.Projections">
+      <HintPath>..\..\..\..\Documents\egis_dt_4_7_0\EGIS.Projections.dll</HintPath>
+    </Reference>
+    <Reference Include="EGIS.ShapeFileLib">
+      <HintPath>..\..\..\..\Documents\egis_dt_4_7_0\EGIS.ShapeFileLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Fizzler, Version=1.2.0.0, Culture=neutral, PublicKeyToken=4ebff4844e382110, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fizzler.1.2.0\lib\netstandard2.0\Fizzler.dll</HintPath>
+    </Reference>
+    <Reference Include="KyoshinMonitorLib, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\KyoshinMonitorLib.0.4.0\lib\net47\KyoshinMonitorLib.dll</HintPath>
+    </Reference>
+    <Reference Include="KyoshinMonitorLib.Images, Version=0.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\KyoshinMonitorLib.Images.0.4.2\lib\net47\KyoshinMonitorLib.Images.dll</HintPath>
+    </Reference>
+    <Reference Include="MessagePack, Version=2.2.0.0, Culture=neutral, PublicKeyToken=b4a0369545f0a1be, processorArchitecture=MSIL">
+      <HintPath>..\packages\MessagePack.2.2.85\lib\netstandard2.0\MessagePack.dll</HintPath>
+    </Reference>
+    <Reference Include="MessagePack.Annotations, Version=2.2.0.0, Culture=neutral, PublicKeyToken=b4a0369545f0a1be, processorArchitecture=MSIL">
+      <HintPath>..\packages\MessagePack.Annotations.2.2.85\lib\netstandard2.0\MessagePack.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack-Core.1.1.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Svg, Version=3.2.0.0, Culture=neutral, PublicKeyToken=12a0bac221edeae2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Svg.3.2.3\lib\net461\Svg.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.5.0.0\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.5.0.0\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.5.0.1\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AlertBoxSet.vb" />
+    <Compile Include="apiTimer.Designer.vb">
+      <DependentUpon>apiTimer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="apiTimer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="colorProcessing.vb" />
+    <Compile Include="eewBanner.Designer.vb">
+      <DependentUpon>eewBanner.vb</DependentUpon>
+    </Compile>
+    <Compile Include="eewBanner.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="errorHandler.vb" />
+    <Compile Include="eventList.vb" />
+    <Compile Include="ExtendedPanel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="flowIntensityLbl.Designer.vb">
+      <DependentUpon>flowIntensityLbl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="flowIntensityLbl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="flowLightShaking.Designer.vb">
+      <DependentUpon>flowLightShaking.vb</DependentUpon>
+    </Compile>
+    <Compile Include="flowLightShaking.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="flowNoAlertPane.Designer.vb">
+      <DependentUpon>flowNoAlertPane.vb</DependentUpon>
+    </Compile>
+    <Compile Include="flowNoAlertPane.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="flowSmallEvent.Designer.vb">
+      <DependentUpon>flowSmallEvent.vb</DependentUpon>
+    </Compile>
+    <Compile Include="flowSmallEvent.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="flowTsunami.Designer.vb">
+      <DependentUpon>flowTsunami.vb</DependentUpon>
+    </Compile>
+    <Compile Include="flowTsunami.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gisRenderObjects.vb" />
+    <Compile Include="globalServers.vb" />
+    <Compile Include="globalSettings.Designer.vb">
+      <DependentUpon>globalSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="globalSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="hsEpicenterLocator.vb" />
+    <Compile Include="lightDetect.Designer.vb">
+      <DependentUpon>lightDetect.vb</DependentUpon>
+    </Compile>
+    <Compile Include="lightDetect.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="line.vb" />
+    <Compile Include="lmsVar.Designer.vb">
+      <DependentUpon>lmsVar.vb</DependentUpon>
+    </Compile>
+    <Compile Include="lmsVar.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="localPane.Designer.vb">
+      <DependentUpon>localPane.vb</DependentUpon>
+    </Compile>
+    <Compile Include="localPane.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="mapViewFrame.Designer.vb">
+      <DependentUpon>mapViewFrame.vb</DependentUpon>
+    </Compile>
+    <Compile Include="mapViewFrame.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MultiSounds.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="My Project\timeTravel.vb" />
+    <Compile Include="nhkDownloader.Designer.vb">
+      <DependentUpon>nhkDownloader.vb</DependentUpon>
+    </Compile>
+    <Compile Include="nhkDownloader.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NIEDImageDownloader.vb" />
+    <Compile Include="pgaImgDownloader.vb" />
+    <Compile Include="pointDecoder.vb" />
+    <Compile Include="soundLangHandler.vb" />
+    <Compile Include="startup.vb" />
+    <Compile Include="svgColorConstruct.vb" />
+    <Compile Include="svgStaticLocations.vb" />
+    <Compile Include="translationSource.vb" />
+    <Compile Include="tsCoastLine.Designer.vb">
+      <DependentUpon>tsCoastLine.vb</DependentUpon>
+    </Compile>
+    <Compile Include="tsCoastLine.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="updateAvailable.Designer.vb">
+      <DependentUpon>updateAvailable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="updateAvailable.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="v1GISmap.Designer.vb">
+      <DependentUpon>v1GISmap.vb</DependentUpon>
+    </Compile>
+    <Compile Include="v1GISmap.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="viewPage.Designer.vb">
+      <DependentUpon>viewPage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="viewPage.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="viewPageLocalMonitor.Designer.vb">
+      <DependentUpon>viewPageLocalMonitor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="viewPageLocalMonitor.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XMLViewParse.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="apiTimer.resx">
+      <DependentUpon>apiTimer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="eewBanner.resx">
+      <DependentUpon>eewBanner.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="flowIntensityLbl.resx">
+      <DependentUpon>flowIntensityLbl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="flowLightShaking.resx">
+      <DependentUpon>flowLightShaking.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="flowNoAlertPane.resx">
+      <DependentUpon>flowNoAlertPane.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="flowSmallEvent.resx">
+      <DependentUpon>flowSmallEvent.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="flowTsunami.resx">
+      <DependentUpon>flowTsunami.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="globalSettings.resx">
+      <DependentUpon>globalSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="lightDetect.resx">
+      <DependentUpon>lightDetect.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="lmsVar.resx">
+      <DependentUpon>lmsVar.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="localPane.resx">
+      <DependentUpon>localPane.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mapViewFrame.resx">
+      <DependentUpon>mapViewFrame.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="nhkDownloader.resx">
+      <DependentUpon>nhkDownloader.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="tsCoastLine.resx">
+      <DependentUpon>tsCoastLine.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="updateAvailable.resx">
+      <DependentUpon>updateAvailable.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="v1GISmap.resx">
+      <DependentUpon>v1GISmap.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="viewPage.resx">
+      <DependentUpon>viewPage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="viewPageLocalMonitor.resx">
+      <DependentUpon>viewPageLocalMonitor.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\JapanSvgCss.emf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\polbnda_jpn.shx" />
+    <None Include="Resources\stop.png" />
+    <None Include="Resources\replay.png" />
+    <None Include="Resources\20110311145000.jma_s.gif" />
+    <None Include="Resources\sampleimg.gif" />
+    <None Include="Resources\bx-0.png" />
+    <None Include="Resources\epicenter.png" />
+    <None Include="Resources\dkrender1.png" />
+    <None Include="Resources\r_render.gif" />
+    <None Include="Resources\smp1.gif" />
+    <Content Include="winmm.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="SHDocVw">
+      <Guid>{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>1</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>

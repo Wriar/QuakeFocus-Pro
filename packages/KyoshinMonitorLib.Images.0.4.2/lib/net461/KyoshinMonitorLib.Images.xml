@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>KyoshinMonitorLib.Images</name>
+    </assembly>
+    <members>
+        <member name="T:KyoshinMonitorLib.Images.ColorConverter">
+            <summary>
+            色を震度に変換する
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.Images.ColorConverter.ConvertToIntensityAtTable(System.Drawing.Color)">
+            <summary>
+            強震モニタの画像の色から震度に変換します。
+            </summary>
+            <param name="color">変換する色</param>
+            <returns>変換された震度</returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Images.ColorConverter.ConvertToIntensityFromScale(System.Double)">
+            <summary>
+            スケールを震度に変換します。
+            </summary>
+            <param name="scale">変換前のスケール</param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Images.ColorConverter.ConvertToPgaFromScale(System.Double)">
+            <summary>
+            スケールをPGA(最大加速度)に変換します。
+            </summary>
+            <param name="scale">変換前のスケール</param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Images.ColorConverter.ConvertToPgvFromScale(System.Double)">
+            <summary>
+            スケールをPGV(最大速度)に変換します。
+            </summary>
+            <param name="scale">変換前のスケール</param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Images.ColorConverter.ConvertToPgdFromScale(System.Double)">
+            <summary>
+            スケールをPGD(最大変位)に変換します。
+            </summary>
+            <param name="scale">変換前のスケール</param>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Images.ColorConverter.ConvertToScaleAtPolynomialInterpolation(System.Drawing.Color)">
+            <summary>
+            多項式補完を使用して色をスケールに変換します。
+            from: https://qiita.com/NoneType1/items/a4d2cf932e20b56ca444
+            </summary>
+            <param name="color">変換元の色</param>
+            <returns>変換後のスケール</returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Images.ColorConverter.GetHsv(System.Drawing.Color)">
+            <summary>
+            指定した色をHSVで返す
+            </summary>
+            <param name="rgb">変換する色</param>
+            <returns>変換した色</returns>
+        </member>
+        <member name="T:KyoshinMonitorLib.Images.Extensions">
+            <summary>
+            拡張メソッドたち
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.Images.Extensions.ParseScaleFromParameterAsync(KyoshinMonitorLib.WebApi,System.Collections.Generic.IEnumerable{KyoshinMonitorLib.ObservationPoint},System.DateTime,KyoshinMonitorLib.UrlGenerator.RealtimeDataType,System.Boolean)">
+            <summary>
+            与えられた情報から強震モニタの画像を取得し、そこから観測点情報を使用しスケールを取得します。
+            <para>asyncなのはStream取得部分のみなので注意してください。</para>
+            </summary>
+            <param name="webApi">WebApiインスタンス</param>
+            <param name="points">使用する観測点情報の配列</param>
+            <param name="datetime">参照する日付</param>
+            <param name="dataType">取得する情報の種類</param>
+            <param name="isBehole">地中の情報を取得するかどうか</param>
+            <returns>震度情報が追加された観測点情報の配列 取得に失敗した場合null</returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Images.Extensions.ParseScaleFromParameterAsync(KyoshinMonitorLib.WebApi,System.Collections.Generic.IEnumerable{KyoshinMonitorLib.Images.ImageAnalysisResult},System.DateTime,KyoshinMonitorLib.UrlGenerator.RealtimeDataType,System.Boolean)">
+            <summary>
+            与えられた情報から強震モニタの画像を取得し、そこから観測点情報を使用しスケールを取得します。
+            <para>asyncなのはStream取得部分のみなので注意してください。</para>
+            </summary>
+            <param name="webApi">WebApiインスタンス</param>
+            <param name="points">使用する観測点情報の配列</param>
+            <param name="datetime">参照する日付</param>
+            <param name="dataType">取得する情報の種類</param>
+            <param name="isBehole">地中の情報を取得するかどうか</param>
+            <returns>震度情報が追加された観測点情報の配列 取得に失敗した場合null</returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Images.Extensions.ParseScaleFromImage(System.Collections.Generic.IEnumerable{KyoshinMonitorLib.Images.ImageAnalysisResult},System.Drawing.Bitmap)">
+            <summary>
+            与えられた画像から観測点情報を使用しスケールを取得します。
+            </summary>
+            <param name="points">使用する観測点情報の配列</param>
+            <param name="bitmap">参照する画像</param>
+            <returns>震度情報が追加された観測点情報の配列</returns>
+        </member>
+        <member name="T:KyoshinMonitorLib.Images.ImageAnalysisResult">
+            <summary>
+            画像解析結果
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.Images.ImageAnalysisResult.ObservationPoint">
+            <summary>
+            観測点情報
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.Images.ImageAnalysisResult.AnalysisResult">
+            <summary>
+            解析されたスケール
+            </summary>
+        </member>
+        <member name="P:KyoshinMonitorLib.Images.ImageAnalysisResult.Color">
+            <summary>
+            解析に使用した色
+            </summary>
+        </member>
+        <member name="M:KyoshinMonitorLib.Images.ImageAnalysisResult.#ctor(KyoshinMonitorLib.ObservationPoint)">
+            <summary>
+            ObservationPointを元にImageAnalysisResultを初期化します。
+            </summary>
+            <param name="point">元にするObservationPoint</param>
+        </member>
+        <member name="M:KyoshinMonitorLib.Images.ImageAnalysisResult.GetResultToIntensity">
+            <summary>
+            結果を震度として返します
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Images.ImageAnalysisResult.GetResultToPga">
+            <summary>
+            結果を最大加速度(PGA)として返します
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Images.ImageAnalysisResult.GetResultToPgv">
+            <summary>
+            結果を最大速度(PGV)として返します
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:KyoshinMonitorLib.Images.ImageAnalysisResult.GetResultToPgd">
+            <summary>
+            結果を最大変位(PGD)として返します
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

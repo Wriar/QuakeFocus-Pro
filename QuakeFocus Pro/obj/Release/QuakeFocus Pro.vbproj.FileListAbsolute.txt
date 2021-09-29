@@ -1,0 +1,46 @@
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\QuakeFocus Pro.exe.config
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\QuakeFocus Pro.exe
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\QuakeFocus Pro.pdb
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\QuakeFocus Pro.xml
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\obj\Release\QuakeFocus Pro.vbprojAssemblyReference.cache
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\obj\Release\QuakeFocus_Pro.flowIntensityLbl.resources
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\obj\Release\QuakeFocus_Pro.flowNoAlertPane.resources
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\obj\Release\QuakeFocus_Pro.flowSmallEvent.resources
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\obj\Release\QuakeFocus_Pro.localPane.resources
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\obj\Release\QuakeFocus_Pro.Resources.resources
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\obj\Release\QuakeFocus Pro.vbproj.GenerateResource.cache
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\obj\Release\QuakeFocus Pro.vbproj.CoreCompileInputs.cache
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\obj\Release\QuakeFocus Pro.exe
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\obj\Release\QuakeFocus Pro.xml
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\obj\Release\QuakeFocus Pro.pdb
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\KyoshinMonitorLib.dll
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\KyoshinMonitorLib.Images.dll
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\MessagePack.Annotations.dll
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\MessagePack.dll
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.Buffers.dll
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.Collections.Immutable.dll
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.Drawing.Common.dll
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.Memory.dll
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.Numerics.Vectors.dll
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.Text.Encodings.Web.dll
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.Text.Json.dll
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.Threading.Tasks.Extensions.dll
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.ValueTuple.dll
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\KyoshinMonitorLib.xml
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\KyoshinMonitorLib.Images.xml
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\MessagePack.xml
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\MessagePack.Annotations.xml
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.Buffers.xml
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.Collections.Immutable.xml
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.Memory.xml
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.Numerics.Vectors.xml
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.Text.Encodings.Web.xml
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.Text.Json.xml
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.Threading.Tasks.Extensions.xml
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\bin\Release\System.ValueTuple.xml
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\obj\Release\QuakeFocus_Pro.Form1.resources
+C:\Users\natha\source\repos\QuakeFocus Pro\QuakeFocus Pro\obj\Release\QuakeFocus Pro.vbproj.CopyComplete

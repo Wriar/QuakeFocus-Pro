@@ -1,0 +1,2442 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Dangl.Calculator</name>
+    </assembly>
+    <members>
+        <member name="T:Dangl.Calculator.CalculationResult">
+            <summary>
+            Container class that holds the result of a calculation
+            </summary>
+        </member>
+        <member name="P:Dangl.Calculator.CalculationResult.IsValid">
+            <summary>
+                Indicates if the formula was valid and a result was calculated. If false, the result will be either NaN or Infinity
+            </summary>
+        </member>
+        <member name="P:Dangl.Calculator.CalculationResult.ErrorPosition">
+            <summary>
+                The position on which the first error was encountered. This is a zero based index. Will report -1 for
+                division by zero, but result will be reported as invalid
+            </summary>
+        </member>
+        <member name="P:Dangl.Calculator.CalculationResult.ErrorMessage">
+            <summary>
+            Relays the underlying formula parsers error message
+            </summary>
+        </member>
+        <member name="P:Dangl.Calculator.CalculationResult.Result">
+            <summary>
+            The calculated result
+            </summary>
+        </member>
+        <member name="T:Dangl.Calculator.Calculator">
+            <summary>
+                This class provides functionality to calculate a mathematical expression from a string.
+            </summary>
+        </member>
+        <member name="M:Dangl.Calculator.Calculator.Calculate(System.String)">
+            <summary>
+                This takes a string as input and returns the calculated result as decimal.
+            </summary>
+            <param name="formula">The mathematical expression as string to be calculated.</param>
+        </member>
+        <member name="M:Dangl.Calculator.Calculator.Calculate(System.String,System.Func{System.String,System.Nullable{System.Double}})">
+            <summary>
+                This takes a string as input and returns the calculated result as decimal.
+            </summary>
+            <param name="formula">The mathematical expression as string to be calculated.</param>
+            <param name="substitutionResolver">
+                This callback may be used to resolve substitutions. If a null value is returned
+                by this callback, the formula is considered invalid.
+            </param>
+        </member>
+        <member name="M:Dangl.Calculator.Calculator.CalculateResult(System.String,System.Boolean,System.Func{System.String,System.Nullable{System.Double}})">
+            <summary>
+                This will attempt to recalculate if an error was encountered. Will try to skip whitespaces
+                and comments so to prevent number literals and function qualifiers not being identified.
+            </summary>
+            <param name="formula"></param>
+            <param name="secondRun"></param>
+            <param name="substitutionResolver">
+                This callback may be used to resolve substitutions. If a null value is returned
+                by this callback, the formula is considered invalid.
+            </param>
+            <returns></returns>
+        </member>
+        <member name="T:Dangl.Calculator.CalculatorErrorListener">
+            <summary>
+                This class overrides some functionalities of the ANTLR4 BaseErrorListener.
+                It will create error objects upon encountering errors in the expression.
+            </summary>
+        </member>
+        <member name="P:Dangl.Calculator.CalculatorErrorListener.IsValid">
+            <summary>
+            Returns false if any errors have been reported
+            </summary>
+        </member>
+        <member name="P:Dangl.Calculator.CalculatorErrorListener.ErrorLocation">
+            <summary>
+            Returns the location an encountered syntax error, -1 otherwise
+            </summary>
+        </member>
+        <member name="P:Dangl.Calculator.CalculatorErrorListener.ErrorMessage">
+            <summary>
+            Returns the message of an encountered syntax error
+            </summary>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorErrorListener.ReportAmbiguity(Antlr4.Runtime.Parser,Antlr4.Runtime.Dfa.DFA,System.Int32,System.Int32,System.Boolean,Antlr4.Runtime.Sharpen.BitSet,Antlr4.Runtime.Atn.ATNConfigSet)">
+            <summary>
+            Sets <see cref="P:Dangl.Calculator.CalculatorErrorListener.IsValid"/> to false
+            </summary>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorErrorListener.ReportAttemptingFullContext(Antlr4.Runtime.Parser,Antlr4.Runtime.Dfa.DFA,System.Int32,System.Int32,Antlr4.Runtime.Sharpen.BitSet,Antlr4.Runtime.Atn.SimulatorState)">
+            <summary>
+            Sets <see cref="P:Dangl.Calculator.CalculatorErrorListener.IsValid"/> to false
+            </summary>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorErrorListener.ReportContextSensitivity(Antlr4.Runtime.Parser,Antlr4.Runtime.Dfa.DFA,System.Int32,System.Int32,System.Int32,Antlr4.Runtime.Atn.SimulatorState)">
+            <summary>
+            Sets <see cref="P:Dangl.Calculator.CalculatorErrorListener.IsValid"/> to false
+            </summary>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorErrorListener.SyntaxError(Antlr4.Runtime.IRecognizer,Antlr4.Runtime.IToken,System.Int32,System.Int32,System.String,Antlr4.Runtime.RecognitionException)">
+            <summary>
+            Sets <see cref="P:Dangl.Calculator.CalculatorErrorListener.IsValid"/> to false and <see cref="P:Dangl.Calculator.CalculatorErrorListener.ErrorLocation"/> and <see cref="P:Dangl.Calculator.CalculatorErrorListener.ErrorMessage"/> to the values provided by the parser
+            </summary>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorErrorListener.ReportSubstitutionNotFound(System.Int32,System.String)">
+            <summary>
+            Sets <see cref="P:Dangl.Calculator.CalculatorErrorListener.IsValid"/> to false and <see cref="P:Dangl.Calculator.CalculatorErrorListener.ErrorLocation"/> to the value provided by the caller. The <see cref="P:Dangl.Calculator.CalculatorErrorListener.ErrorMessage"/> will be set
+            to indicate which substitution value was not found.
+            </summary>
+            <param name="errorLocation"></param>
+            <param name="substitution"></param>
+        </member>
+        <member name="T:Dangl.Calculator.CalculatorVisitor">
+            <summary>
+                This is the visitor to actually perform the mathematical calculation of a given expression.
+            </summary>
+        </member>
+        <member name="T:Dangl.Calculator.ICalculatorListener">
+            <summary>
+            This interface defines a complete listener for a parse tree produced by
+            <see cref="T:Dangl.Calculator.CalculatorParser"/>.
+            </summary>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterTan(Dangl.Calculator.CalculatorParser.TanContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Tan</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitTan(Dangl.Calculator.CalculatorParser.TanContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Tan</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterCosh(Dangl.Calculator.CalculatorParser.CoshContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Cosh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitCosh(Dangl.Calculator.CalculatorParser.CoshContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Cosh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterSqRoot(Dangl.Calculator.CalculatorParser.SqRootContext)">
+            <summary>
+            Enter a parse tree produced by the <c>SqRoot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitSqRoot(Dangl.Calculator.CalculatorParser.SqRootContext)">
+            <summary>
+            Exit a parse tree produced by the <c>SqRoot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterNegExponent(Dangl.Calculator.CalculatorParser.NegExponentContext)">
+            <summary>
+            Enter a parse tree produced by the <c>NegExponent</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitNegExponent(Dangl.Calculator.CalculatorParser.NegExponentContext)">
+            <summary>
+            Exit a parse tree produced by the <c>NegExponent</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterExponent(Dangl.Calculator.CalculatorParser.ExponentContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Exponent</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitExponent(Dangl.Calculator.CalculatorParser.ExponentContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Exponent</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterArctan2(Dangl.Calculator.CalculatorParser.Arctan2Context)">
+            <summary>
+            Enter a parse tree produced by the <c>Arctan2</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitArctan2(Dangl.Calculator.CalculatorParser.Arctan2Context)">
+            <summary>
+            Exit a parse tree produced by the <c>Arctan2</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterMulDiv(Dangl.Calculator.CalculatorParser.MulDivContext)">
+            <summary>
+            Enter a parse tree produced by the <c>MulDiv</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitMulDiv(Dangl.Calculator.CalculatorParser.MulDivContext)">
+            <summary>
+            Exit a parse tree produced by the <c>MulDiv</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterArcsin(Dangl.Calculator.CalculatorParser.ArcsinContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Arcsin</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitArcsin(Dangl.Calculator.CalculatorParser.ArcsinContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Arcsin</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterUnaryPlus(Dangl.Calculator.CalculatorParser.UnaryPlusContext)">
+            <summary>
+            Enter a parse tree produced by the <c>UnaryPlus</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitUnaryPlus(Dangl.Calculator.CalculatorParser.UnaryPlusContext)">
+            <summary>
+            Exit a parse tree produced by the <c>UnaryPlus</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterArccot(Dangl.Calculator.CalculatorParser.ArccotContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Arccot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitArccot(Dangl.Calculator.CalculatorParser.ArccotContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Arccot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterArccos(Dangl.Calculator.CalculatorParser.ArccosContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Arccos</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitArccos(Dangl.Calculator.CalculatorParser.ArccosContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Arccos</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterEuler(Dangl.Calculator.CalculatorParser.EulerContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Euler</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitEuler(Dangl.Calculator.CalculatorParser.EulerContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Euler</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterArctan(Dangl.Calculator.CalculatorParser.ArctanContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Arctan</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitArctan(Dangl.Calculator.CalculatorParser.ArctanContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Arctan</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterParenthesis(Dangl.Calculator.CalculatorParser.ParenthesisContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Parenthesis</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitParenthesis(Dangl.Calculator.CalculatorParser.ParenthesisContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Parenthesis</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterAbs(Dangl.Calculator.CalculatorParser.AbsContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Abs</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitAbs(Dangl.Calculator.CalculatorParser.AbsContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Abs</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterNumber(Dangl.Calculator.CalculatorParser.NumberContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Number</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitNumber(Dangl.Calculator.CalculatorParser.NumberContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Number</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterSubstitution(Dangl.Calculator.CalculatorParser.SubstitutionContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Substitution</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitSubstitution(Dangl.Calculator.CalculatorParser.SubstitutionContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Substitution</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterSinh(Dangl.Calculator.CalculatorParser.SinhContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Sinh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitSinh(Dangl.Calculator.CalculatorParser.SinhContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Sinh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterRound(Dangl.Calculator.CalculatorParser.RoundContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Round</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitRound(Dangl.Calculator.CalculatorParser.RoundContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Round</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterTrunc(Dangl.Calculator.CalculatorParser.TruncContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Trunc</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitTrunc(Dangl.Calculator.CalculatorParser.TruncContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Trunc</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterPi(Dangl.Calculator.CalculatorParser.PiContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Pi</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitPi(Dangl.Calculator.CalculatorParser.PiContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Pi</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterTanh(Dangl.Calculator.CalculatorParser.TanhContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Tanh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitTanh(Dangl.Calculator.CalculatorParser.TanhContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Tanh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterFloor(Dangl.Calculator.CalculatorParser.FloorContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Floor</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitFloor(Dangl.Calculator.CalculatorParser.FloorContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Floor</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterLn(Dangl.Calculator.CalculatorParser.LnContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Ln</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitLn(Dangl.Calculator.CalculatorParser.LnContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Ln</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterMod(Dangl.Calculator.CalculatorParser.ModContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Mod</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitMod(Dangl.Calculator.CalculatorParser.ModContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Mod</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterLog(Dangl.Calculator.CalculatorParser.LogContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Log</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitLog(Dangl.Calculator.CalculatorParser.LogContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Log</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterAddSub(Dangl.Calculator.CalculatorParser.AddSubContext)">
+            <summary>
+            Enter a parse tree produced by the <c>AddSub</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitAddSub(Dangl.Calculator.CalculatorParser.AddSubContext)">
+            <summary>
+            Exit a parse tree produced by the <c>AddSub</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterCos(Dangl.Calculator.CalculatorParser.CosContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Cos</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitCos(Dangl.Calculator.CalculatorParser.CosContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Cos</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterDeg(Dangl.Calculator.CalculatorParser.DegContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Deg</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitDeg(Dangl.Calculator.CalculatorParser.DegContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Deg</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterSqrt(Dangl.Calculator.CalculatorParser.SqrtContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Sqrt</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitSqrt(Dangl.Calculator.CalculatorParser.SqrtContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Sqrt</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterCot(Dangl.Calculator.CalculatorParser.CotContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Cot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitCot(Dangl.Calculator.CalculatorParser.CotContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Cot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterWhole(Dangl.Calculator.CalculatorParser.WholeContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Whole</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitWhole(Dangl.Calculator.CalculatorParser.WholeContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Whole</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterUnary(Dangl.Calculator.CalculatorParser.UnaryContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Unary</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitUnary(Dangl.Calculator.CalculatorParser.UnaryContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Unary</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterRad(Dangl.Calculator.CalculatorParser.RadContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Rad</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitRad(Dangl.Calculator.CalculatorParser.RadContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Rad</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterMult(Dangl.Calculator.CalculatorParser.MultContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Mult</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitMult(Dangl.Calculator.CalculatorParser.MultContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Mult</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterSqr(Dangl.Calculator.CalculatorParser.SqrContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Sqr</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitSqr(Dangl.Calculator.CalculatorParser.SqrContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Sqr</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterSin(Dangl.Calculator.CalculatorParser.SinContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Sin</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitSin(Dangl.Calculator.CalculatorParser.SinContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Sin</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterEex(Dangl.Calculator.CalculatorParser.EexContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Eex</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitEex(Dangl.Calculator.CalculatorParser.EexContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Eex</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterPow(Dangl.Calculator.CalculatorParser.PowContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Pow</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitPow(Dangl.Calculator.CalculatorParser.PowContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Pow</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterCeil(Dangl.Calculator.CalculatorParser.CeilContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Ceil</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitCeil(Dangl.Calculator.CalculatorParser.CeilContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Ceil</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterExp(Dangl.Calculator.CalculatorParser.ExpContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Exp</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitExp(Dangl.Calculator.CalculatorParser.ExpContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Exp</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterRoundk(Dangl.Calculator.CalculatorParser.RoundkContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Roundk</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitRoundk(Dangl.Calculator.CalculatorParser.RoundkContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Roundk</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterCalculator(Dangl.Calculator.CalculatorParser.CalculatorContext)">
+            <summary>
+            Enter a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.calculator"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitCalculator(Dangl.Calculator.CalculatorParser.CalculatorContext)">
+            <summary>
+            Exit a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.calculator"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterExpression(Dangl.Calculator.CalculatorParser.ExpressionContext)">
+            <summary>
+            Enter a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitExpression(Dangl.Calculator.CalculatorParser.ExpressionContext)">
+            <summary>
+            Exit a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterTrailingComment(Dangl.Calculator.CalculatorParser.TrailingCommentContext)">
+            <summary>
+            Enter a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.trailingComment"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitTrailingComment(Dangl.Calculator.CalculatorParser.TrailingCommentContext)">
+            <summary>
+            Exit a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.trailingComment"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.EnterCompileUnit(Dangl.Calculator.CalculatorParser.CompileUnitContext)">
+            <summary>
+            Enter a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.compileUnit"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorListener.ExitCompileUnit(Dangl.Calculator.CalculatorParser.CompileUnitContext)">
+            <summary>
+            Exit a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.compileUnit"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="T:Dangl.Calculator.CalculatorBaseListener">
+            <summary>
+            This class provides an empty implementation of <see cref="T:Dangl.Calculator.ICalculatorListener"/>,
+            which can be extended to create a listener which only needs to handle a subset
+            of the available methods.
+            </summary>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterTan(Dangl.Calculator.CalculatorParser.TanContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Tan</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitTan(Dangl.Calculator.CalculatorParser.TanContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Tan</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterCosh(Dangl.Calculator.CalculatorParser.CoshContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Cosh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitCosh(Dangl.Calculator.CalculatorParser.CoshContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Cosh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterSqRoot(Dangl.Calculator.CalculatorParser.SqRootContext)">
+            <summary>
+            Enter a parse tree produced by the <c>SqRoot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitSqRoot(Dangl.Calculator.CalculatorParser.SqRootContext)">
+            <summary>
+            Exit a parse tree produced by the <c>SqRoot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterNegExponent(Dangl.Calculator.CalculatorParser.NegExponentContext)">
+            <summary>
+            Enter a parse tree produced by the <c>NegExponent</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitNegExponent(Dangl.Calculator.CalculatorParser.NegExponentContext)">
+            <summary>
+            Exit a parse tree produced by the <c>NegExponent</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterExponent(Dangl.Calculator.CalculatorParser.ExponentContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Exponent</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitExponent(Dangl.Calculator.CalculatorParser.ExponentContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Exponent</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterArctan2(Dangl.Calculator.CalculatorParser.Arctan2Context)">
+            <summary>
+            Enter a parse tree produced by the <c>Arctan2</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitArctan2(Dangl.Calculator.CalculatorParser.Arctan2Context)">
+            <summary>
+            Exit a parse tree produced by the <c>Arctan2</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterMulDiv(Dangl.Calculator.CalculatorParser.MulDivContext)">
+            <summary>
+            Enter a parse tree produced by the <c>MulDiv</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitMulDiv(Dangl.Calculator.CalculatorParser.MulDivContext)">
+            <summary>
+            Exit a parse tree produced by the <c>MulDiv</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterArcsin(Dangl.Calculator.CalculatorParser.ArcsinContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Arcsin</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitArcsin(Dangl.Calculator.CalculatorParser.ArcsinContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Arcsin</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterUnaryPlus(Dangl.Calculator.CalculatorParser.UnaryPlusContext)">
+            <summary>
+            Enter a parse tree produced by the <c>UnaryPlus</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitUnaryPlus(Dangl.Calculator.CalculatorParser.UnaryPlusContext)">
+            <summary>
+            Exit a parse tree produced by the <c>UnaryPlus</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterArccot(Dangl.Calculator.CalculatorParser.ArccotContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Arccot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitArccot(Dangl.Calculator.CalculatorParser.ArccotContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Arccot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterArccos(Dangl.Calculator.CalculatorParser.ArccosContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Arccos</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitArccos(Dangl.Calculator.CalculatorParser.ArccosContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Arccos</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterEuler(Dangl.Calculator.CalculatorParser.EulerContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Euler</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitEuler(Dangl.Calculator.CalculatorParser.EulerContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Euler</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterArctan(Dangl.Calculator.CalculatorParser.ArctanContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Arctan</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitArctan(Dangl.Calculator.CalculatorParser.ArctanContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Arctan</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterParenthesis(Dangl.Calculator.CalculatorParser.ParenthesisContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Parenthesis</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitParenthesis(Dangl.Calculator.CalculatorParser.ParenthesisContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Parenthesis</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterAbs(Dangl.Calculator.CalculatorParser.AbsContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Abs</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitAbs(Dangl.Calculator.CalculatorParser.AbsContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Abs</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterNumber(Dangl.Calculator.CalculatorParser.NumberContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Number</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitNumber(Dangl.Calculator.CalculatorParser.NumberContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Number</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterSubstitution(Dangl.Calculator.CalculatorParser.SubstitutionContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Substitution</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitSubstitution(Dangl.Calculator.CalculatorParser.SubstitutionContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Substitution</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterSinh(Dangl.Calculator.CalculatorParser.SinhContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Sinh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitSinh(Dangl.Calculator.CalculatorParser.SinhContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Sinh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterRound(Dangl.Calculator.CalculatorParser.RoundContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Round</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitRound(Dangl.Calculator.CalculatorParser.RoundContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Round</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterTrunc(Dangl.Calculator.CalculatorParser.TruncContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Trunc</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitTrunc(Dangl.Calculator.CalculatorParser.TruncContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Trunc</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterPi(Dangl.Calculator.CalculatorParser.PiContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Pi</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitPi(Dangl.Calculator.CalculatorParser.PiContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Pi</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterTanh(Dangl.Calculator.CalculatorParser.TanhContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Tanh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitTanh(Dangl.Calculator.CalculatorParser.TanhContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Tanh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterFloor(Dangl.Calculator.CalculatorParser.FloorContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Floor</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitFloor(Dangl.Calculator.CalculatorParser.FloorContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Floor</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterLn(Dangl.Calculator.CalculatorParser.LnContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Ln</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitLn(Dangl.Calculator.CalculatorParser.LnContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Ln</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterMod(Dangl.Calculator.CalculatorParser.ModContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Mod</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitMod(Dangl.Calculator.CalculatorParser.ModContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Mod</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterLog(Dangl.Calculator.CalculatorParser.LogContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Log</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitLog(Dangl.Calculator.CalculatorParser.LogContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Log</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterAddSub(Dangl.Calculator.CalculatorParser.AddSubContext)">
+            <summary>
+            Enter a parse tree produced by the <c>AddSub</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitAddSub(Dangl.Calculator.CalculatorParser.AddSubContext)">
+            <summary>
+            Exit a parse tree produced by the <c>AddSub</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterCos(Dangl.Calculator.CalculatorParser.CosContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Cos</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitCos(Dangl.Calculator.CalculatorParser.CosContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Cos</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterDeg(Dangl.Calculator.CalculatorParser.DegContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Deg</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitDeg(Dangl.Calculator.CalculatorParser.DegContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Deg</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterSqrt(Dangl.Calculator.CalculatorParser.SqrtContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Sqrt</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitSqrt(Dangl.Calculator.CalculatorParser.SqrtContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Sqrt</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterCot(Dangl.Calculator.CalculatorParser.CotContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Cot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitCot(Dangl.Calculator.CalculatorParser.CotContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Cot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterWhole(Dangl.Calculator.CalculatorParser.WholeContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Whole</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitWhole(Dangl.Calculator.CalculatorParser.WholeContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Whole</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterUnary(Dangl.Calculator.CalculatorParser.UnaryContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Unary</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitUnary(Dangl.Calculator.CalculatorParser.UnaryContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Unary</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterRad(Dangl.Calculator.CalculatorParser.RadContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Rad</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitRad(Dangl.Calculator.CalculatorParser.RadContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Rad</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterMult(Dangl.Calculator.CalculatorParser.MultContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Mult</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitMult(Dangl.Calculator.CalculatorParser.MultContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Mult</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterSqr(Dangl.Calculator.CalculatorParser.SqrContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Sqr</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitSqr(Dangl.Calculator.CalculatorParser.SqrContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Sqr</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterSin(Dangl.Calculator.CalculatorParser.SinContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Sin</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitSin(Dangl.Calculator.CalculatorParser.SinContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Sin</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterEex(Dangl.Calculator.CalculatorParser.EexContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Eex</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitEex(Dangl.Calculator.CalculatorParser.EexContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Eex</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterPow(Dangl.Calculator.CalculatorParser.PowContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Pow</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitPow(Dangl.Calculator.CalculatorParser.PowContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Pow</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterCeil(Dangl.Calculator.CalculatorParser.CeilContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Ceil</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitCeil(Dangl.Calculator.CalculatorParser.CeilContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Ceil</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterExp(Dangl.Calculator.CalculatorParser.ExpContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Exp</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitExp(Dangl.Calculator.CalculatorParser.ExpContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Exp</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterRoundk(Dangl.Calculator.CalculatorParser.RoundkContext)">
+            <summary>
+            Enter a parse tree produced by the <c>Roundk</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitRoundk(Dangl.Calculator.CalculatorParser.RoundkContext)">
+            <summary>
+            Exit a parse tree produced by the <c>Roundk</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterCalculator(Dangl.Calculator.CalculatorParser.CalculatorContext)">
+            <summary>
+            Enter a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.calculator"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitCalculator(Dangl.Calculator.CalculatorParser.CalculatorContext)">
+            <summary>
+            Exit a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.calculator"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterExpression(Dangl.Calculator.CalculatorParser.ExpressionContext)">
+            <summary>
+            Enter a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitExpression(Dangl.Calculator.CalculatorParser.ExpressionContext)">
+            <summary>
+            Exit a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterTrailingComment(Dangl.Calculator.CalculatorParser.TrailingCommentContext)">
+            <summary>
+            Enter a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.trailingComment"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitTrailingComment(Dangl.Calculator.CalculatorParser.TrailingCommentContext)">
+            <summary>
+            Exit a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.trailingComment"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterCompileUnit(Dangl.Calculator.CalculatorParser.CompileUnitContext)">
+            <summary>
+            Enter a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.compileUnit"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitCompileUnit(Dangl.Calculator.CalculatorParser.CompileUnitContext)">
+            <summary>
+            Exit a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.compileUnit"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.EnterEveryRule(Antlr4.Runtime.ParserRuleContext)">
+            <inheritdoc/>
+            <remarks>The default implementation does nothing.</remarks>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.ExitEveryRule(Antlr4.Runtime.ParserRuleContext)">
+            <inheritdoc/>
+            <remarks>The default implementation does nothing.</remarks>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.VisitTerminal(Antlr4.Runtime.Tree.ITerminalNode)">
+            <inheritdoc/>
+            <remarks>The default implementation does nothing.</remarks>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseListener.VisitErrorNode(Antlr4.Runtime.Tree.IErrorNode)">
+            <inheritdoc/>
+            <remarks>The default implementation does nothing.</remarks>
+        </member>
+        <member name="T:Dangl.Calculator.ICalculatorVisitor`1">
+            <summary>
+            This interface defines a complete generic visitor for a parse tree produced
+            by <see cref="T:Dangl.Calculator.CalculatorParser"/>.
+            </summary>
+            <typeparam name="Result">The return type of the visit operation.</typeparam>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitTan(Dangl.Calculator.CalculatorParser.TanContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Tan</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitCosh(Dangl.Calculator.CalculatorParser.CoshContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Cosh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitSqRoot(Dangl.Calculator.CalculatorParser.SqRootContext)">
+            <summary>
+            Visit a parse tree produced by the <c>SqRoot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitNegExponent(Dangl.Calculator.CalculatorParser.NegExponentContext)">
+            <summary>
+            Visit a parse tree produced by the <c>NegExponent</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitExponent(Dangl.Calculator.CalculatorParser.ExponentContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Exponent</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitArctan2(Dangl.Calculator.CalculatorParser.Arctan2Context)">
+            <summary>
+            Visit a parse tree produced by the <c>Arctan2</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitMulDiv(Dangl.Calculator.CalculatorParser.MulDivContext)">
+            <summary>
+            Visit a parse tree produced by the <c>MulDiv</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitArcsin(Dangl.Calculator.CalculatorParser.ArcsinContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Arcsin</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitUnaryPlus(Dangl.Calculator.CalculatorParser.UnaryPlusContext)">
+            <summary>
+            Visit a parse tree produced by the <c>UnaryPlus</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitArccot(Dangl.Calculator.CalculatorParser.ArccotContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Arccot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitArccos(Dangl.Calculator.CalculatorParser.ArccosContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Arccos</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitEuler(Dangl.Calculator.CalculatorParser.EulerContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Euler</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitArctan(Dangl.Calculator.CalculatorParser.ArctanContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Arctan</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitParenthesis(Dangl.Calculator.CalculatorParser.ParenthesisContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Parenthesis</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitAbs(Dangl.Calculator.CalculatorParser.AbsContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Abs</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitNumber(Dangl.Calculator.CalculatorParser.NumberContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Number</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitSubstitution(Dangl.Calculator.CalculatorParser.SubstitutionContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Substitution</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitSinh(Dangl.Calculator.CalculatorParser.SinhContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Sinh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitRound(Dangl.Calculator.CalculatorParser.RoundContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Round</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitTrunc(Dangl.Calculator.CalculatorParser.TruncContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Trunc</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitPi(Dangl.Calculator.CalculatorParser.PiContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Pi</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitTanh(Dangl.Calculator.CalculatorParser.TanhContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Tanh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitFloor(Dangl.Calculator.CalculatorParser.FloorContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Floor</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitLn(Dangl.Calculator.CalculatorParser.LnContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Ln</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitMod(Dangl.Calculator.CalculatorParser.ModContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Mod</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitLog(Dangl.Calculator.CalculatorParser.LogContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Log</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitAddSub(Dangl.Calculator.CalculatorParser.AddSubContext)">
+            <summary>
+            Visit a parse tree produced by the <c>AddSub</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitCos(Dangl.Calculator.CalculatorParser.CosContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Cos</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitDeg(Dangl.Calculator.CalculatorParser.DegContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Deg</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitSqrt(Dangl.Calculator.CalculatorParser.SqrtContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Sqrt</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitCot(Dangl.Calculator.CalculatorParser.CotContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Cot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitWhole(Dangl.Calculator.CalculatorParser.WholeContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Whole</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitUnary(Dangl.Calculator.CalculatorParser.UnaryContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Unary</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitRad(Dangl.Calculator.CalculatorParser.RadContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Rad</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitMult(Dangl.Calculator.CalculatorParser.MultContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Mult</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitSqr(Dangl.Calculator.CalculatorParser.SqrContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Sqr</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitSin(Dangl.Calculator.CalculatorParser.SinContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Sin</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitEex(Dangl.Calculator.CalculatorParser.EexContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Eex</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitPow(Dangl.Calculator.CalculatorParser.PowContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Pow</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitCeil(Dangl.Calculator.CalculatorParser.CeilContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Ceil</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitExp(Dangl.Calculator.CalculatorParser.ExpContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Exp</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitRoundk(Dangl.Calculator.CalculatorParser.RoundkContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Roundk</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitCalculator(Dangl.Calculator.CalculatorParser.CalculatorContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.calculator"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitExpression(Dangl.Calculator.CalculatorParser.ExpressionContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitTrailingComment(Dangl.Calculator.CalculatorParser.TrailingCommentContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.trailingComment"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.ICalculatorVisitor`1.VisitCompileUnit(Dangl.Calculator.CalculatorParser.CompileUnitContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.compileUnit"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="T:Dangl.Calculator.CalculatorBaseVisitor`1">
+            <summary>
+            This class provides an empty implementation of <see cref="T:Dangl.Calculator.ICalculatorVisitor`1"/>,
+            which can be extended to create a visitor which only needs to handle a subset
+            of the available methods.
+            </summary>
+            <typeparam name="Result">The return type of the visit operation.</typeparam>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitTan(Dangl.Calculator.CalculatorParser.TanContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Tan</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitCosh(Dangl.Calculator.CalculatorParser.CoshContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Cosh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitSqRoot(Dangl.Calculator.CalculatorParser.SqRootContext)">
+            <summary>
+            Visit a parse tree produced by the <c>SqRoot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitNegExponent(Dangl.Calculator.CalculatorParser.NegExponentContext)">
+            <summary>
+            Visit a parse tree produced by the <c>NegExponent</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitExponent(Dangl.Calculator.CalculatorParser.ExponentContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Exponent</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitArctan2(Dangl.Calculator.CalculatorParser.Arctan2Context)">
+            <summary>
+            Visit a parse tree produced by the <c>Arctan2</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitMulDiv(Dangl.Calculator.CalculatorParser.MulDivContext)">
+            <summary>
+            Visit a parse tree produced by the <c>MulDiv</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitArcsin(Dangl.Calculator.CalculatorParser.ArcsinContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Arcsin</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitUnaryPlus(Dangl.Calculator.CalculatorParser.UnaryPlusContext)">
+            <summary>
+            Visit a parse tree produced by the <c>UnaryPlus</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitArccot(Dangl.Calculator.CalculatorParser.ArccotContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Arccot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitArccos(Dangl.Calculator.CalculatorParser.ArccosContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Arccos</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitEuler(Dangl.Calculator.CalculatorParser.EulerContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Euler</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitArctan(Dangl.Calculator.CalculatorParser.ArctanContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Arctan</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitParenthesis(Dangl.Calculator.CalculatorParser.ParenthesisContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Parenthesis</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitAbs(Dangl.Calculator.CalculatorParser.AbsContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Abs</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitNumber(Dangl.Calculator.CalculatorParser.NumberContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Number</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitSubstitution(Dangl.Calculator.CalculatorParser.SubstitutionContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Substitution</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitSinh(Dangl.Calculator.CalculatorParser.SinhContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Sinh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitRound(Dangl.Calculator.CalculatorParser.RoundContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Round</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitTrunc(Dangl.Calculator.CalculatorParser.TruncContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Trunc</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitPi(Dangl.Calculator.CalculatorParser.PiContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Pi</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitTanh(Dangl.Calculator.CalculatorParser.TanhContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Tanh</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitFloor(Dangl.Calculator.CalculatorParser.FloorContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Floor</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitLn(Dangl.Calculator.CalculatorParser.LnContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Ln</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitMod(Dangl.Calculator.CalculatorParser.ModContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Mod</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitLog(Dangl.Calculator.CalculatorParser.LogContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Log</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitAddSub(Dangl.Calculator.CalculatorParser.AddSubContext)">
+            <summary>
+            Visit a parse tree produced by the <c>AddSub</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitCos(Dangl.Calculator.CalculatorParser.CosContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Cos</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitDeg(Dangl.Calculator.CalculatorParser.DegContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Deg</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitSqrt(Dangl.Calculator.CalculatorParser.SqrtContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Sqrt</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitCot(Dangl.Calculator.CalculatorParser.CotContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Cot</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitWhole(Dangl.Calculator.CalculatorParser.WholeContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Whole</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitUnary(Dangl.Calculator.CalculatorParser.UnaryContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Unary</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitRad(Dangl.Calculator.CalculatorParser.RadContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Rad</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitMult(Dangl.Calculator.CalculatorParser.MultContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Mult</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitSqr(Dangl.Calculator.CalculatorParser.SqrContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Sqr</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitSin(Dangl.Calculator.CalculatorParser.SinContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Sin</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitEex(Dangl.Calculator.CalculatorParser.EexContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Eex</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitPow(Dangl.Calculator.CalculatorParser.PowContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Pow</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitCeil(Dangl.Calculator.CalculatorParser.CeilContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Ceil</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitExp(Dangl.Calculator.CalculatorParser.ExpContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Exp</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitRoundk(Dangl.Calculator.CalculatorParser.RoundkContext)">
+            <summary>
+            Visit a parse tree produced by the <c>Roundk</c>
+            labeled alternative in <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitCalculator(Dangl.Calculator.CalculatorParser.CalculatorContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.calculator"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitExpression(Dangl.Calculator.CalculatorParser.ExpressionContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitTrailingComment(Dangl.Calculator.CalculatorParser.TrailingCommentContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.trailingComment"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:Dangl.Calculator.CalculatorBaseVisitor`1.VisitCompileUnit(Dangl.Calculator.CalculatorParser.CompileUnitContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:Dangl.Calculator.CalculatorParser.compileUnit"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+    </members>
+</doc>
