@@ -2,7 +2,7 @@
 Imports System.Net
 Imports System.Threading
 Imports Newtonsoft.Json
-Imports Dangl.Calculator
+Imports Dangl.Calculator 'This is deprecated no need but I'll still leave it in here.
 Imports KyoshinMonitorLib.Images
 Imports System.Text
 
