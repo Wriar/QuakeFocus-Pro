@@ -1,3 +1,5 @@
+# DO NOT COMMIT THIS BRANCH
+
 # 初期リリースの開発者の皆様へ - ATTENTION BETA TESTERS
 
 You should have received an email that contains a PDF file detailing the operation of this service. If you
