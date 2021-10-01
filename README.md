@@ -1,6 +1,6 @@
 
 
-### [VIEW ADVANCED SETUP GUIDE HERE! アドバンスド・セットアップ・ガイドはこちらです。](https://quakefocusdev.gitbook.io/quakefocus-pro/)
+### [VIEW ADVANCED SETUP GUIDE HERE! アドバンスド・セットアップ・ガイドはこちらです。](https://quakefocus-development.gitbook.io/quakefocus-pro/)
 
 
 # QuakeFocus-Pro
