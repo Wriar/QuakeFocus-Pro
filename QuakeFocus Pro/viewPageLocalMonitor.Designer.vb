@@ -42,14 +42,14 @@ Partial Class viewPageLocalMonitor
         '
         'Label1
         '
-        Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Gen Shin Gothic Normal", 13.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(241, 13)
+        Me.Label1.Location = New System.Drawing.Point(181, 13)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(160, 34)
+        Me.Label1.Size = New System.Drawing.Size(220, 34)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Tokyo, Japan"
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'ColorBar1
         '

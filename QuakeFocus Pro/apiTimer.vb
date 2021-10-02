@@ -615,7 +615,7 @@ Public Class apiTimer
         End Try
 
         'Test
-        MsgBox(hsEpicenterLocator.getPWTravelTime(10.0) & vbCrLf & hsEpicenterLocator.getSWTravelTime(10.0))
+        '     MsgBox(hsEpicenterLocator.getPWTravelTime(10.0) & vbCrLf & hsEpicenterLocator.getSWTravelTime(10.0))
 
 
         '   niedPointImporter.Start()

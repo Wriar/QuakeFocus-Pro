@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="prefixLang" Type="System.String" Scope="User">
-      <Value Profile="(Default)">en</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="pastEventID" Type="System.String" Scope="User">
       <Value Profile="(Default)">unknown</Value>

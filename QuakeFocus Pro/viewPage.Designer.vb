@@ -402,7 +402,7 @@ Partial Class viewPage
         Me.Controls.Add(Me.FlowLayoutPanel1)
         Me.Name = "viewPage"
         Me.Padding = New System.Windows.Forms.Padding(15)
-        Me.Text = "QuakeFocus Pro"
+        Me.Text = "QuakeFocus Pro || INDEV BETA-BETA V1"
         Me.FlowLayoutPanel1.ResumeLayout(False)
         Me.topDocker.ResumeLayout(False)
         Me.mapDocker.ResumeLayout(False)

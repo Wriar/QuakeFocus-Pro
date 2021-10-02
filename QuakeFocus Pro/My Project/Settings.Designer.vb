@@ -56,7 +56,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("en")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
         Public Property prefixLang() As String
             Get
                 Return CType(Me("prefixLang"),String)

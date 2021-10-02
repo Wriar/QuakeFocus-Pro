@@ -20,27 +20,51 @@ Public Class viewPage
         If My.Settings.prefixLang = "" Then
             'Prompt User
 
-            Dim promptDialog As New TaskDialog
-            promptDialog.Caption = "言語 / Language"
-            promptDialog.InstructionText = "言語設定 / Set Language"
-            promptDialog.FooterText = "これらの設定は、「設定」ページでいつでも変更することができます。
-These settings may be changed at any time in the ""settings"" window."
-            Dim cmd_setEN As TaskDialogCommandLink = New TaskDialogCommandLink("buttonEnglish", "English / 英語")
-            Dim cmd_setJP As TaskDialogCommandLink = New TaskDialogCommandLink("buttonJapanese", "Japanese / 日本語")
-            promptDialog.Icon = TaskDialogStandardIcon.Information
+            ' Dim promptDialog As New TaskDialog
+            '   promptDialog.Caption = "言語 / Language"
+            '  promptDialog.InstructionText = "言語設定 / Set Language"
+            '   promptDialog.FooterText = "これらの設定は、「設定」ページでいつでも変更することができます。
+            ' These settings may be changed at any time in the ""settings"" window."
+            '  Dim cmd_setEN As TaskDialogCommandLink = New TaskDialogCommandLink("buttonEnglish", "English / 英語")
+            '  Dim cmd_setJP As TaskDialogCommandLink = New TaskDialogCommandLink("buttonJapanese", "Japanese / 日本語")
+            '  promptDialog.Icon = TaskDialogStandardIcon.Information
 
-            promptDialog.Controls.Add(cmd_setEN)
-            promptDialog.Controls.Add(cmd_setJP)
-            promptDialog.Show()
+            '  promptDialog.Controls.Add(cmd_setEN)
+            '  promptDialog.Controls.Add(cmd_setJP)
+            '    Dim tskRes As Integer = promptDialog.Show()
 
-            '   AddHandler cmd_setEN.Click, AddressOf enButton_click
-            ' AddHandler cmd_setJP.Click, AddressOf jpButton_click
+            '  MsgBox(tskRes)
+            '
+
+            Dim customMsgbox = New updateAvailable("アプリケーションの言語を日本語にする場合は、「はい」を選択します。
+アプリケーションの言語を英語にするには、「no」を選択します。
+To set the default application language to Japanese, click YES. 
+To set the default application language to English, click NO.")
+            If customMsgbox.ShowDialog() = DialogResult.Yes Then
+                ' do something
+                My.Settings.prefixLang = "jp"
+                My.Settings.soundLang = "jp"
+
+                MessageBox.Show("アプリケーションの言語が日本語に設定されています。BETA版でこの言語をリセットするには、このリリースを再ダウンロードする必要があります。
+The application language has been set to Japanese, to change the language, please rebuid or redownload this beta version.", "インフォメーション", MessageBoxButtons.OK, MessageBoxIcon.Asterisk)
+
+                'TEMP SET OTHER elEMEnts, FUTURE METHOD WILL BE IMPLEMENTED LATER
+
+                FlowNoAlertPane1.Label1.Text = "現在、警告は出ていません。"
+                ViewPageLocalMonitor1.Label1.Text = "東京、日本"
+            Else
+                ' do nothing (its DialogResult.no)
+                My.Settings.prefixLang = "en"
+                My.Settings.soundLang = "en"
+                MessageBox.Show("The application language has been set to ENGLISH. To change the language, please rebuild or redownload this beta version.
+アプリケーションの言語がENGLISHに設定されています。言語を変更するには、このベータ版を再構築または再ダウンロードしてください。", "INFORMATION", MessageBoxButtons.OK, MessageBoxIcon.Asterisk)
+            End If
         End If
 
 
 
 #End Region
-        loadShapeFile()
+            loadShapeFile()
         ConstructSVG()
         apiTimer.xmlFetchTimer.Start()
         apiTimer.pushJson.Start()
@@ -64,6 +88,8 @@ These settings may be changed at any time in the ""settings"" window."
 
         '  MsgBox("")
     End Sub
+
+
 
     Private Sub outputMapView_Click(sender As Object, e As EventArgs)
 
@@ -195,7 +221,8 @@ These settings may be changed at any time in the ""settings"" window."
     Private Sub loadShapeFile()
         If shapeFileAdded = False Then
             Dim colors As Dictionary(Of String, Color) = New Dictionary(Of String, Color)()
-            SfMap1.AddShapeFile("C:\Users\natha\Documents\exam\PopDensity\Pop_density.shp", "ShapeFile", "")
+            Dim shapeFilePath As String = Application.StartupPath & "\assets\gisdata\Pop_density.shp"
+            SfMap1.AddShapeFile(shapeFilePath, "ShapeFile", "")
             SfMap1(0).RenderSettings.FillColor = Color.FromArgb(42, 44, 47)
             SfMap1(0).RenderSettings.LineDashStyle = Drawing2D.DashStyle.Solid
             SfMap1(0).RenderSettings.MaxZoomLevel = 10000000
@@ -231,28 +258,34 @@ These settings may be changed at any time in the ""settings"" window."
 
             If SfMap1.ZoomLevel > 3000 Then
                 'Draw Region Name
-                Dim areaName As String = str.Item6
+                Dim areaName As String
+                If My.Settings.prefixLang = "jp" Then
+                    areaName = str.Item1
+                Else
+                    areaName = str.Item6
+                End If
+
                 Dim textFont As New Font("Arial", 10)
-                Dim drawBrush As New SolidBrush(Color.White)
+                    Dim drawBrush As New SolidBrush(Color.White)
 
-                Dim drawAreaX As Integer = pt.X + 10
-                Dim drawAreaY As Integer = pt.Y - 5
+                    Dim drawAreaX As Integer = pt.X + 10
+                    Dim drawAreaY As Integer = pt.Y - 5
 
-                e.Graphics.DrawString(areaName, textFont, drawBrush, drawAreaX, drawAreaY)
+                    e.Graphics.DrawString(areaName, textFont, drawBrush, drawAreaX, drawAreaY)
 
-                'Draw INT Level
+                    'Draw INT Level
 
-                Dim intLevel As String = Truncate(realtimeInterpolated, 5)
-                Dim textFont2 As New Font("Segoe UI Semibold", 8)
-                Dim drawBrush2 As New SolidBrush(Color.White)
+                    Dim intLevel As String = Truncate(realtimeInterpolated, 5)
+                    Dim textFont2 As New Font("Segoe UI Semibold", 8)
+                    Dim drawBrush2 As New SolidBrush(Color.White)
 
-                Dim drawAreaX2 As Integer = pt.X + 10
-                Dim drawAreaY2 As Integer = pt.Y + 13
+                    Dim drawAreaX2 As Integer = pt.X + 10
+                    Dim drawAreaY2 As Integer = pt.Y + 13
 
-                e.Graphics.DrawString("INT: " & intLevel, textFont2, drawBrush2, drawAreaX2, drawAreaY2)
+                    e.Graphics.DrawString("INT: " & intLevel, textFont2, drawBrush2, drawAreaX2, drawAreaY2)
 
 
-            End If
+                End If
 
         Next
     End Function
