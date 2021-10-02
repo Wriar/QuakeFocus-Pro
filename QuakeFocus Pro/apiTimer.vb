@@ -1,4 +1,5 @@
-﻿Imports System.IO
+' MAIN PROCESSES OF APP CODE CONDENSED ON THIS PAGE
+Imports System.IO
 Imports System.Net
 Imports System.Threading
 Imports Newtonsoft.Json
