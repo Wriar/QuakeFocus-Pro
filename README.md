@@ -1,4 +1,5 @@
-
+# QuakeFocus Pro
+![App Demo](https://i.imgur.com/peKP8a7.png)
 
 ### [VIEW ADVANCED SETUP GUIDE HERE! アドバンスド・セットアップ・ガイドはこちらです。](https://quakefocus-development.gitbook.io/quakefocus-pro/)
 
