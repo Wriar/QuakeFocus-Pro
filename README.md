@@ -14,8 +14,19 @@ This application is written in a BASIC language so others can read and develop o
 
 User configuration files can be edited in a text editor or editing within the application setting pane itself. 
 
-
 ## Project Roadmap:
+
+Start Building -> 12/28/2019
+First Indev Release -> 10/2/2021 (Contains Map ONLY)
+Second Indev Release -> TBD -> Contains JSON Forecasting
+Third Indev Release -> TBD -> All Feature Implemented
+
+Beta Test Round 1 -> TBD 
+Beta Test Round 2 -> TBD
+
+Public Release 1 -> By 2022
+
+## Feature Roadmap:
 
 | Feature | Date Created | Date Completed |
 |---------|--------------|----------------|
