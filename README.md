@@ -1,7 +1,7 @@
 # QuakeFocus Pro
 ![App Demo](https://i.imgur.com/peKP8a7.png)
 
-### [VIEW ADVANCED SETUP GUIDE HERE! アドバンスド・セットアップ・ガイドはこちらです。](https://quakefocus-development.gitbook.io/quakefocus-pro/)
+### [VIEW ADVANCED SETUP GUIDE HERE! アドバンスド・セットアップ・ガイドはこちらです。](https://quakefocusdev.gitbook.io/)
 
 # NOTICE: INDEV VERSION BETA 0.0.0.1 WILL NOT HAVE A FALLBACK TIMESERVER SETTING. A CONSTANT INTERNET CONNECTION MUST BE MAINTAINED
 # QuakeFocus-Pro
