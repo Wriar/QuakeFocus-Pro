@@ -3,8 +3,28 @@
 
 ### [VIEW ADVANCED SETUP GUIDE HERE! アドバンスド・セットアップ・ガイドはこちらです。](https://quakefocusdev.gitbook.io/)
 
+# 注意：Indevバージョンのベータ版0.0.0.1には、フォールバックのタイムサーバー設定がありません。常にインターネットに接続されている必要があります。
 # NOTICE: INDEV VERSION BETA 0.0.0.1 WILL NOT HAVE A FALLBACK TIMESERVER SETTING. A CONSTANT INTERNET CONNECTION MUST BE MAINTAINED
 # QuakeFocus-Pro
+
+QuakeFocusの強震モニタリングアプリケーションと課題のトラッキング
+
+> このプロジェクトはまだ完成していませんので、完成品がアップロードされた時点でこの文章は削除されます。
+
+## About:
+このアプリケーションは、他の人がこのフレームワークを読んで開発できるように、BASIC言語で書かれています。``C#``プロジェクトに簡単に変換でき、Windows PC用の ``.NET`` 環境で開発されています。Webhookを送受信することができ、非常にカスタマイズ性に優れています。ただし、開発用の ``C#`` リポジトリがありますが、これはプライベートなものです。
+
+ユーザー設定ファイルは、テキストエディタで編集したり、アプリケーションの設定画面で編集することができます。
+
+## Project Roadmap:
+
+構築開始 -> 2019/12/28
+最初のIndevリリース -> 10/2/2021 (地図のみを含む)
+2回目のインデブのリリース -> TBD -> JSONフォーキャストを含む
+3回目のインデブリリース -> TBD -> すべての機能を実装
+
+ベータテストラウンド1 -> TBD 
+
 QuakeFocus strong-motion monitoring application and issue tracking
 
 > This project is not yet completed, this text will be removed once the finished product has been uploaded.
