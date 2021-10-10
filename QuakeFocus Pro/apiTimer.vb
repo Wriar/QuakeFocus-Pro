@@ -623,6 +623,7 @@ Public Class apiTimer
 
         '  prefAvg.Start()
         workingPrefAvg.Start()
+
         '  lightDetectDB.Add(Tuple.Create("test", "test", "test", "test", "test", "test", "light"))
     End Sub
     Dim localAverageRaw As String

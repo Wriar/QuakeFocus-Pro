@@ -41,14 +41,14 @@ Partial Class flowSmallEvent
         Me.lblMaxInt.Name = "lblMaxInt"
         Me.lblMaxInt.Size = New System.Drawing.Size(42, 47)
         Me.lblMaxInt.TabIndex = 3
-        Me.lblMaxInt.Text = "0"
+        Me.lblMaxInt.Text = "2"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("M+ 1p", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(63, 8)
+        Me.Label1.Location = New System.Drawing.Point(55, 5)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(253, 26)
         Me.Label1.TabIndex = 4
@@ -59,7 +59,7 @@ Partial Class flowSmallEvent
         Me.lblDateTime.AutoSize = True
         Me.lblDateTime.Font = New System.Drawing.Font("Consolas", 9.2!)
         Me.lblDateTime.ForeColor = System.Drawing.Color.White
-        Me.lblDateTime.Location = New System.Drawing.Point(65, 33)
+        Me.lblDateTime.Location = New System.Drawing.Point(56, 31)
         Me.lblDateTime.Name = "lblDateTime"
         Me.lblDateTime.Size = New System.Drawing.Size(180, 19)
         Me.lblDateTime.TabIndex = 5

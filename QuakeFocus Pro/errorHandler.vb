@@ -41,7 +41,7 @@
 
             objWriter.Close()
 
-            MessageBox.Show("A Fatal Error has occurred within QuakeFocus Pro. Please restart your application. If you continue yo see this Error, please create an issue on the project's GitHub and upload your logfile in logs\errors.log. " & vbCrLf & vbCrLf & "QuakeFocus Proで致命的なエラーが発生しました。アプリケーションを再起動してください。引き続きこのエラーが表示される場合は、このプロジェクトのGitHubに新しい問題を作成してください。ログファイルがGitHubの課題に添付されていることを確認してください (logs\error.log)" & vbCrLf & vbCrLf & "View ""logs\errors.log"" for more information." & vbCrLf & vbCrLf & "詳細は「logs\errors.log」をご覧ください。", "Critical Error / エラー @ " & "[" & dT & "] ", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("A Fatal Error has occurred within QuakeFocus Pro. Please restart your application. If you continue to see this Error, please create an issue on the project's GitHub and upload your logfile in logs\errors.log. " & vbCrLf & vbCrLf & "QuakeFocus Proで致命的なエラーが発生しました。アプリケーションを再起動してください。引き続きこのエラーが表示される場合は、このプロジェクトのGitHubに新しい問題を作成してください。ログファイルがGitHubの課題に添付されていることを確認してください (logs\error.log)" & vbCrLf & vbCrLf & "View ""logs\errors.log"" for more information." & vbCrLf & vbCrLf & "詳細は「logs\errors.log」をご覧ください。", "Critical Error / エラー @ " & "[" & dT & "] ", MessageBoxButtons.OK, MessageBoxIcon.Error)
             If e = True Then
                 Application.Exit()
             Else

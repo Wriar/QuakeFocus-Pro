@@ -337,9 +337,11 @@ Public Class XMLViewParse
         'Adjust Font Size
 
         If viewPage.FlowSmallEvent1.lblMaxInt.Text.Length > 1 Then
-            viewPage.FlowSmallEvent1.lblMaxInt.Font = New Font("Noto Sans JP", 20, FontStyle.Regular)
+            viewPage.FlowSmallEvent1.Label1.Location = New Point(77, viewPage.FlowSmallEvent1.Label1.Location.Y)
+            viewPage.FlowSmallEvent1.lblDateTime.Location = New Point(77, viewPage.FlowSmallEvent1.lblDateTime.Location.Y)
         Else
-            viewPage.FlowSmallEvent1.lblMaxInt.Font = New Font("Noto Sans JP", 24, FontStyle.Regular)
+            viewPage.FlowSmallEvent1.Label1.Location = New Point(55, viewPage.FlowSmallEvent1.Label1.Location.Y)
+            viewPage.FlowSmallEvent1.lblDateTime.Location = New Point(55, viewPage.FlowSmallEvent1.lblDateTime.Location.Y)
         End If
 
         If viewPage.FlowSmallEvent2.lblMaxInt.Text.Length > 1 Then
