@@ -1,7 +1,7 @@
 # QuakeFocus Pro
 ![App Demo](https://i.imgur.com/QxoFlYA.png)
 
-### [VIEW ADVANCED SETUP GUIDE HERE! アドバンスド・セットアップ・ガイドはこちらです。](https://quakefocusdev.gitbook.io/)
+### [VIEW ADVANCED SETUP GUIDE HERE! アドバンスド・セットアップ・ガイドはこちらです。](https://wriar.gitbook.io/)
 
 # 注意：Indevバージョンのベータ版0.0.0.1には、フォールバックのタイムサーバー設定がありません。常にインターネットに接続されている必要があります。
 # NOTICE: INDEV VERSION BETA 0.0.0.1 WILL NOT HAVE A FALLBACK TIMESERVER SETTING. A CONSTANT INTERNET CONNECTION MUST BE MAINTAINED
