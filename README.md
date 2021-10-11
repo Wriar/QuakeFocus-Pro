@@ -3,6 +3,12 @@
 
 ### [VIEW ADVANCED SETUP GUIDE HERE! アドバンスド・セットアップ・ガイドはこちらです。](https://wriar.gitbook.io/)
 
+➡️ GET STARTED: Clone the repository
+➡️ START EDITING: Edit in your local desktop environemnt
+➡️ CONTRIBUTE: Create a pull request and propose changes. Check out ``contributing.md``.
+⚠️ FIND A BUG: Create a issue in the Issues Tab!
+
+
 # 注意：Indevバージョンのベータ版0.0.0.1には、フォールバックのタイムサーバー設定がありません。常にインターネットに接続されている必要があります。
 # NOTICE: INDEV VERSION BETA 0.0.0.1 WILL NOT HAVE A FALLBACK TIMESERVER SETTING. A CONSTANT INTERNET CONNECTION MUST BE MAINTAINED
 # QuakeFocus-Pro
