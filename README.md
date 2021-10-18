@@ -36,10 +36,14 @@ QuakeFocus strong-motion monitoring application and issue tracking
 
 > This project is not yet completed, this text will be removed once the finished product has been uploaded.
 
-## About:
-This application is written in a BASIC language so others can read and develop off this framework. It is easily converted to ``C#`` projects and is developed under the ``.NET`` environment for Windows PCs. It can send and receive webhooks and is very customizable. There is a development ``C#`` repository, however, that is private. 
+## About
 
-User configuration files can be edited in a text editor or editing within the application setting pane itself. 
+QuakeFocus Profesional is an open-source earthquake data processing and monitoring service with a professional and integratable UI. Originally developed in C#, the project has been converted to basic to allow other users to understand the principals of forecasting and signal processing & to improve the readability of the software for first-time users.
+
+Open source projects provide high-transparency without the need of a code signing certificate.
+
+
+User configuration files can be edited in a text editor or editing within the application setting pane itself in Visual Studio.
 
 ## Project Roadmap:
 
