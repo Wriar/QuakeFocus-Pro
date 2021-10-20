@@ -180,7 +180,6 @@ Public Class lightDetect
                     'Simplify the Collection
 
 
-
                 Next
 
 
