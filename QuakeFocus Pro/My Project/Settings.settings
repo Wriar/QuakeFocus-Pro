@@ -3,13 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="prefixLang" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">jp</Value>
     </Setting>
     <Setting Name="pastEventID" Type="System.String" Scope="User">
       <Value Profile="(Default)">unknown</Value>
     </Setting>
     <Setting Name="soundLang" Type="System.String" Scope="User">
-      <Value Profile="(Default)">en</Value>
+      <Value Profile="(Default)">jp</Value>
     </Setting>
     <Setting Name="soundSpeaker" Type="System.String" Scope="User">
       <Value Profile="(Default)">male</Value>

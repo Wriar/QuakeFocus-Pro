@@ -86,6 +86,13 @@ QuakeFocus Pro
  </summary>
  
 </member>
+<member name="M:QuakeFocus_Pro.flowNoAlertPane.flowNoAlertPane_Load(System.Object,System.EventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
 <member name="M:QuakeFocus_Pro.lightDetect.lightDetect_Load(System.Object,System.EventArgs)">
  <summary>
  1. IMPORT TABLE INTO THE DATAGRID (IMPORT TABLE)

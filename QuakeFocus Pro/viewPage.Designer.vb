@@ -54,6 +54,7 @@ Partial Class viewPage
         Me.FlowSmallEvent7 = New QuakeFocus_Pro.flowSmallEvent()
         Me.FlowSmallEvent9 = New QuakeFocus_Pro.flowSmallEvent()
         Me.ViewPageLocalMonitor1 = New QuakeFocus_Pro.viewPageLocalMonitor()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.FlowLayoutPanel1.SuspendLayout()
         Me.topDocker.SuspendLayout()
         Me.mapDocker.SuspendLayout()
@@ -151,6 +152,7 @@ Partial Class viewPage
         '
         'mapDocker
         '
+        Me.mapDocker.Controls.Add(Me.Label2)
         Me.mapDocker.Controls.Add(Me.mapZoomLevel)
         Me.mapDocker.Controls.Add(Me.Label1)
         Me.mapDocker.Controls.Add(Me.Button1)
@@ -183,7 +185,7 @@ Partial Class viewPage
         'localPga
         '
         Me.localPga.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(47, Byte), Integer))
-        Me.localPga.Location = New System.Drawing.Point(1181, 738)
+        Me.localPga.Location = New System.Drawing.Point(1182, 738)
         Me.localPga.Name = "localPga"
         Me.localPga.Size = New System.Drawing.Size(335, 80)
         Me.localPga.TabIndex = 16
@@ -389,6 +391,18 @@ Partial Class viewPage
         Me.ViewPageLocalMonitor1.Size = New System.Drawing.Size(418, 150)
         Me.ViewPageLocalMonitor1.TabIndex = 10
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.BackColor = System.Drawing.Color.Maroon
+        Me.Label2.Font = New System.Drawing.Font("Segoe UI Semibold", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.White
+        Me.Label2.Location = New System.Drawing.Point(15, 48)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(323, 38)
+        Me.Label2.TabIndex = 22
+        Me.Label2.Text = "WARNING: THIS IS AN EARLY RELEASE BUILD." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "閲覧注意です。これは初期リリースのビルドバージョンです。"
+        '
         'viewPage
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -402,7 +416,7 @@ Partial Class viewPage
         Me.Controls.Add(Me.FlowLayoutPanel1)
         Me.Name = "viewPage"
         Me.Padding = New System.Windows.Forms.Padding(15)
-        Me.Text = "QuakeFocus Pro || INDEV BETA-BETA V1"
+        Me.Text = "QuakeFocus Pro || INDEV BETA-BETA V1.5"
         Me.FlowLayoutPanel1.ResumeLayout(False)
         Me.topDocker.ResumeLayout(False)
         Me.mapDocker.ResumeLayout(False)
@@ -442,4 +456,5 @@ Partial Class viewPage
     Friend WithEvents mapZoomLevel As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents ViewPageLocalMonitor1 As viewPageLocalMonitor
+    Friend WithEvents Label2 As Label
 End Class

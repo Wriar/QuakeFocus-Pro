@@ -1,5 +1,6 @@
 ﻿
 Imports System.Drawing.Imaging
+Imports System.Drawing.Text
 Imports System.Runtime.InteropServices
 Imports Microsoft.WindowsAPICodePack.Dialogs
 Imports Svg
@@ -13,58 +14,83 @@ Public Class viewPage
         Return i1
     End Function
 
-
+    Private pfc As PrivateFontCollection
 
     Private Sub viewPage_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+#Region "Font Localization"
+        'Apply FontFix
+
+        ' Dim pfc As New PrivateFontCollection()
+        pfc = New PrivateFontCollection()
+
+        Dim fontCollectionBaseDIR As String = Application.StartupPath & "\assets\fonts\"
+        Console.WriteLine(fontCollectionBaseDIR & "mplus-1p-regular.ttf")
+
+        pfc.AddFontFile(fontCollectionBaseDIR & "mplus-1p-bold.ttf")
+        FlowNoAlertPane1.Label1.Font = New Font(pfc.Families(0), 10.8, FontStyle.Bold)
+
+        '   topEvent.lblEpicenter.Font = New Font(pfc.Families(0), 12, FontStyle.Bold)
+        FlowSmallEvent1.Label1.Font = New Font(pfc.Families(0), 10.8, FontStyle.Regular)
+        FlowSmallEvent2.Label1.Font = New Font(pfc.Families(0), 10.8, FontStyle.Regular)
+        FlowSmallEvent3.Label1.Font = New Font(pfc.Families(0), 10.8, FontStyle.Regular)
+        FlowSmallEvent4.Label1.Font = New Font(pfc.Families(0), 10.8, FontStyle.Regular)
+        FlowSmallEvent5.Label1.Font = New Font(pfc.Families(0), 10.8, FontStyle.Regular)
+        FlowSmallEvent6.Label1.Font = New Font(pfc.Families(0), 10.8, FontStyle.Regular)
+        FlowSmallEvent7.Label1.Font = New Font(pfc.Families(0), 10.8, FontStyle.Regular)
+        FlowSmallEvent9.Label1.Font = New Font(pfc.Families(0), 10.8, FontStyle.Regular)
+#End Region
+
 #Region "First Run"
-        If My.Settings.prefixLang = "" Then
-            'Prompt User
+        '   If My.Settings.prefixLang = "nothing" Then
+        'Prompt User
 
-            ' Dim promptDialog As New TaskDialog
-            '   promptDialog.Caption = "言語 / Language"
-            '  promptDialog.InstructionText = "言語設定 / Set Language"
-            '   promptDialog.FooterText = "これらの設定は、「設定」ページでいつでも変更することができます。
-            ' These settings may be changed at any time in the ""settings"" window."
-            '  Dim cmd_setEN As TaskDialogCommandLink = New TaskDialogCommandLink("buttonEnglish", "English / 英語")
-            '  Dim cmd_setJP As TaskDialogCommandLink = New TaskDialogCommandLink("buttonJapanese", "Japanese / 日本語")
-            '  promptDialog.Icon = TaskDialogStandardIcon.Information
+        ' Dim promptDialog As New TaskDialog
+        '   promptDialog.Caption = "言語 / Language"
+        '  promptDialog.InstructionText = "言語設定 / Set Language"
+        '   promptDialog.FooterText = "これらの設定は、「設定」ページでいつでも変更することができます。
+        ' These settings may be changed at any time in the ""settings"" window."
+        '  Dim cmd_setEN As TaskDialogCommandLink = New TaskDialogCommandLink("buttonEnglish", "English / 英語")
+        '  Dim cmd_setJP As TaskDialogCommandLink = New TaskDialogCommandLink("buttonJapanese", "Japanese / 日本語")
+        '  promptDialog.Icon = TaskDialogStandardIcon.Information
 
-            '  promptDialog.Controls.Add(cmd_setEN)
-            '  promptDialog.Controls.Add(cmd_setJP)
-            '    Dim tskRes As Integer = promptDialog.Show()
+        '  promptDialog.Controls.Add(cmd_setEN)
+        '  promptDialog.Controls.Add(cmd_setJP)
+        '    Dim tskRes As Integer = promptDialog.Show()
 
-            '  MsgBox(tskRes)
-            '
+        '  MsgBox(tskRes)
+        '
 
-            Dim customMsgbox = New updateAvailable("アプリケーションの言語を日本語にする場合は、「はい」を選択します。
+        Dim customMsgbox = New updateAvailable("アプリケーションの言語を日本語にする場合は、「はい」を選択します。
 アプリケーションの言語を英語にするには、「no」を選択します。
 To set the default application language to Japanese, click YES. 
 To set the default application language to English, click NO.")
-            If customMsgbox.ShowDialog() = DialogResult.Yes Then
-                ' do something
-                My.Settings.prefixLang = "jp"
-                My.Settings.soundLang = "jp"
+        If customMsgbox.ShowDialog() = DialogResult.Yes Then
+            ' do something
+            My.Settings.prefixLang = "jp"
+            My.Settings.soundLang = "jp"
 
-                MessageBox.Show("アプリケーションの言語が日本語に設定されています。BETA版でこの言語をリセットするには、このリリースを再ダウンロードする必要があります。
-The application language has been set to Japanese, to change the language, please rebuid or redownload this beta version.", "インフォメーション", MessageBoxButtons.OK, MessageBoxIcon.Asterisk)
+            MessageBox.Show("Indev V0.15ビルドをご利用いただきありがとうございます。アプリケーションを開いた後、毎回、言語設定のプロンプトが表示されます。
+Thank you for using the Japan Translation of Indev V0.15. You can reset the language by restarting the application", "インフォメーション", MessageBoxButtons.OK, MessageBoxIcon.Asterisk)
 
-                'TEMP SET OTHER elEMEnts, FUTURE METHOD WILL BE IMPLEMENTED LATER
+            'TEMP SET OTHER elEMEnts, FUTURE METHOD WILL BE IMPLEMENTED LATER
 
-                FlowNoAlertPane1.Label1.Text = "現在、警告は出ていません。"
-                ViewPageLocalMonitor1.Label1.Text = "東京、日本"
-            Else
-                ' do nothing (its DialogResult.no)
-                My.Settings.prefixLang = "en"
-                My.Settings.soundLang = "en"
-                MessageBox.Show("The application language has been set to ENGLISH. To change the language, please rebuild or redownload this beta version.
-アプリケーションの言語がENGLISHに設定されています。言語を変更するには、このベータ版を再構築または再ダウンロードしてください。", "INFORMATION", MessageBoxButtons.OK, MessageBoxIcon.Asterisk)
-            End If
+            FlowNoAlertPane1.Label1.Text = "緊急地震速報は発表されていません。"
+            ViewPageLocalMonitor1.Label1.Text = "東京、日本"
+        Else
+            ' do nothing (its DialogResult.no)
+            My.Settings.prefixLang = "en"
+            My.Settings.soundLang = "en"
+            MessageBox.Show("The application language has been set to ENGLISH. To change the language, restart the application (does not have to be redownloaded)
+Indev V0.2ビルドをご利用いただきありがとうございます。アプリケーションを開いた後、毎回、言語設定のプロンプトが表示されます。", "INFORMATION", MessageBoxButtons.OK, MessageBoxIcon.Asterisk)
         End If
+        '  Else
+        '  MsgBox("SET TO: " & My.Settings.prefixLang)
+        ' End If
 
 
 
 #End Region
-            loadShapeFile()
+        loadShapeFile()
         ConstructSVG()
         apiTimer.xmlFetchTimer.Start()
         apiTimer.pushJson.Start()
@@ -266,28 +292,31 @@ The application language has been set to Japanese, to change the language, pleas
                 End If
 
                 Dim textFont As New Font("Arial", 10)
-                    Dim drawBrush As New SolidBrush(Color.White)
+                Dim drawBrush As New SolidBrush(Color.White)
 
-                    Dim drawAreaX As Integer = pt.X + 10
-                    Dim drawAreaY As Integer = pt.Y - 5
+                Dim drawAreaX As Integer = pt.X + 10
+                Dim drawAreaY As Integer = pt.Y - 5
 
-                    e.Graphics.DrawString(areaName, textFont, drawBrush, drawAreaX, drawAreaY)
+                e.Graphics.DrawString(areaName, textFont, drawBrush, drawAreaX, drawAreaY)
 
-                    'Draw INT Level
+                'Draw INT Level
 
-                    Dim intLevel As String = Truncate(realtimeInterpolated, 5)
-                    Dim textFont2 As New Font("Segoe UI Semibold", 8)
-                    Dim drawBrush2 As New SolidBrush(Color.White)
+                Dim intLevel As String = Truncate(realtimeInterpolated, 5)
+                Dim textFont2 As New Font("Segoe UI Semibold", 8)
+                Dim drawBrush2 As New SolidBrush(Color.White)
 
-                    Dim drawAreaX2 As Integer = pt.X + 10
-                    Dim drawAreaY2 As Integer = pt.Y + 13
+                Dim drawAreaX2 As Integer = pt.X + 10
+                Dim drawAreaY2 As Integer = pt.Y + 13
 
-                    e.Graphics.DrawString("INT: " & intLevel, textFont2, drawBrush2, drawAreaX2, drawAreaY2)
+                e.Graphics.DrawString("INT: " & intLevel, textFont2, drawBrush2, drawAreaX2, drawAreaY2)
 
 
-                End If
+            End If
 
         Next
+
+
+
     End Function
 
     Public Shared Function Truncate(ByVal value As String, ByVal maxLength As Integer) As String
@@ -317,9 +346,19 @@ The application language has been set to Japanese, to change the language, pleas
 
         'Fix Zooming Max: 860,000 Min: 1
 
+        'FIX Zoom Issue L322-B-301
+
+        If SfMap1.ZoomLevel < 1 Then 'Reported that map can be zoomed out into infinity
+            SfMap1.ZoomLevel = 1
+        End If
+        If SfMap1.ZoomLevel > 200000 Then 'Reported that map can be zoomed into infinity
+            SfMap1.ZoomLevel = 190000
+        End If
+
+        'Demo Demo P/S Circle
 
 
-        'Demo Draw Points
+
     End Sub
 
     Dim rectH As Integer = 3
@@ -411,5 +450,13 @@ The application language has been set to Japanese, to change the language, pleas
         '   g.FillRectangle(blueBrush, rect)
 
         'g.FillEllipse(blueBrush, myRectangle)
+    End Sub
+
+    Private Sub viewPage_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
+
+    End Sub
+
+    Private Sub FlowNoAlertPane1_Load(sender As Object, e As EventArgs) Handles FlowNoAlertPane1.Load
+
     End Sub
 End Class

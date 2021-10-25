@@ -105,11 +105,7 @@ C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFoc
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Threading.Tasks.Extensions.dll
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.ValueTuple.dll
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\Antlr4.Runtime.xml
-C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\ColorBar.xml
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\Dangl.Calculator.xml
-C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\EGIS.Controls.xml
-C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\EGIS.Projections.xml
-C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\EGIS.ShapeFileLib.xml
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\KyoshinMonitorLib.xml
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\KyoshinMonitorLib.Images.xml
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\MessagePack.xml
@@ -127,7 +123,6 @@ C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFoc
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Text.Json.xml
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.ValueTuple.xml
-C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.vbproj.AssemblyReference.cache
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\Interop.SHDocVw.dll
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.vbproj.ResolveComReference.cache
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.apiTimer.resources
@@ -156,3 +151,4 @@ C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFoc
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.exe
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.xml
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.pdb
+C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.vbproj.AssemblyReference.cache

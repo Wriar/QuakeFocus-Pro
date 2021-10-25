@@ -334,8 +334,9 @@ Public Class XMLViewParse
         viewPage.FlowSmallEvent7.Label1.Text = areaList.Item(7)
         viewPage.FlowSmallEvent9.Label1.Text = areaList.Item(8)
 
-        'Adjust Font Size
+        'Adjust Font Size - Old Fix
 
+        'Fix Bug of 5 and over intensity icons not displaying correctly (10/22/2021)
         If viewPage.FlowSmallEvent1.lblMaxInt.Text.Length > 1 Then
             viewPage.FlowSmallEvent1.Label1.Location = New Point(77, viewPage.FlowSmallEvent1.Label1.Location.Y)
             viewPage.FlowSmallEvent1.lblDateTime.Location = New Point(77, viewPage.FlowSmallEvent1.lblDateTime.Location.Y)
@@ -345,47 +346,61 @@ Public Class XMLViewParse
         End If
 
         If viewPage.FlowSmallEvent2.lblMaxInt.Text.Length > 1 Then
-            viewPage.FlowSmallEvent2.lblMaxInt.Font = New Font("Noto Sans JP", 20, FontStyle.Regular)
+            viewPage.FlowSmallEvent2.Label1.Location = New Point(77, viewPage.FlowSmallEvent2.Label1.Location.Y)
+            viewPage.FlowSmallEvent2.lblDateTime.Location = New Point(77, viewPage.FlowSmallEvent2.lblDateTime.Location.Y)
         Else
-            viewPage.FlowSmallEvent2.lblMaxInt.Font = New Font("Noto Sans JP", 24, FontStyle.Regular)
+            viewPage.FlowSmallEvent2.Label1.Location = New Point(55, viewPage.FlowSmallEvent2.Label1.Location.Y)
+            viewPage.FlowSmallEvent2.lblDateTime.Location = New Point(55, viewPage.FlowSmallEvent2.lblDateTime.Location.Y)
         End If
 
         If viewPage.FlowSmallEvent3.lblMaxInt.Text.Length > 1 Then
-            viewPage.FlowSmallEvent3.lblMaxInt.Font = New Font("Noto Sans JP", 20, FontStyle.Regular)
+            viewPage.FlowSmallEvent3.Label1.Location = New Point(77, viewPage.FlowSmallEvent3.Label1.Location.Y)
+            viewPage.FlowSmallEvent3.lblDateTime.Location = New Point(77, viewPage.FlowSmallEvent3.lblDateTime.Location.Y)
         Else
-            viewPage.FlowSmallEvent3.lblMaxInt.Font = New Font("Noto Sans JP", 24, FontStyle.Regular)
+            viewPage.FlowSmallEvent3.Label1.Location = New Point(55, viewPage.FlowSmallEvent3.Label1.Location.Y)
+            viewPage.FlowSmallEvent3.lblDateTime.Location = New Point(55, viewPage.FlowSmallEvent3.lblDateTime.Location.Y)
         End If
 
         If viewPage.FlowSmallEvent4.lblMaxInt.Text.Length > 1 Then
-            viewPage.FlowSmallEvent4.lblMaxInt.Font = New Font("Noto Sans JP", 20, FontStyle.Regular)
+            viewPage.FlowSmallEvent4.Label1.Location = New Point(77, viewPage.FlowSmallEvent4.Label1.Location.Y)
+            viewPage.FlowSmallEvent4.lblDateTime.Location = New Point(77, viewPage.FlowSmallEvent4.lblDateTime.Location.Y)
         Else
-            viewPage.FlowSmallEvent4.lblMaxInt.Font = New Font("Noto Sans JP", 24, FontStyle.Regular)
+            viewPage.FlowSmallEvent4.Label1.Location = New Point(55, viewPage.FlowSmallEvent4.Label1.Location.Y)
+            viewPage.FlowSmallEvent4.lblDateTime.Location = New Point(55, viewPage.FlowSmallEvent4.lblDateTime.Location.Y)
         End If
 
         If viewPage.FlowSmallEvent5.lblMaxInt.Text.Length > 1 Then
-            viewPage.FlowSmallEvent5.lblMaxInt.Font = New Font("Noto Sans JP", 20, FontStyle.Regular)
+            viewPage.FlowSmallEvent5.Label1.Location = New Point(77, viewPage.FlowSmallEvent5.Label1.Location.Y)
+            viewPage.FlowSmallEvent5.lblDateTime.Location = New Point(77, viewPage.FlowSmallEvent5.lblDateTime.Location.Y)
         Else
-            viewPage.FlowSmallEvent5.lblMaxInt.Font = New Font("Noto Sans JP", 24, FontStyle.Regular)
+            viewPage.FlowSmallEvent5.Label1.Location = New Point(55, viewPage.FlowSmallEvent5.Label1.Location.Y)
+            viewPage.FlowSmallEvent5.lblDateTime.Location = New Point(55, viewPage.FlowSmallEvent5.lblDateTime.Location.Y)
         End If
 
         If viewPage.FlowSmallEvent6.lblMaxInt.Text.Length > 1 Then
-            viewPage.FlowSmallEvent6.lblMaxInt.Font = New Font("Noto Sans JP", 20, FontStyle.Regular)
+            viewPage.FlowSmallEvent6.Label1.Location = New Point(77, viewPage.FlowSmallEvent6.Label1.Location.Y)
+            viewPage.FlowSmallEvent6.lblDateTime.Location = New Point(77, viewPage.FlowSmallEvent6.lblDateTime.Location.Y)
         Else
-            viewPage.FlowSmallEvent6.lblMaxInt.Font = New Font("Noto Sans JP", 24, FontStyle.Regular)
+            viewPage.FlowSmallEvent6.Label1.Location = New Point(55, viewPage.FlowSmallEvent6.Label1.Location.Y)
+            viewPage.FlowSmallEvent6.lblDateTime.Location = New Point(55, viewPage.FlowSmallEvent6.lblDateTime.Location.Y)
         End If
 
         If viewPage.FlowSmallEvent7.lblMaxInt.Text.Length > 1 Then
-            viewPage.FlowSmallEvent7.lblMaxInt.Font = New Font("Noto Sans JP", 20, FontStyle.Regular)
+            viewPage.FlowSmallEvent7.Label1.Location = New Point(77, viewPage.FlowSmallEvent7.Label1.Location.Y)
+            viewPage.FlowSmallEvent7.lblDateTime.Location = New Point(77, viewPage.FlowSmallEvent7.lblDateTime.Location.Y)
         Else
-            viewPage.FlowSmallEvent7.lblMaxInt.Font = New Font("Noto Sans JP", 24, FontStyle.Regular)
+            viewPage.FlowSmallEvent7.Label1.Location = New Point(55, viewPage.FlowSmallEvent7.Label1.Location.Y)
+            viewPage.FlowSmallEvent7.lblDateTime.Location = New Point(55, viewPage.FlowSmallEvent7.lblDateTime.Location.Y)
         End If
 
 
 
         If viewPage.FlowSmallEvent9.lblMaxInt.Text.Length > 1 Then
-            viewPage.FlowSmallEvent9.lblMaxInt.Font = New Font("Noto Sans JP", 20, FontStyle.Regular)
+            viewPage.FlowSmallEvent9.Label1.Location = New Point(77, viewPage.FlowSmallEvent9.Label1.Location.Y)
+            viewPage.FlowSmallEvent9.lblDateTime.Location = New Point(77, viewPage.FlowSmallEvent9.lblDateTime.Location.Y)
         Else
-            viewPage.FlowSmallEvent9.lblMaxInt.Font = New Font("Noto Sans JP", 24, FontStyle.Regular)
+            viewPage.FlowSmallEvent9.Label1.Location = New Point(55, viewPage.FlowSmallEvent9.Label1.Location.Y)
+            viewPage.FlowSmallEvent9.lblDateTime.Location = New Point(55, viewPage.FlowSmallEvent9.lblDateTime.Location.Y)
         End If
 
     End Sub

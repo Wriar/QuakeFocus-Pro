@@ -352,31 +352,7 @@ Public Class apiTimer
 
 
 
-    'Private Data Required for JSON implementation
-    Private jsonPartURL As String
-    Private jsonResult As String
-    Public jsonStatus As Boolean 'Displays if JSON is successful.
 
-    'Public Variables for Using API
-
-    Public reportTime As String
-    Public requestTime As String
-    Public regionNameJP As String
-    Public longitude As String
-    Public latitude As String
-    Public isCancel As String
-    Public depthOrigin As String
-    Public calcIntensity As String
-    Public isFinal As String
-    Public isTraining As String
-    Public originTime As String
-    Public magunitude As String
-    Public reportNumber As String
-    Public reportId As String
-    Public alertFlagOrigin As String
-
-    'Important
-    Public eewExists As Boolean
 
 
 
@@ -467,6 +443,32 @@ Public Class apiTimer
 
     End Sub
 
+    'Private Data Required for JSON implementation
+    Private jsonPartURL As String
+    Private jsonResult As String
+    Public jsonStatus As Boolean 'Displays if JSON is successful.
+
+    'Public Variables for Using API
+
+    Public reportTime As String
+    Public requestTime As String
+    Public regionNameJP As String
+    Public longitude As String
+    Public latitude As String
+    Public isCancel As String
+    Public depthOrigin As String
+    Public calcIntensity As String
+    Public isFinal As String
+    Public isTraining As String
+    Public originTime As String
+    Public magunitude As String
+    Public reportNumber As String
+    Public reportId As String
+    Public alertFlagOrigin As String
+
+    'Important
+    Public eewExists As Boolean
+
     Public Sub drawPSCircles()
 
     End Sub
@@ -487,6 +489,18 @@ Public Class apiTimer
             viewPage.FlowNoAlertPane1.Visible = False
             viewPage.FlowLightShaking1.Visible = False
             viewPage.EewBanner1.Visible = True
+
+
+            'Create a Calculation for Velocity (used to draw P-W)
+            Dim velocityPW As Double = hsEpicenterLocator.getPWTravelTime(depthOrigin.Replace("km", ""))
+            Dim velocitySW As Double = hsEpicenterLocator.getSWTravelTime(depthOrigin.Replace("km", ""))
+
+            'Create a Calculation for Time Travel Per Second
+
+
+
+
+
 
 
             'Get language to use

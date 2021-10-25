@@ -56,7 +56,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("jp")>  _
         Public Property prefixLang() As String
             Get
                 Return CType(Me("prefixLang"),String)
@@ -80,7 +80,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("en")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("jp")>  _
         Public Property soundLang() As String
             Get
                 Return CType(Me("soundLang"),String)
