@@ -1,4 +1,4 @@
-﻿
+﻿'ViewPage Settings
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Runtime.InteropServices
@@ -67,7 +67,7 @@ To set the default application language to English, click NO.")
         If customMsgbox.ShowDialog() = DialogResult.Yes Then
             ' do something
             My.Settings.prefixLang = "jp"
-            My.Settings.soundLang = "jp"
+            My.Settings.soundLang = "jp" 'Sound Language
 
             MessageBox.Show("Indev V0.15ビルドをご利用いただきありがとうございます。アプリケーションを開いた後、毎回、言語設定のプロンプトが表示されます。
 Thank you for using the Japan Translation of Indev V0.15. You can reset the language by restarting the application", "インフォメーション", MessageBoxButtons.OK, MessageBoxIcon.Asterisk)
