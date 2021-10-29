@@ -1,7 +1,7 @@
 <h1 align="center">
   <br>
-  <a href="https://i.imgur.com/QxoFlYA.png" alt="QuakeFocus Professional" width="200"></a>
+  <a href="https://wriar.github.io/resources/68747470733a2f2f692e696d6775722e636f6d2f51786f466c59412e706e67%20(1).png" alt="Image Did Not Load" width="200"></a>
   <br>
-  QuakeFocus Pro
+  QuakeFocus Professional
   <br>
 </h1>
