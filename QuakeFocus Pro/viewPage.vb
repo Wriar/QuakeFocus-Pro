@@ -110,8 +110,9 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
         'Fix Custom Colors on ColorBar
 
+        isdDialog.Show()
 
-
+        ' MsgBox(extrapolate(34.052235, -118.243683, 0, 100))
         '  MsgBox("")
     End Sub
 
@@ -280,6 +281,12 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             '  Console.WriteLine(pt)
             DrawMarker(e.Graphics, pt.X, pt.Y, "realtime", Color.FromArgb(255, 0, 0), Color.FromArgb(255, 0, 0), realtimeColor, realtimeInterpolated)
 
+
+            drawCircle(e.Graphics, SfMap1.GisPointToPixelCoord(139.839478, 35.652832).X, SfMap1.GisPointToPixelCoord(139.839478, 35.652832).Y, 1)
+
+
+
+
             'Draw Text @ zoom lvl 3000
 
             If SfMap1.ZoomLevel > 3000 Then
@@ -323,7 +330,8 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
         If String.IsNullOrEmpty(value) Then Return value
         Return If(value.Length <= maxLength, value, value.Substring(0, maxLength))
     End Function
-
+    Dim rectH As Integer = 3
+    Dim rectW As Integer = 3
     Private Sub SfMap1_Paint(sender As Object, e As PaintEventArgs) Handles SfMap1.Paint
 
 
@@ -361,8 +369,75 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
     End Sub
 
-    Dim rectH As Integer = 3
-    Dim rectW As Integer = 3
+
+    Public Sub drawCircle(ByVal g As Graphics, ByVal locX As Double, ByVal locY As Double, ByVal cDistance As Double)
+        Dim rectH2 As Integer = 50
+        Dim rectW2 As Integer = 50
+
+        Dim blueBrush As New System.Drawing.SolidBrush(Color.FromArgb(255, 0, 0))
+        Dim myRectangle As New Rectangle
+        Dim rectHeightHalf As Integer = rectH2 / 2
+        Dim rectWidthHalf As Integer = rectW2 / 2
+        '    Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(locX, locY)
+        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias
+        myRectangle.X = locX - rectWidthHalf
+        myRectangle.Y = locY - rectHeightHalf
+        myRectangle.Width = rectW2
+        myRectangle.Height = rectH2
+
+        g.FillEllipse(blueBrush, myRectangle)
+    End Sub
+
+    Private Function DegreesToRadians(ByVal degrees As Double) As Double
+        Return degrees * Math.PI / 180
+    End Function
+
+    Private Function RadiansToDegrees(ByVal radians As Double) As Double
+        Return radians * 180 / Math.PI
+    End Function
+
+    Function extrapolate(ByVal startPointLat As Double, ByVal startPointLon As Double, ByVal course As Double, ByVal distance As Double) As Point
+
+        Dim DEGREE_DISTANCE_AT_EQUATOR As Integer = 111329
+        Dim EARTH_RADIUS As Double = 6378137
+        Dim MINUTES_TO_METERS As Double
+        Dim DEGREE_TO_MINUTES As Double
+        '
+        'lat =asin(sin(lat1)*cos(d)+cos(lat1)*sin(d)*cos(tc))
+        'dlon=atan2(sin(tc)*sin(d)*cos(lat1),cos(d)-sin(lat1)*sin(lat))
+        'lon=mod( lon1+dlon +pi,2*pi )-pi
+        '
+        ' where:
+        ' lat1,lon1  -start pointi n radians
+        ' d          - distance in radians Deg2Rad(nm/60)
+        ' tc         - course in radians
+        Dim crs As Double = DegreesToRadians(course)
+        Dim d12 As Double = DegreesToRadians((distance _
+                        / (MINUTES_TO_METERS / DEGREE_TO_MINUTES)))
+        Dim lat1 As Double = DegreesToRadians(startPointLat)
+        Dim lon1 As Double = DegreesToRadians(startPointLon)
+        Dim lat As Double = Math.Asin(((Math.Sin(lat1) * Math.Cos(d12)) _
+                        + (Math.Cos(lat1) _
+                        * (Math.Sin(d12) * Math.Cos(crs)))))
+        Dim dlon As Double = Math.Atan2((Math.Sin(crs) _
+                        * (Math.Sin(d12) * Math.Cos(lat1))), (Math.Cos(d12) _
+                        - (Math.Sin(lat1) * Math.Sin(lat))))
+        Dim lon As Double = (((lon1 _
+                    + (dlon + Math.PI)) Mod (2 * Math.PI)) _
+                    - Math.PI)
+        Return New Point(RadiansToDegrees(lat), RadiansToDegrees(lon))
+    End Function
+
+    Function longitudeDistanceAtLatitude2(ByVal latitude As Double) As Double
+        Dim DEGREE_DISTANCE_AT_EQUATOR As Integer = 111329
+        Dim EARTH_RADIUS As Double = 6378137
+        Dim MINUTES_TO_METERS As Double
+        Dim DEGREE_TO_MINUTES As Double
+
+        Dim longitudeDistanceScaleForCurrentLatitude As Double = Math.Cos(DegreesToRadians(latitude))
+        Return (DEGREE_DISTANCE_AT_EQUATOR * longitudeDistanceScaleForCurrentLatitude)
+    End Function
+
     ''' <summary>
     ''' Plot graphics object on map. Marker types are:
     ''' Normal/Not-Measured/ -> realtime

@@ -216,6 +216,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="hsEpicenterLocator.vb" />
+    <Compile Include="isd\isdDialog.Designer.vb">
+      <DependentUpon>isdDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="isd\isdDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="lightDetect.Designer.vb">
       <DependentUpon>lightDetect.vb</DependentUpon>
     </Compile>
@@ -248,6 +254,7 @@
       <DependentUpon>Application.myapp</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="My Project\DataStructureRaw.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -332,6 +339,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="globalSettings.resx">
       <DependentUpon>globalSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="isd\isdDialog.resx">
+      <DependentUpon>isdDialog.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="lightDetect.resx">
       <DependentUpon>lightDetect.vb</DependentUpon>

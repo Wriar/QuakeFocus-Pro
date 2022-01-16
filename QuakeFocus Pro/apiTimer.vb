@@ -363,16 +363,17 @@ Public Class apiTimer
 
             '============
             'For LIVE USE
-            Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/" & jsonPartURL & ".json"
+            ' Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/" & jsonPartURL & ".json"
 
             'FOR DEBUGGING TSTFLAG1
 
-            '  Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/20210320181258.json"
+            Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/20210320181258.json"
             '==============
 
             'Create Webclient for JSON Request
 
             Dim webClient As New WebClient
+            webClient.Encoding = UTF8Encoding.UTF8
             Dim result As String = webClient.DownloadString(constructedURL)
 
             '   MsgBox(result)
@@ -389,6 +390,7 @@ Public Class apiTimer
 
         Try
             Dim jsonResulttodict = JsonConvert.DeserializeObject(Of Dictionary(Of String, Object))(jsonResult)
+            '  MsgBox(jsonResult)
             Dim AlertStatus As String = jsonResulttodict.Item("security")("realm")
 
             If AlertStatus = "/kyoshin_monitor/static/jsondata/eew_est/" Then
@@ -409,6 +411,23 @@ Public Class apiTimer
                 reportNumber = jsonResulttodict.Item("report_num")
                 alertFlagOrigin = jsonResulttodict.Item("alertflg")
                 reportId = jsonResulttodict.Item("report_id")
+
+
+                DataStructureRaw.reportTime = jsonResulttodict.Item("report_time")
+                DataStructureRaw.requestTime = jsonResulttodict.Item("request_time")
+                DataStructureRaw.regionNameJP = jsonResulttodict.Item("region_name")
+                DataStructureRaw.longitude = jsonResulttodict.Item("longitude")
+                DataStructureRaw.isCancel = jsonResulttodict.Item("is_cancel")
+                DataStructureRaw.depthOrigin = jsonResulttodict.Item("depth")
+                DataStructureRaw.calcIntensity = jsonResulttodict.Item("calcintensity")
+                DataStructureRaw.isFinal = jsonResulttodict.Item("is_final")
+                DataStructureRaw.isTraining = jsonResulttodict.Item("is_training")
+                DataStructureRaw.latitude = jsonResulttodict.Item("latitude")
+                DataStructureRaw.originTime = jsonResulttodict.Item("origin_time")
+                DataStructureRaw.magunitude = jsonResulttodict.Item("magunitude")
+                DataStructureRaw.reportNumber = jsonResulttodict.Item("report_num")
+                DataStructureRaw.alertFlagOrigin = jsonResulttodict.Item("alertflg")
+                DataStructureRaw.reportId = jsonResulttodict.Item("report_id")
                 eewExists = True
 
                 'IF MULTITHREADING IS USED THIS WON'T WORK.
@@ -507,7 +526,8 @@ Public Class apiTimer
             Try
                 If My.Settings.prefixLang = "jp" Then
                     'Do not require translations
-                    viewPage.EewBanner1.locationLbl.Text = regionNameJP
+                    viewPage.EewBanner1.locationLbl.Text = DataStructureRaw.regionNameJP
+                    MsgBox(DataStructureRaw.regionNameJP)
                 Else
                     'Language is english; attempt translation
                     viewPage.EewBanner1.locationLbl.Text = translationSource.DecodeEpicenterToEnglish(regionNameJP)
