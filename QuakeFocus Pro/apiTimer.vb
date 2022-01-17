@@ -6,6 +6,7 @@ Imports Newtonsoft.Json
 Imports Dangl.Calculator 'This is deprecated no need but I'll still leave it in here.
 Imports KyoshinMonitorLib.Images
 Imports System.Text
+Imports System.IO.Compression
 
 Public Class apiTimer
 
@@ -289,13 +290,13 @@ Public Class apiTimer
         'Use Color Picker
         Dim imgToBitmap As Bitmap = pgaImg.Image
 
-            Dim localPGAColor = imgToBitmap.GetPixel(My.Settings.userLocalPointX, My.Settings.userLocalPointY)
+        Dim localPGAColor = imgToBitmap.GetPixel(My.Settings.userLocalPointX, My.Settings.userLocalPointY)
 
-            Dim pgaR As Integer = localPGAColor.R
-            Dim pgaG As Integer = localPGAColor.G
-            Dim pgaB As Integer = localPGAColor.B
+        Dim pgaR As Integer = localPGAColor.R
+        Dim pgaG As Integer = localPGAColor.G
+        Dim pgaB As Integer = localPGAColor.B
 
-            viewPage.localPga.pgaColorGradient.BackColor = Color.FromArgb(pgaR, pgaG, pgaB)
+        viewPage.localPga.pgaColorGradient.BackColor = Color.FromArgb(pgaR, pgaG, pgaB)
 
 
         Dim longstr As String = colorProcessing.ProcessColor(localPGAColor, "pga", False) & "00000"
@@ -311,8 +312,8 @@ Public Class apiTimer
 
         Else
 
-                viewPage.localPga.pgaLbl.Text = ">900"
-            End If
+            viewPage.localPga.pgaLbl.Text = ">900"
+        End If
 
 
 
@@ -344,8 +345,8 @@ Public Class apiTimer
 
         Else
 
-                viewPage.localPga.intLbl.Text = ">900"
-            End If
+            viewPage.localPga.intLbl.Text = ">900"
+        End If
 
 
     End Sub
@@ -386,78 +387,82 @@ Public Class apiTimer
         End Try
 
 
+
         'Begin to Process the JSON with Newtonsoft
+        If jsonStatus = True Then
+            Try
+                Dim jsonResulttodict = JsonConvert.DeserializeObject(Of Dictionary(Of String, Object))(jsonResult)
+                '  MsgBox(jsonResult)
+                Dim AlertStatus As String = jsonResulttodict.Item("security")("realm")
 
-        Try
-            Dim jsonResulttodict = JsonConvert.DeserializeObject(Of Dictionary(Of String, Object))(jsonResult)
-            '  MsgBox(jsonResult)
-            Dim AlertStatus As String = jsonResulttodict.Item("security")("realm")
+                If AlertStatus = "/kyoshin_monitor/static/jsondata/eew_est/" Then
+                    'If this exists, this means that an EEW exists
 
-            If AlertStatus = "/kyoshin_monitor/static/jsondata/eew_est/" Then
-                'If this exists, this means that an EEW exists
-
-                reportTime = jsonResulttodict.Item("report_time")
-                requestTime = jsonResulttodict.Item("request_time")
-                regionNameJP = jsonResulttodict.Item("region_name")
-                longitude = jsonResulttodict.Item("longitude")
-                isCancel = jsonResulttodict.Item("is_cancel")
-                depthOrigin = jsonResulttodict.Item("depth")
-                calcIntensity = jsonResulttodict.Item("calcintensity")
-                isFinal = jsonResulttodict.Item("is_final")
-                isTraining = jsonResulttodict.Item("is_training")
-                latitude = jsonResulttodict.Item("latitude")
-                originTime = jsonResulttodict.Item("origin_time")
-                magunitude = jsonResulttodict.Item("magunitude")
-                reportNumber = jsonResulttodict.Item("report_num")
-                alertFlagOrigin = jsonResulttodict.Item("alertflg")
-                reportId = jsonResulttodict.Item("report_id")
+                    reportTime = jsonResulttodict.Item("report_time")
+                    requestTime = jsonResulttodict.Item("request_time")
+                    regionNameJP = jsonResulttodict.Item("region_name")
+                    longitude = jsonResulttodict.Item("longitude")
+                    isCancel = jsonResulttodict.Item("is_cancel")
+                    depthOrigin = jsonResulttodict.Item("depth")
+                    calcIntensity = jsonResulttodict.Item("calcintensity")
+                    isFinal = jsonResulttodict.Item("is_final")
+                    isTraining = jsonResulttodict.Item("is_training")
+                    latitude = jsonResulttodict.Item("latitude")
+                    originTime = jsonResulttodict.Item("origin_time")
+                    magunitude = jsonResulttodict.Item("magunitude")
+                    reportNumber = jsonResulttodict.Item("report_num")
+                    alertFlagOrigin = jsonResulttodict.Item("alertflg")
+                    reportId = jsonResulttodict.Item("report_id")
 
 
-                DataStructureRaw.reportTime = jsonResulttodict.Item("report_time")
-                DataStructureRaw.requestTime = jsonResulttodict.Item("request_time")
-                DataStructureRaw.regionNameJP = jsonResulttodict.Item("region_name")
-                DataStructureRaw.longitude = jsonResulttodict.Item("longitude")
-                DataStructureRaw.isCancel = jsonResulttodict.Item("is_cancel")
-                DataStructureRaw.depthOrigin = jsonResulttodict.Item("depth")
-                DataStructureRaw.calcIntensity = jsonResulttodict.Item("calcintensity")
-                DataStructureRaw.isFinal = jsonResulttodict.Item("is_final")
-                DataStructureRaw.isTraining = jsonResulttodict.Item("is_training")
-                DataStructureRaw.latitude = jsonResulttodict.Item("latitude")
-                DataStructureRaw.originTime = jsonResulttodict.Item("origin_time")
-                DataStructureRaw.magunitude = jsonResulttodict.Item("magunitude")
-                DataStructureRaw.reportNumber = jsonResulttodict.Item("report_num")
-                DataStructureRaw.alertFlagOrigin = jsonResulttodict.Item("alertflg")
-                DataStructureRaw.reportId = jsonResulttodict.Item("report_id")
-                eewExists = True
+                    DataStructureRaw.reportTime = jsonResulttodict.Item("report_time")
+                    DataStructureRaw.requestTime = jsonResulttodict.Item("request_time")
+                    DataStructureRaw.regionNameJP = jsonResulttodict.Item("region_name")
+                    DataStructureRaw.longitude = jsonResulttodict.Item("longitude")
+                    DataStructureRaw.isCancel = jsonResulttodict.Item("is_cancel")
+                    DataStructureRaw.depthOrigin = jsonResulttodict.Item("depth")
+                    DataStructureRaw.calcIntensity = jsonResulttodict.Item("calcintensity")
+                    DataStructureRaw.isFinal = jsonResulttodict.Item("is_final")
+                    DataStructureRaw.isTraining = jsonResulttodict.Item("is_training")
+                    DataStructureRaw.latitude = jsonResulttodict.Item("latitude")
+                    DataStructureRaw.originTime = jsonResulttodict.Item("origin_time")
+                    DataStructureRaw.magunitude = jsonResulttodict.Item("magunitude")
+                    DataStructureRaw.reportNumber = jsonResulttodict.Item("report_num")
+                    DataStructureRaw.alertFlagOrigin = jsonResulttodict.Item("alertflg")
+                    DataStructureRaw.reportId = jsonResulttodict.Item("report_id")
+                    eewExists = True
 
-                'IF MULTITHREADING IS USED THIS WON'T WORK.
-                Label1.Text = reportTime
-                Label2.Text = requestTime
-                Label3.Text = regionNameJP
-                Label4.Text = longitude
-                Label5.Text = latitude
-                Label6.Text = isCancel
-                Label7.Text = depthOrigin
-                Label8.Text = calcIntensity
-                Label9.Text = isFinal
-                Label10.Text = isTraining
-                Label11.Text = originTime
-                Label12.Text = magunitude
-                Label13.Text = reportNumber
-                Label15.Text = alertFlagOrigin
-                Label14.Text = reportId
+                    'IF MULTITHREADING IS USED THIS WON'T WORK. (Which it does not).
+                    Label1.Text = reportTime
+                    Label2.Text = requestTime
+                    Label3.Text = regionNameJP
+                    Label4.Text = longitude
+                    Label5.Text = latitude
+                    Label6.Text = isCancel
+                    Label7.Text = depthOrigin
+                    Label8.Text = calcIntensity
+                    Label9.Text = isFinal
+                    Label10.Text = isTraining
+                    Label11.Text = originTime
+                    Label12.Text = magunitude
+                    Label13.Text = reportNumber
+                    Label15.Text = alertFlagOrigin
+                    Label14.Text = reportId
 
-                eewExists = True
+                    eewExists = True
 
-            Else
-                eewExists = False
+                Else
+                    eewExists = False
 
-            End If
+                End If
 
-        Catch ex As Exception
+            Catch ex As Exception
 
-        End Try
-
+            End Try
+        Else
+            errorHandler.HandleError("service", "Could Not Contact Japan Meteorological Agency (JSON SERVICE). This error is usually normal and can be due to network changes/loss of connection/maitnence. Please do not report this issue.", False)
+            Console.WriteLine("Could not Contact JMA JSON API.")
+        End If
 
 
     End Sub
@@ -488,6 +493,26 @@ Public Class apiTimer
     'Important
     Public eewExists As Boolean
 
+#Region "GZIP Compression"
+    Protected Function GzipGetWebRequest(myUrl As String)
+        Dim client = New WebClient()
+        client.Encoding = UTF8Encoding.UTF8
+        client.Headers(HttpRequestHeader.AcceptEncoding) = "gzip"
+        Dim responseStream = New GZipStream(client.OpenRead(myUrl), CompressionMode.Decompress)
+        Dim reader = New StreamReader(responseStream)
+        Dim textResponse = reader.ReadToEnd()
+        Return textResponse
+    End Function
+#End Region
+    Public Sub queryPlum()
+        Dim constructedURL As String = "https://svir.jp/eew/data.json"
+        '==============
+
+        'Create Webclient for JSON Request
+        Dim reqData As String = GzipGetWebRequest(constructedURL)
+        '   MsgBox(result)
+
+    End Sub
     Public Sub drawPSCircles()
 
     End Sub
@@ -500,52 +525,90 @@ Public Class apiTimer
     End Sub
 
     Private Sub pushJson_Tick(sender As Object, e As EventArgs) Handles pushJson.Tick
-        If eewExists = True Then
-            'Show the Banners
+        'This is deprecated.
+        If 1 = 2 Then
+            If eewExists = True Then
+                'Show the Banners
 
-            Console.WriteLine("EEW Exists")
+                Console.WriteLine("EEW Exists")
+                viewPage.FlowTsunami1.Visible = False
+                viewPage.FlowNoAlertPane1.Visible = False
+                viewPage.FlowLightShaking1.Visible = False
+                viewPage.EewBanner1.Visible = True
+
+
+                'Create a Calculation for Velocity (used to draw P-W)
+                Dim velocityPW As Double = hsEpicenterLocator.getPWTravelTime(depthOrigin.Replace("km", ""))
+                Dim velocitySW As Double = hsEpicenterLocator.getSWTravelTime(depthOrigin.Replace("km", ""))
+
+                'Create a Calculation for Time Travel Per Second
+
+
+
+
+
+
+
+                'Get language to use
+                Try
+                    If My.Settings.prefixLang = "jp" Then
+                        'Do not require translations
+                        viewPage.EewBanner1.locationLbl.Text = DataStructureRaw.regionNameJP
+                        MsgBox(DataStructureRaw.regionNameJP)
+                    Else
+                        'Language is english; attempt translation
+                        viewPage.EewBanner1.locationLbl.Text = translationSource.DecodeEpicenterToEnglish(regionNameJP)
+                    End If
+
+                Catch ex As Exception
+                    errorHandler.HandleError("service", "Could not translate EEW String", False)
+                End Try
+
+
+
+            Else
+                'There is no worry about EEW.
+                viewPage.EewBanner1.Visible = False
+                viewPage.FlowNoAlertPane1.Visible = True
+
+
+            End If
+        End If
+
+
+        If eewExists = True Then
+            'Multiple Events must be started here
+            Console.WriteLine("EEW Detected. ")
+
+            'Show or hide current elements
             viewPage.FlowTsunami1.Visible = False
             viewPage.FlowNoAlertPane1.Visible = False
             viewPage.FlowLightShaking1.Visible = False
             viewPage.EewBanner1.Visible = True
 
+            'Get the location data. This data can remain static
 
-            'Create a Calculation for Velocity (used to draw P-W)
-            Dim velocityPW As Double = hsEpicenterLocator.getPWTravelTime(depthOrigin.Replace("km", ""))
-            Dim velocitySW As Double = hsEpicenterLocator.getSWTravelTime(depthOrigin.Replace("km", ""))
-
-            'Create a Calculation for Time Travel Per Second
-
-
-
-
-
-
-
-            'Get language to use
             Try
-                If My.Settings.prefixLang = "jp" Then
+                If My.Settings.prefixLang = "en" Then
                     'Do not require translations
-                    viewPage.EewBanner1.locationLbl.Text = DataStructureRaw.regionNameJP
-                    MsgBox(DataStructureRaw.regionNameJP)
+                    viewPage.EewBanner1.locationLbl.Text = translationSource.DecodeEpicenterToEnglish(regionNameJP)
                 Else
                     'Language is english; attempt translation
-                    viewPage.EewBanner1.locationLbl.Text = translationSource.DecodeEpicenterToEnglish(regionNameJP)
+                    viewPage.EewBanner1.locationLbl.Text = DataStructureRaw.regionNameJP
                 End If
 
             Catch ex As Exception
-                errorHandler.HandleError("service", "Could not translate EEW String", False)
+                errorHandler.HandleError("service", "Could not translate EEW String.", False)
             End Try
 
 
-
         Else
-            'There is no worry about EEW.
-            viewPage.EewBanner1.Visible = False
-            viewPage.FlowNoAlertPane1.Visible = True
+            'Stop all current alerts.
+
 
 
         End If
+
     End Sub
 
     Private Sub viewPageFlowAdjust_Tick(sender As Object, e As EventArgs) Handles viewPageFlowAdjust.Tick
