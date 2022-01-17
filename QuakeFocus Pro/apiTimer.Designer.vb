@@ -58,6 +58,7 @@ Partial Class apiTimer
         Me.cxCounter = New System.Windows.Forms.Label()
         Me.workingPrefAvg = New System.Windows.Forms.Timer(Me.components)
         Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button3 = New System.Windows.Forms.Button()
         CType(Me.pgaImg, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pcImg, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -87,7 +88,7 @@ Partial Class apiTimer
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(27, 90)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(51, 17)
+        Me.Label1.Size = New System.Drawing.Size(48, 16)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Label1"
         '
@@ -96,7 +97,7 @@ Partial Class apiTimer
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(27, 144)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(51, 17)
+        Me.Label2.Size = New System.Drawing.Size(48, 16)
         Me.Label2.TabIndex = 3
         Me.Label2.Text = "Label2"
         '
@@ -105,7 +106,7 @@ Partial Class apiTimer
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(27, 115)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(51, 17)
+        Me.Label3.Size = New System.Drawing.Size(48, 16)
         Me.Label3.TabIndex = 4
         Me.Label3.Text = "Label3"
         '
@@ -114,7 +115,7 @@ Partial Class apiTimer
         Me.Label4.AutoSize = True
         Me.Label4.Location = New System.Drawing.Point(27, 176)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(51, 17)
+        Me.Label4.Size = New System.Drawing.Size(48, 16)
         Me.Label4.TabIndex = 4
         Me.Label4.Text = "Label3"
         '
@@ -123,7 +124,7 @@ Partial Class apiTimer
         Me.Label5.AutoSize = True
         Me.Label5.Location = New System.Drawing.Point(27, 207)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(51, 17)
+        Me.Label5.Size = New System.Drawing.Size(48, 16)
         Me.Label5.TabIndex = 5
         Me.Label5.Text = "Label5"
         '
@@ -132,7 +133,7 @@ Partial Class apiTimer
         Me.Label6.AutoSize = True
         Me.Label6.Location = New System.Drawing.Point(27, 240)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(51, 17)
+        Me.Label6.Size = New System.Drawing.Size(48, 16)
         Me.Label6.TabIndex = 6
         Me.Label6.Text = "Label6"
         '
@@ -141,7 +142,7 @@ Partial Class apiTimer
         Me.Label7.AutoSize = True
         Me.Label7.Location = New System.Drawing.Point(27, 272)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(51, 17)
+        Me.Label7.Size = New System.Drawing.Size(48, 16)
         Me.Label7.TabIndex = 7
         Me.Label7.Text = "Label7"
         '
@@ -150,7 +151,7 @@ Partial Class apiTimer
         Me.Label8.AutoSize = True
         Me.Label8.Location = New System.Drawing.Point(27, 303)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(51, 17)
+        Me.Label8.Size = New System.Drawing.Size(48, 16)
         Me.Label8.TabIndex = 8
         Me.Label8.Text = "Label8"
         '
@@ -159,7 +160,7 @@ Partial Class apiTimer
         Me.Label9.AutoSize = True
         Me.Label9.Location = New System.Drawing.Point(27, 340)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(51, 17)
+        Me.Label9.Size = New System.Drawing.Size(48, 16)
         Me.Label9.TabIndex = 9
         Me.Label9.Text = "Label9"
         '
@@ -168,7 +169,7 @@ Partial Class apiTimer
         Me.Label10.AutoSize = True
         Me.Label10.Location = New System.Drawing.Point(27, 375)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(59, 17)
+        Me.Label10.Size = New System.Drawing.Size(55, 16)
         Me.Label10.TabIndex = 10
         Me.Label10.Text = "Label10"
         '
@@ -177,7 +178,7 @@ Partial Class apiTimer
         Me.Label11.AutoSize = True
         Me.Label11.Location = New System.Drawing.Point(126, 90)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(59, 17)
+        Me.Label11.Size = New System.Drawing.Size(55, 16)
         Me.Label11.TabIndex = 11
         Me.Label11.Text = "Label11"
         '
@@ -186,7 +187,7 @@ Partial Class apiTimer
         Me.Label12.AutoSize = True
         Me.Label12.Location = New System.Drawing.Point(126, 115)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(59, 17)
+        Me.Label12.Size = New System.Drawing.Size(55, 16)
         Me.Label12.TabIndex = 12
         Me.Label12.Text = "Label12"
         '
@@ -195,7 +196,7 @@ Partial Class apiTimer
         Me.Label13.AutoSize = True
         Me.Label13.Location = New System.Drawing.Point(126, 144)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(59, 17)
+        Me.Label13.Size = New System.Drawing.Size(55, 16)
         Me.Label13.TabIndex = 13
         Me.Label13.Text = "Label13"
         '
@@ -204,7 +205,7 @@ Partial Class apiTimer
         Me.Label14.AutoSize = True
         Me.Label14.Location = New System.Drawing.Point(126, 176)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(59, 17)
+        Me.Label14.Size = New System.Drawing.Size(55, 16)
         Me.Label14.TabIndex = 14
         Me.Label14.Text = "Label14"
         '
@@ -213,7 +214,7 @@ Partial Class apiTimer
         Me.Label15.AutoSize = True
         Me.Label15.Location = New System.Drawing.Point(126, 207)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(59, 17)
+        Me.Label15.Size = New System.Drawing.Size(55, 16)
         Me.Label15.TabIndex = 15
         Me.Label15.Text = "Label15"
         '
@@ -273,7 +274,7 @@ Partial Class apiTimer
         Me.Label16.AutoSize = True
         Me.Label16.Location = New System.Drawing.Point(581, 115)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(16, 17)
+        Me.Label16.Size = New System.Drawing.Size(14, 16)
         Me.Label16.TabIndex = 17
         Me.Label16.Text = "1"
         '
@@ -282,7 +283,7 @@ Partial Class apiTimer
         Me.Label17.AutoSize = True
         Me.Label17.Location = New System.Drawing.Point(581, 144)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(16, 17)
+        Me.Label17.Size = New System.Drawing.Size(14, 16)
         Me.Label17.TabIndex = 18
         Me.Label17.Text = "1"
         '
@@ -291,7 +292,7 @@ Partial Class apiTimer
         Me.cxCounter.AutoSize = True
         Me.cxCounter.Location = New System.Drawing.Point(245, 90)
         Me.cxCounter.Name = "cxCounter"
-        Me.cxCounter.Size = New System.Drawing.Size(16, 17)
+        Me.cxCounter.Size = New System.Drawing.Size(14, 16)
         Me.cxCounter.TabIndex = 19
         Me.cxCounter.Text = "1"
         '
@@ -309,11 +310,21 @@ Partial Class apiTimer
         Me.Button2.Text = "Show Settings"
         Me.Button2.UseVisualStyleBackColor = True
         '
+        'Button3
+        '
+        Me.Button3.Location = New System.Drawing.Point(365, 326)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(75, 23)
+        Me.Button3.TabIndex = 21
+        Me.Button3.Text = "Button3"
+        Me.Button3.UseVisualStyleBackColor = True
+        '
         'apiTimer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(723, 431)
+        Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.cxCounter)
         Me.Controls.Add(Me.Label17)
@@ -337,7 +348,7 @@ Partial Class apiTimer
         Me.Controls.Add(Me.pgaImg)
         Me.Controls.Add(Me.pcImg)
         Me.Name = "apiTimer"
-        Me.Opacity = 0R
+        Me.Opacity = 0.8R
         Me.Text = "apiTimer"
         CType(Me.pgaImg, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pcImg, System.ComponentModel.ISupportInitialize).EndInit()
@@ -380,4 +391,5 @@ Partial Class apiTimer
     Friend WithEvents cxCounter As Label
     Friend WithEvents workingPrefAvg As Timer
     Friend WithEvents Button2 As Button
+    Friend WithEvents Button3 As Button
 End Class

@@ -7,6 +7,7 @@ Imports Dangl.Calculator 'This is deprecated no need but I'll still leave it in 
 Imports KyoshinMonitorLib.Images
 Imports System.Text
 Imports System.IO.Compression
+Imports System.Globalization
 
 Public Class apiTimer
 
@@ -32,7 +33,7 @@ Public Class apiTimer
 
     Private eewPresent As Boolean
 
-
+    Public onlineCurrentTime As DateTime
     Sub importImgTime()
         Dim TimeSync As String
         Dim rawJSON1 As String = ""
@@ -80,6 +81,8 @@ Public Class apiTimer
         Dim oDate As DateTime
         Try
             oDate = DateTime.ParseExact(TimeSync, "yyyy/MM/dd HH:mm:ss", Nothing)
+            onlineCurrentTime = oDate
+
         Catch ex As Exception
 
         End Try
@@ -171,6 +174,8 @@ Public Class apiTimer
 
         End Try
     End Sub
+
+
     Private tokyoTimer As System.Timers.Timer = Nothing
     Private tokyoClient As WebClient
     Private Sub methodDownloadNIED()
@@ -368,7 +373,8 @@ Public Class apiTimer
 
             'FOR DEBUGGING TSTFLAG1
 
-            Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/20210320181258.json"
+            ' Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/20210320181258.json"
+            Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/20210320180958.json"
             '==============
 
             'Create Webclient for JSON Request
@@ -602,6 +608,22 @@ Public Class apiTimer
             End Try
 
 
+            'Current timer is able to handle time calculations whilst tick rate = 1000.
+
+            'spdCalc requires the unparsed time
+            Dim provider As CultureInfo = CultureInfo.InvariantCulture
+            Dim parsedRequestTime As Date = DateTime.ParseExact(DataStructureRaw.requestTime, "yyyyMMddHHmmss", provider)
+            Dim parsedEventTime As Date = DateTime.ParseExact(DataStructureRaw.originTime, "yyyyMMddHHmmss", provider)
+
+            'Returns arrival times in form (<pwaveArrivalTimeInSeconds>,<swaveArrivalTimeInSeconds>) e.x (10,43)
+            Dim timeUnsplitResult As String = spdCalc.calculateArrivalTime(parsedEventTime, parsedRequestTime, DataStructureRaw.longitude, DataStructureRaw.latitude, My.Settings.usrLat, My.Settings.usrLong, DataStructureRaw.depthOrigin)
+
+            Dim tsplitResult = timeUnsplitResult.Split(",")
+
+            Dim PWaveArriveTimeLeft As Integer = tsplitResult(0)
+            Dim SWaveArriveTimeLeft As Integer = tsplitResult(1)
+
+            MessageBox.Show(PWaveArriveTimeLeft & vbCrLf & vbCrLf & SWaveArriveTimeLeft, "CALC COMPLETE")
         Else
             'Stop all current alerts.
 
@@ -1456,6 +1478,19 @@ Public Class apiTimer
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         globalSettings.Show()
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        'Dim unparsedEventTime As String = originTime
+        ' Parse Text to DateTime
+        Dim provider As CultureInfo = CultureInfo.InvariantCulture
+        Dim parsedRequestTime As Date = DateTime.ParseExact(DataStructureRaw.requestTime, "yyyyMMddHHmmss", provider)
+        Dim parsedEventTime As Date = DateTime.ParseExact(DataStructureRaw.originTime, "yyyyMMddHHmmss", provider)
+
+
+        MsgBox(spdCalc.calculateArrivalTime(parsedEventTime, parsedRequestTime, DataStructureRaw.longitude, DataStructureRaw.latitude, My.Settings.usrLat, My.Settings.usrLong, DataStructureRaw.depthOrigin))
+
+
     End Sub
 #End Region
 
