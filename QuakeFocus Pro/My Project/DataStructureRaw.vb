@@ -23,4 +23,17 @@
     Public Shared reportNumber As String
     Public Shared reportId As String
     Public Shared alertFlagOrigin As String
+
+    'Raw Production Timings
+    Public Shared sWaveRawArrivalTime As String
+    Public Shared pWaveRawArrivalTime As String
+
+    'P-Wave and S-Wave Velocities
+    Public Shared pWaveVelocity As Double
+    Public Shared sWaveVelocity As Double
+
+    'P-Wave and S-Wave Radius
+    Public Shared pWaveRadius As Double
+    Public Shared sWaveRadius As Double
+
 End Class

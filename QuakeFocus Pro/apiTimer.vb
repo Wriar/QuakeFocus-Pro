@@ -1,4 +1,4 @@
-' MAIN PROCESSES OF APP CODE CONDENSED ON THIS PAGE
+﻿' MAIN PROCESSES OF APP CODE CONDENSED ON THIS PAGE
 Imports System.IO
 Imports System.Net
 Imports System.Threading
@@ -10,6 +10,11 @@ Imports System.IO.Compression
 Imports System.Globalization
 
 Public Class apiTimer
+    'Use these; the ones in My.Settings can be corrupted
+
+    Public Shared rwTime As Integer
+    Public Shared serverDelay As Integer
+
 
     Dim realtimeNIED As PictureBox
 
@@ -91,7 +96,7 @@ Public Class apiTimer
 
         'Get Usable DateTime
 
-        Dim serverTimeDelaySeconds As Integer = My.Settings.serverDelay + My.Settings.rewindTime
+        Dim serverTimeDelaySeconds As Integer = My.Settings.serverDelay + rwTime
 
         '   Console.WriteLine("SD IS " & My.Settings.serverDelay)
         '   Console.WriteLine("RW IS " & My.Settings.rewindTime)
@@ -166,10 +171,15 @@ Public Class apiTimer
             'For JSON Functions
             jsonPartURLDate = DateTime.ParseExact(TimeSync, "yyyy/MM/dd HH:mm:ss", Nothing)
 
+            'For rewinding JSON Features
+            Dim totalDelay As Integer = (CInt(My.Settings.serverDelay) + CInt(rwTime)) * (-1)
 
-            Dim jsonFullTime As String = jsonPartURLDate.ToString("yyyyMMddHHmmss")
+            Dim rwDelay As DateTime = jsonPartURLDate.AddSeconds(totalDelay)
+
+            Dim jsonFullTime As String = rwDelay.ToString("yyyyMMddHHmmss")
             jsonPartURL = jsonFullTime
 
+            Console.WriteLine("URL Request Fragment:: " & jsonPartURL)
         Catch Ex As Exception
 
         End Try
@@ -369,12 +379,12 @@ Public Class apiTimer
 
             '============
             'For LIVE USE
-            ' Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/" & jsonPartURL & ".json"
+            Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/" & jsonPartURL & ".json"
 
             'FOR DEBUGGING TSTFLAG1
 
             ' Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/20210320181258.json"
-            Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/20210320180958.json"
+            '   Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/20210320180958.json"
             '==============
 
             'Create Webclient for JSON Request
@@ -382,6 +392,14 @@ Public Class apiTimer
             Dim webClient As New WebClient
             webClient.Encoding = UTF8Encoding.UTF8
             Dim result As String = webClient.DownloadString(constructedURL)
+
+            '  Dim client = New WebClient()
+            ' client.Encoding = UTF8Encoding.UTF8
+            'client.Headers(HttpRequestHeader.AcceptEncoding) = "gzip"
+            ' Dim responseStream = New GZipStream(client.OpenRead(constructedURL), CompressionMode.Decompress)
+            ' Dim reader = New StreamReader(responseStream)
+            ' Dim textResponse = reader.ReadToEnd()
+            ' Dim result As String = textResponse
 
             '   MsgBox(result)
             jsonResult = result 'Allow to be accessed via function.
@@ -530,8 +548,25 @@ Public Class apiTimer
         ' MsgBox(magunitude)
     End Sub
 
+    Function getMetersPerPixel()
+        Dim sfClientWidth As Integer = viewPage.SfMap1.Width / viewPage.SfMap1.VisibleExtent.Width
+        MsgBox(viewPage.SfMap1.VisibleExtent.Width)
+        Return sfClientWidth
+    End Function
+
+    Function eh()
+        ' Dim topLeft As String =
+        '  Dim bottomRight As String
+    End Function
+
+
+
+
+
     Private Sub pushJson_Tick(sender As Object, e As EventArgs) Handles pushJson.Tick
-        'This is deprecated.
+        viewPage.SfMap1.Invalidate()
+
+        'This method is deprecated.
         If 1 = 2 Then
             If eewExists = True Then
                 'Show the Banners
@@ -580,7 +615,7 @@ Public Class apiTimer
 
             End If
         End If
-
+        '  MsgBox(My.Settings.rewindTime)
 
         If eewExists = True Then
             'Multiple Events must be started here
@@ -597,10 +632,10 @@ Public Class apiTimer
             Try
                 If My.Settings.prefixLang = "en" Then
                     'Do not require translations
-                    viewPage.EewBanner1.locationLbl.Text = translationSource.DecodeEpicenterToEnglish(regionNameJP)
+                    viewPage.EewBanner1.locationLbl.Text = "Location: " & translationSource.DecodeEpicenterToEnglish(regionNameJP)
                 Else
                     'Language is english; attempt translation
-                    viewPage.EewBanner1.locationLbl.Text = DataStructureRaw.regionNameJP
+                    viewPage.EewBanner1.locationLbl.Text = "場所: " & DataStructureRaw.regionNameJP
                 End If
 
             Catch ex As Exception
@@ -608,31 +643,83 @@ Public Class apiTimer
             End Try
 
 
-            'Current timer is able to handle time calculations whilst tick rate = 1000.
+            'Start Time Calculations
+            PStimeCalculator.Start()
 
-            'spdCalc requires the unparsed time
-            Dim provider As CultureInfo = CultureInfo.InvariantCulture
-            Dim parsedRequestTime As Date = DateTime.ParseExact(DataStructureRaw.requestTime, "yyyyMMddHHmmss", provider)
-            Dim parsedEventTime As Date = DateTime.ParseExact(DataStructureRaw.originTime, "yyyyMMddHHmmss", provider)
+            'Start Drawing Utilities
+            eewGraphicDrawer.Start()
 
-            'Returns arrival times in form (<pwaveArrivalTimeInSeconds>,<swaveArrivalTimeInSeconds>) e.x (10,43)
-            Dim timeUnsplitResult As String = spdCalc.calculateArrivalTime(parsedEventTime, parsedRequestTime, DataStructureRaw.longitude, DataStructureRaw.latitude, My.Settings.usrLat, My.Settings.usrLong, DataStructureRaw.depthOrigin)
 
-            Dim tsplitResult = timeUnsplitResult.Split(",")
-
-            Dim PWaveArriveTimeLeft As Integer = tsplitResult(0)
-            Dim SWaveArriveTimeLeft As Integer = tsplitResult(1)
-
-            MessageBox.Show(PWaveArriveTimeLeft & vbCrLf & vbCrLf & SWaveArriveTimeLeft, "CALC COMPLETE")
         Else
             'Stop all current alerts.
+            PStimeCalculator.Stop()
+            eewGraphicDrawer.Stop()
 
+            viewPage.FlowTsunami1.Visible = False
+            viewPage.FlowNoAlertPane1.Visible = True
+            viewPage.FlowLightShaking1.Visible = False
+            viewPage.EewBanner1.Visible = False
 
 
         End If
 
     End Sub
+    Dim prevReportID As String
 
+    Private Sub PStimeCalculator_Tick(sender As Object, e As EventArgs) Handles PStimeCalculator.Tick
+        Dim currentReportNumber As String = DataStructureRaw.reportNumber
+
+        If prevReportID = "" Then
+            prevReportID = currentReportNumber
+
+        Else
+
+        End If
+
+        'spdCalc requires the unparsed time
+        Dim provider As CultureInfo = CultureInfo.InvariantCulture
+        Dim parsedRequestTime As Date = DateTime.ParseExact(DataStructureRaw.requestTime, "yyyyMMddHHmmss", provider)
+        Dim parsedEventTime As Date = DateTime.ParseExact(DataStructureRaw.originTime, "yyyyMMddHHmmss", provider)
+
+        'Returns arrival times in form (<pwaveArrivalTimeInSeconds>,<swaveArrivalTimeInSeconds>) e.x (10,43)
+        Dim timeUnsplitResult As String = spdCalc.calculateArrivalTime(currentReportNumber, parsedEventTime, parsedRequestTime, DataStructureRaw.longitude, DataStructureRaw.latitude, My.Settings.usrLat, My.Settings.usrLong, DataStructureRaw.depthOrigin)
+
+        Dim tsplitResult = timeUnsplitResult.Split(",")
+
+        Dim PWaveArriveTimeLeft As Integer = tsplitResult(0)
+        Dim SWaveArriveTimeLeft As Integer = tsplitResult(1)
+
+        DataStructureRaw.pWaveRawArrivalTime = PWaveArriveTimeLeft
+        DataStructureRaw.sWaveRawArrivalTime = SWaveArriveTimeLeft
+
+
+        'Set the current seconds
+        viewPage.EewBanner1.secondLbl.Text = secondConstructor(SWaveArriveTimeLeft)
+
+        'set eq mag in the EEWBANNER
+
+        viewPage.EewBanner1.lineMagLbl.Text = DataStructureRaw.magunitude
+        viewPage.EewBanner1.lineMagLbl.ForeColor = colorProcessing.ReturnTileColorJMAplusMinus(colorProcessing.ReturnPlusMinusJma(DataStructureRaw.magunitude))
+
+        'set report number
+        If My.Settings.prefixLang = "en" Then
+            viewPage.EewBanner1.reportNumLbl.Text = "Report Number: " & DataStructureRaw.reportNumber
+        Else
+            viewPage.EewBanner1.reportNumLbl.Text = "報告書番号: " & DataStructureRaw.reportNumber
+        End If
+
+
+
+
+    End Sub
+    Function secondConstructor(rawSec As Double)
+        Dim iSpan As TimeSpan = TimeSpan.FromSeconds(rawSec)
+        Dim hrs As String = iSpan.Hours.ToString.PadLeft(2, "0"c)
+        Dim mins As String = iSpan.Minutes.ToString.PadLeft(2, "0"c)
+        Dim secs As String = iSpan.Seconds.ToString.PadLeft(2, "0"c)
+
+        Return mins & ":" & secs
+    End Function
     Private Sub viewPageFlowAdjust_Tick(sender As Object, e As EventArgs) Handles viewPageFlowAdjust.Tick
         If viewPage.FlowTsunami1.Visible = True And viewPage.FlowNoAlertPane1.Visible = False And viewPage.EewBanner1.Visible = False And viewPage.FlowLightShaking1.Visible = False Then
             'one pane is visible. 
@@ -1488,10 +1575,12 @@ Public Class apiTimer
         Dim parsedEventTime As Date = DateTime.ParseExact(DataStructureRaw.originTime, "yyyyMMddHHmmss", provider)
 
 
-        MsgBox(spdCalc.calculateArrivalTime(parsedEventTime, parsedRequestTime, DataStructureRaw.longitude, DataStructureRaw.latitude, My.Settings.usrLat, My.Settings.usrLong, DataStructureRaw.depthOrigin))
+        '  MsgBox(spdCalc.calculateArrivalTime(parsedEventTime, parsedRequestTime, DataStructureRaw.longitude, DataStructureRaw.latitude, My.Settings.usrLat, My.Settings.usrLong, DataStructureRaw.depthOrigin))
 
 
     End Sub
+
+
 #End Region
 
 End Class

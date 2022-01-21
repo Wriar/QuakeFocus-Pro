@@ -49,8 +49,6 @@ Partial Class apiTimer
         Me.niedPointImporter = New System.Windows.Forms.Timer(Me.components)
         Me.Button1 = New System.Windows.Forms.Button()
         Me.localNIEDAvg = New System.Windows.Forms.Timer(Me.components)
-        Me.pgaImg = New System.Windows.Forms.PictureBox()
-        Me.pcImg = New System.Windows.Forms.PictureBox()
         Me.prefAvg = New System.Windows.Forms.Timer(Me.components)
         Me.alertTimeout = New System.Windows.Forms.Timer(Me.components)
         Me.Label16 = New System.Windows.Forms.Label()
@@ -59,6 +57,11 @@ Partial Class apiTimer
         Me.workingPrefAvg = New System.Windows.Forms.Timer(Me.components)
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
+        Me.pgaImg = New System.Windows.Forms.PictureBox()
+        Me.pcImg = New System.Windows.Forms.PictureBox()
+        Me.PStimeCalculator = New System.Windows.Forms.Timer(Me.components)
+        Me.ListBox1 = New System.Windows.Forms.ListBox()
+        Me.eewGraphicDrawer = New System.Windows.Forms.Timer(Me.components)
         CType(Me.pgaImg, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pcImg, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -243,24 +246,6 @@ Partial Class apiTimer
         '
         Me.localNIEDAvg.Interval = 1000
         '
-        'pgaImg
-        '
-        Me.pgaImg.Image = CType(resources.GetObject("pgaImg.Image"), System.Drawing.Image)
-        Me.pgaImg.Location = New System.Drawing.Point(129, 12)
-        Me.pgaImg.Name = "pgaImg"
-        Me.pgaImg.Size = New System.Drawing.Size(304, 40)
-        Me.pgaImg.TabIndex = 1
-        Me.pgaImg.TabStop = False
-        '
-        'pcImg
-        '
-        Me.pcImg.Image = Global.QuakeFocus_Pro.My.Resources.Resources.hi_demo
-        Me.pcImg.Location = New System.Drawing.Point(12, 12)
-        Me.pcImg.Name = "pcImg"
-        Me.pcImg.Size = New System.Drawing.Size(100, 50)
-        Me.pcImg.TabIndex = 0
-        Me.pcImg.TabStop = False
-        '
         'prefAvg
         '
         Me.prefAvg.Interval = 1000
@@ -319,11 +304,43 @@ Partial Class apiTimer
         Me.Button3.Text = "Button3"
         Me.Button3.UseVisualStyleBackColor = True
         '
+        'pgaImg
+        '
+        Me.pgaImg.Image = CType(resources.GetObject("pgaImg.Image"), System.Drawing.Image)
+        Me.pgaImg.Location = New System.Drawing.Point(129, 12)
+        Me.pgaImg.Name = "pgaImg"
+        Me.pgaImg.Size = New System.Drawing.Size(304, 40)
+        Me.pgaImg.TabIndex = 1
+        Me.pgaImg.TabStop = False
+        '
+        'pcImg
+        '
+        Me.pcImg.Image = Global.QuakeFocus_Pro.My.Resources.Resources.hi_demo
+        Me.pcImg.Location = New System.Drawing.Point(12, 12)
+        Me.pcImg.Name = "pcImg"
+        Me.pcImg.Size = New System.Drawing.Size(100, 50)
+        Me.pcImg.TabIndex = 0
+        Me.pcImg.TabStop = False
+        '
+        'PStimeCalculator
+        '
+        Me.PStimeCalculator.Interval = 1000
+        '
+        'ListBox1
+        '
+        Me.ListBox1.FormattingEnabled = True
+        Me.ListBox1.ItemHeight = 16
+        Me.ListBox1.Location = New System.Drawing.Point(313, 90)
+        Me.ListBox1.Name = "ListBox1"
+        Me.ListBox1.Size = New System.Drawing.Size(186, 84)
+        Me.ListBox1.TabIndex = 22
+        '
         'apiTimer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(723, 431)
+        Me.Controls.Add(Me.ListBox1)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.cxCounter)
@@ -392,4 +409,7 @@ Partial Class apiTimer
     Friend WithEvents workingPrefAvg As Timer
     Friend WithEvents Button2 As Button
     Friend WithEvents Button3 As Button
+    Friend WithEvents PStimeCalculator As Timer
+    Friend WithEvents ListBox1 As ListBox
+    Friend WithEvents eewGraphicDrawer As Timer
 End Class

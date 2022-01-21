@@ -151,6 +151,18 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Prompter\abtForm.Designer.vb">
+      <DependentUpon>abtForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Prompter\abtForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Prompter\frmReplay.Designer.vb">
+      <DependentUpon>frmReplay.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Prompter\frmReplay.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Deprecated\AlertBoxSet.vb" />
     <Compile Include="apiTimer.Designer.vb">
       <DependentUpon>apiTimer.vb</DependentUpon>
@@ -215,6 +227,7 @@
     <Compile Include="globalSettings.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Utils\geolocatePoint.vb" />
     <Compile Include="Utils\hsEpicenterLocator.vb" />
     <Compile Include="Prompter\isdDialog.Designer.vb">
       <DependentUpon>isdDialog.vb</DependentUpon>
@@ -340,6 +353,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="globalSettings.resx">
       <DependentUpon>globalSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Prompter\abtForm.resx">
+      <DependentUpon>abtForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Prompter\frmReplay.resx">
+      <DependentUpon>frmReplay.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Prompter\isdDialog.resx">
       <DependentUpon>isdDialog.vb</DependentUpon>

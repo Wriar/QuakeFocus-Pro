@@ -2,20 +2,47 @@
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Runtime.InteropServices
+Imports EGIS.Projections
+Imports EGIS.ShapeFileLib
 Imports Microsoft.WindowsAPICodePack.Dialogs
 Imports Svg
 
 Public Class viewPage
     Private image As System.Drawing.Imaging.Metafile
 
+
+
+
     Function MakeNewImage(ByVal i1 As Bitmap, ByVal i2 As Bitmap) As Bitmap
         Dim g As Graphics = Graphics.FromImage(i1)
         g.DrawImage(i2, New Point(0, 0))
         Return i1
     End Function
+    Private Function DistanceBetweenPoints2(ByVal p0 As PointD, ByVal p1 As PointD) As Double
+        Dim distance As Double = Double.NaN
 
+        If (TryCast(Me.SfMap1.MapCoordinateReferenceSystem, IGeographicCRS)) IsNot Nothing Then
+            distance = EGIS.ShapeFileLib.ConversionFunctions.DistanceBetweenLatLongPointsHaversine(ConversionFunctions.Wgs84RefEllipse, p0.Y, p0.X, p1.Y, p1.X)
+        ElseIf (TryCast(Me.SfMap1.MapCoordinateReferenceSystem, IProjectedCRS)) IsNot Nothing Then
+            distance = Math.Sqrt((p1.X - p0.X) * (p1.X - p0.X) + (p1.Y - p0.Y) * (p1.Y - p0.Y))
+        End If
+
+        Return distance
+
+
+    End Function
     Private pfc As PrivateFontCollection
+    Private Function DistanceBetweenPoints(ByVal p0 As PointD, ByVal p1 As PointD) As Double
+        Dim distance As Double = Double.NaN
 
+        If (TryCast(Me.SfMap1.MapCoordinateReferenceSystem, IGeographicCRS)) IsNot Nothing Then
+            distance = EGIS.ShapeFileLib.ConversionFunctions.DistanceBetweenLatLongPointsHaversine(ConversionFunctions.Wgs84RefEllipse, p0.Y, p0.X, p1.Y, p1.X)
+        ElseIf (TryCast(Me.SfMap1.MapCoordinateReferenceSystem, IProjectedCRS)) IsNot Nothing Then
+            distance = Math.Sqrt((p1.X - p0.X) * (p1.X - p0.X) + (p1.Y - p0.Y) * (p1.Y - p0.Y))
+        End If
+
+        Return distance
+    End Function
     Private Sub viewPage_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 #Region "Font Localization"
         'Apply FontFix
@@ -39,6 +66,9 @@ Public Class viewPage
         FlowSmallEvent7.Label1.Font = New Font(pfc.Families(0), 10.8, FontStyle.Regular)
         FlowSmallEvent9.Label1.Font = New Font(pfc.Families(0), 10.8, FontStyle.Regular)
 #End Region
+        My.Settings.rewindTime = 0
+        My.Settings.serverDelay = 0
+
 
 #Region "First Run"
         '   If My.Settings.prefixLang = "nothing" Then
@@ -86,7 +116,8 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
         '  Else
         '  MsgBox("SET TO: " & My.Settings.prefixLang)
         ' End If
-
+        Dim lfr = New localPane()
+        lfr.requestLocalizeRefresh()
 
 
 #End Region
@@ -240,8 +271,18 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        'MsgBox(apiTimer.eh)
+        'Test coords: 35.65860085964554, 139.7454446749598
+        Dim k As New geolocatePoint.GeoLocation
 
+        k.Latitude = 35.658600859645539
+        k.Longitude = 139.7454446749598
 
+        Dim r As geolocatePoint.GeoLocation = geolocatePoint.FindPointAtDistanceFrom(k, 90, 3)
+        MsgBox(r.Longitude & vbCrLf & r.Latitude)
+
+        MsgBox(geolocatePoint.pixelPointFromDistance(k, 2))
+        Console.WriteLine("LONG LAT:: " & r.Longitude & "  " & r.Latitude)
     End Sub
     Private shapeFileAdded As Boolean = False
 
@@ -321,6 +362,8 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             End If
 
         Next
+
+        '  SfMap1.Refresh()
 
 
 

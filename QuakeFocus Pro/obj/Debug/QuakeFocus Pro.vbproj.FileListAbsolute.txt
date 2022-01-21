@@ -227,3 +227,5 @@ C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFoc
 C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.xml
 C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.pdb
 C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.isdDialog.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.frmReplay.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.abtForm.resources

@@ -26,14 +26,15 @@ Partial Class viewPage
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(viewPage))
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.infoToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.btnWebsite = New System.Windows.Forms.Button()
-        Me.btnReplay = New System.Windows.Forms.Button()
         Me.SfMap1 = New EGIS.Controls.SFMap()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.topDocker = New System.Windows.Forms.Panel()
         Me.mapDocker = New System.Windows.Forms.Panel()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.mapZoomLevel = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.btnWebsite = New System.Windows.Forms.Button()
+        Me.btnReplay = New System.Windows.Forms.Button()
         Me.localPga = New QuakeFocus_Pro.localPane()
         Me.EewBanner1 = New QuakeFocus_Pro.eewBanner()
         Me.FlowLightShaking1 = New QuakeFocus_Pro.flowLightShaking()
@@ -54,7 +55,6 @@ Partial Class viewPage
         Me.FlowSmallEvent7 = New QuakeFocus_Pro.flowSmallEvent()
         Me.FlowSmallEvent9 = New QuakeFocus_Pro.flowSmallEvent()
         Me.ViewPageLocalMonitor1 = New QuakeFocus_Pro.viewPageLocalMonitor()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.FlowLayoutPanel1.SuspendLayout()
         Me.topDocker.SuspendLayout()
         Me.mapDocker.SuspendLayout()
@@ -78,6 +78,92 @@ Partial Class viewPage
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
         Me.FlowLayoutPanel1.Size = New System.Drawing.Size(425, 829)
         Me.FlowLayoutPanel1.TabIndex = 0
+        '
+        'SfMap1
+        '
+        Me.SfMap1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.SfMap1.CentrePoint2D = CType(resources.GetObject("SfMap1.CentrePoint2D"), EGIS.ShapeFileLib.PointD)
+        Me.SfMap1.Cursor = System.Windows.Forms.Cursors.Default
+        Me.SfMap1.DefaultMapCursor = System.Windows.Forms.Cursors.Default
+        Me.SfMap1.DefaultSelectionCursor = System.Windows.Forms.Cursors.Hand
+        Me.SfMap1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SfMap1.Location = New System.Drawing.Point(0, 0)
+        Me.SfMap1.MapBackColor = System.Drawing.Color.FromArgb(CType(CType(9, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.SfMap1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.SfMap1.Name = "SfMap1"
+        Me.SfMap1.PanSelectMode = EGIS.Controls.PanSelectMode.Pan
+        Me.SfMap1.RenderQuality = EGIS.ShapeFileLib.RenderQuality.[Auto]
+        Me.SfMap1.Size = New System.Drawing.Size(1112, 680)
+        Me.SfMap1.TabIndex = 18
+        Me.SfMap1.UseMemoryStreams = True
+        Me.SfMap1.UseMercatorProjection = True
+        Me.SfMap1.ZoomLevel = 1.0016611295681064R
+        Me.SfMap1.ZoomToSelectedExtentWhenCtrlKeydown = True
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(784, 39)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 19
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'topDocker
+        '
+        Me.topDocker.Controls.Add(Me.EewBanner1)
+        Me.topDocker.Controls.Add(Me.FlowLightShaking1)
+        Me.topDocker.Controls.Add(Me.FlowNoAlertPane1)
+        Me.topDocker.Controls.Add(Me.FlowTsunami1)
+        Me.topDocker.Dock = System.Windows.Forms.DockStyle.Top
+        Me.topDocker.Location = New System.Drawing.Point(15, 15)
+        Me.topDocker.Name = "topDocker"
+        Me.topDocker.Size = New System.Drawing.Size(1543, 130)
+        Me.topDocker.TabIndex = 20
+        '
+        'mapDocker
+        '
+        Me.mapDocker.Controls.Add(Me.Label2)
+        Me.mapDocker.Controls.Add(Me.mapZoomLevel)
+        Me.mapDocker.Controls.Add(Me.Label1)
+        Me.mapDocker.Controls.Add(Me.Button1)
+        Me.mapDocker.Controls.Add(Me.SfMap1)
+        Me.mapDocker.Location = New System.Drawing.Point(443, 154)
+        Me.mapDocker.Name = "mapDocker"
+        Me.mapDocker.Size = New System.Drawing.Size(1112, 680)
+        Me.mapDocker.TabIndex = 21
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.BackColor = System.Drawing.Color.Maroon
+        Me.Label2.Font = New System.Drawing.Font("Segoe UI Semibold", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.White
+        Me.Label2.Location = New System.Drawing.Point(15, 48)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(370, 34)
+        Me.Label2.TabIndex = 22
+        Me.Label2.Text = "WARNING: THIS IS AN EARLY RELEASE BUILD." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "閲覧注意です。これは初期リリースのビルドバージョンです。"
+        '
+        'mapZoomLevel
+        '
+        Me.mapZoomLevel.AutoSize = True
+        Me.mapZoomLevel.ForeColor = System.Drawing.Color.White
+        Me.mapZoomLevel.Location = New System.Drawing.Point(144, 18)
+        Me.mapZoomLevel.Name = "mapZoomLevel"
+        Me.mapZoomLevel.Size = New System.Drawing.Size(14, 16)
+        Me.mapZoomLevel.TabIndex = 21
+        Me.mapZoomLevel.Text = "0"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.ForeColor = System.Drawing.Color.White
+        Me.Label1.Location = New System.Drawing.Point(16, 18)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(119, 16)
+        Me.Label1.TabIndex = 20
+        Me.Label1.Text = "CURRENT ZOOM:"
         '
         'btnWebsite
         '
@@ -107,81 +193,6 @@ Partial Class viewPage
         Me.btnReplay.TabIndex = 15
         Me.btnReplay.UseVisualStyleBackColor = False
         '
-        'SfMap1
-        '
-        Me.SfMap1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.SfMap1.CentrePoint2D = CType(resources.GetObject("SfMap1.CentrePoint2D"), EGIS.ShapeFileLib.PointD)
-        Me.SfMap1.Cursor = System.Windows.Forms.Cursors.Default
-        Me.SfMap1.DefaultMapCursor = System.Windows.Forms.Cursors.Default
-        Me.SfMap1.DefaultSelectionCursor = System.Windows.Forms.Cursors.Hand
-        Me.SfMap1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SfMap1.Location = New System.Drawing.Point(0, 0)
-        Me.SfMap1.MapBackColor = System.Drawing.Color.FromArgb(CType(CType(9, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.SfMap1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.SfMap1.Name = "SfMap1"
-        Me.SfMap1.PanSelectMode = EGIS.Controls.PanSelectMode.Pan
-        Me.SfMap1.RenderQuality = EGIS.ShapeFileLib.RenderQuality.[Auto]
-        Me.SfMap1.Size = New System.Drawing.Size(1112, 680)
-        Me.SfMap1.TabIndex = 18
-        Me.SfMap1.UseMemoryStreams = False
-        Me.SfMap1.UseMercatorProjection = True
-        Me.SfMap1.ZoomLevel = 1.0016611295681064R
-        Me.SfMap1.ZoomToSelectedExtentWhenCtrlKeydown = True
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(784, 39)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 19
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
-        Me.Button1.Visible = False
-        '
-        'topDocker
-        '
-        Me.topDocker.Controls.Add(Me.EewBanner1)
-        Me.topDocker.Controls.Add(Me.FlowLightShaking1)
-        Me.topDocker.Controls.Add(Me.FlowNoAlertPane1)
-        Me.topDocker.Controls.Add(Me.FlowTsunami1)
-        Me.topDocker.Dock = System.Windows.Forms.DockStyle.Top
-        Me.topDocker.Location = New System.Drawing.Point(15, 15)
-        Me.topDocker.Name = "topDocker"
-        Me.topDocker.Size = New System.Drawing.Size(1543, 130)
-        Me.topDocker.TabIndex = 20
-        '
-        'mapDocker
-        '
-        Me.mapDocker.Controls.Add(Me.Label2)
-        Me.mapDocker.Controls.Add(Me.mapZoomLevel)
-        Me.mapDocker.Controls.Add(Me.Label1)
-        Me.mapDocker.Controls.Add(Me.Button1)
-        Me.mapDocker.Controls.Add(Me.SfMap1)
-        Me.mapDocker.Location = New System.Drawing.Point(443, 154)
-        Me.mapDocker.Name = "mapDocker"
-        Me.mapDocker.Size = New System.Drawing.Size(1112, 680)
-        Me.mapDocker.TabIndex = 21
-        '
-        'mapZoomLevel
-        '
-        Me.mapZoomLevel.AutoSize = True
-        Me.mapZoomLevel.ForeColor = System.Drawing.Color.White
-        Me.mapZoomLevel.Location = New System.Drawing.Point(144, 18)
-        Me.mapZoomLevel.Name = "mapZoomLevel"
-        Me.mapZoomLevel.Size = New System.Drawing.Size(16, 17)
-        Me.mapZoomLevel.TabIndex = 21
-        Me.mapZoomLevel.Text = "0"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(16, 18)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(125, 17)
-        Me.Label1.TabIndex = 20
-        Me.Label1.Text = "CURRENT ZOOM:"
-        '
         'localPga
         '
         Me.localPga.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(47, Byte), Integer))
@@ -198,6 +209,7 @@ Partial Class viewPage
         Me.EewBanner1.Name = "EewBanner1"
         Me.EewBanner1.Size = New System.Drawing.Size(2254, 130)
         Me.EewBanner1.TabIndex = 21
+        Me.EewBanner1.Visible = False
         '
         'FlowLightShaking1
         '
@@ -390,18 +402,6 @@ Partial Class viewPage
         Me.ViewPageLocalMonitor1.Name = "ViewPageLocalMonitor1"
         Me.ViewPageLocalMonitor1.Size = New System.Drawing.Size(418, 150)
         Me.ViewPageLocalMonitor1.TabIndex = 10
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.BackColor = System.Drawing.Color.Maroon
-        Me.Label2.Font = New System.Drawing.Font("Segoe UI Semibold", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(15, 48)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(323, 38)
-        Me.Label2.TabIndex = 22
-        Me.Label2.Text = "WARNING: THIS IS AN EARLY RELEASE BUILD." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "閲覧注意です。これは初期リリースのビルドバージョンです。"
         '
         'viewPage
         '

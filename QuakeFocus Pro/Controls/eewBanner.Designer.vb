@@ -26,35 +26,35 @@ Partial Class eewBanner
         Me.Label2 = New System.Windows.Forms.Label()
         Me.alertTypeLbl = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.locationLbl = New System.Windows.Forms.Label()
+        Me.reportNumLbl = New System.Windows.Forms.Label()
+        Me.lineMagLbl = New System.Windows.Forms.Label()
+        Me.secondLbl = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.PictureBox10 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox9 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox8 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox6 = New System.Windows.Forms.PictureBox()
+        Me.ProgressBar = New System.Windows.Forms.PictureBox()
+        Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.PictureBox7 = New System.Windows.Forms.PictureBox()
-        Me.locationLbl = New System.Windows.Forms.Label()
-        Me.reportNumLbl = New System.Windows.Forms.Label()
-        Me.distanceLbl = New System.Windows.Forms.Label()
-        Me.secondLbl = New System.Windows.Forms.Label()
-        Me.ProgressBar = New System.Windows.Forms.PictureBox()
-        Me.PictureBox6 = New System.Windows.Forms.PictureBox()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.PictureBox8 = New System.Windows.Forms.PictureBox()
-        Me.Label14 = New System.Windows.Forms.Label()
-        Me.PictureBox9 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox10 = New System.Windows.Forms.PictureBox()
+        CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ProgressBar, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.ProgressBar, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label2
@@ -65,7 +65,7 @@ Partial Class eewBanner
         Me.Label2.ForeColor = System.Drawing.Color.White
         Me.Label2.Location = New System.Drawing.Point(38, 16)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(159, 34)
+        Me.Label2.Size = New System.Drawing.Size(152, 32)
         Me.Label2.TabIndex = 19
         Me.Label2.Text = "緊急地震速報"
         '
@@ -89,9 +89,145 @@ Partial Class eewBanner
         Me.Label3.ForeColor = System.Drawing.Color.White
         Me.Label3.Location = New System.Drawing.Point(231, 76)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(35, 19)
+        Me.Label3.Size = New System.Drawing.Size(70, 18)
         Me.Label3.TabIndex = 20
-        Me.Label3.Text = "S-W"
+        Me.Label3.Text = "Time Left"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.BackColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(13, Byte), Integer), CType(CType(14, Byte), Integer))
+        Me.Label4.Font = New System.Drawing.Font("M+ 1p", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.ForeColor = System.Drawing.Color.White
+        Me.Label4.Location = New System.Drawing.Point(362, 76)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(64, 18)
+        Me.Label4.TabIndex = 23
+        Me.Label4.Text = "Intensity"
+        '
+        'locationLbl
+        '
+        Me.locationLbl.Font = New System.Drawing.Font("M+ 1p", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.locationLbl.ForeColor = System.Drawing.Color.White
+        Me.locationLbl.Location = New System.Drawing.Point(43, 49)
+        Me.locationLbl.Name = "locationLbl"
+        Me.locationLbl.Size = New System.Drawing.Size(147, 36)
+        Me.locationLbl.TabIndex = 26
+        Me.locationLbl.Text = "Off the Coast" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "of Iwate Prefecture"
+        '
+        'reportNumLbl
+        '
+        Me.reportNumLbl.AutoSize = True
+        Me.reportNumLbl.Font = New System.Drawing.Font("M+ 1p", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.reportNumLbl.ForeColor = System.Drawing.Color.Orange
+        Me.reportNumLbl.Location = New System.Drawing.Point(43, 92)
+        Me.reportNumLbl.Name = "reportNumLbl"
+        Me.reportNumLbl.Size = New System.Drawing.Size(98, 21)
+        Me.reportNumLbl.TabIndex = 29
+        Me.reportNumLbl.Text = "Report #: 0"
+        '
+        'lineMagLbl
+        '
+        Me.lineMagLbl.AutoSize = True
+        Me.lineMagLbl.BackColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(13, Byte), Integer), CType(CType(14, Byte), Integer))
+        Me.lineMagLbl.Font = New System.Drawing.Font("M+ 2p", 10.8!, System.Drawing.FontStyle.Bold)
+        Me.lineMagLbl.ForeColor = System.Drawing.Color.Magenta
+        Me.lineMagLbl.Location = New System.Drawing.Point(371, 33)
+        Me.lineMagLbl.Name = "lineMagLbl"
+        Me.lineMagLbl.Size = New System.Drawing.Size(57, 25)
+        Me.lineMagLbl.TabIndex = 30
+        Me.lineMagLbl.Text = "m7.1"
+        '
+        'secondLbl
+        '
+        Me.secondLbl.AutoSize = True
+        Me.secondLbl.BackColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(13, Byte), Integer), CType(CType(14, Byte), Integer))
+        Me.secondLbl.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.secondLbl.ForeColor = System.Drawing.Color.OrangeRed
+        Me.secondLbl.Location = New System.Drawing.Point(239, 33)
+        Me.secondLbl.Name = "secondLbl"
+        Me.secondLbl.Size = New System.Drawing.Size(65, 23)
+        Me.secondLbl.TabIndex = 31
+        Me.secondLbl.Text = "00:00"
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Font = New System.Drawing.Font("M+ 1p", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.ForeColor = System.Drawing.Color.White
+        Me.Label13.Location = New System.Drawing.Point(503, 84)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(79, 18)
+        Me.Label13.TabIndex = 35
+        Me.Label13.Text = "Hypocenter"
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("M+ 1p", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.ForeColor = System.Drawing.Color.White
+        Me.Label14.Location = New System.Drawing.Point(1307, 76)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(94, 18)
+        Me.Label14.TabIndex = 37
+        Me.Label14.Text = "Your Location"
+        '
+        'PictureBox10
+        '
+        Me.PictureBox10.Image = CType(resources.GetObject("PictureBox10.Image"), System.Drawing.Image)
+        Me.PictureBox10.Location = New System.Drawing.Point(1878, -2)
+        Me.PictureBox10.Name = "PictureBox10"
+        Me.PictureBox10.Size = New System.Drawing.Size(464, 50)
+        Me.PictureBox10.TabIndex = 39
+        Me.PictureBox10.TabStop = False
+        '
+        'PictureBox9
+        '
+        Me.PictureBox9.Location = New System.Drawing.Point(1419, 33)
+        Me.PictureBox9.Name = "PictureBox9"
+        Me.PictureBox9.Size = New System.Drawing.Size(100, 62)
+        Me.PictureBox9.TabIndex = 38
+        Me.PictureBox9.TabStop = False
+        '
+        'PictureBox8
+        '
+        Me.PictureBox8.Image = CType(resources.GetObject("PictureBox8.Image"), System.Drawing.Image)
+        Me.PictureBox8.Location = New System.Drawing.Point(1335, 33)
+        Me.PictureBox8.Name = "PictureBox8"
+        Me.PictureBox8.Size = New System.Drawing.Size(29, 32)
+        Me.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PictureBox8.TabIndex = 36
+        Me.PictureBox8.TabStop = False
+        '
+        'PictureBox6
+        '
+        Me.PictureBox6.Image = CType(resources.GetObject("PictureBox6.Image"), System.Drawing.Image)
+        Me.PictureBox6.Location = New System.Drawing.Point(524, 35)
+        Me.PictureBox6.Name = "PictureBox6"
+        Me.PictureBox6.Size = New System.Drawing.Size(35, 40)
+        Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PictureBox6.TabIndex = 34
+        Me.PictureBox6.TabStop = False
+        '
+        'ProgressBar
+        '
+        Me.ProgressBar.Image = CType(resources.GetObject("ProgressBar.Image"), System.Drawing.Image)
+        Me.ProgressBar.Location = New System.Drawing.Point(584, 35)
+        Me.ProgressBar.Name = "ProgressBar"
+        Me.ProgressBar.Size = New System.Drawing.Size(716, 46)
+        Me.ProgressBar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.ProgressBar.TabIndex = 33
+        Me.ProgressBar.TabStop = False
+        '
+        'PictureBox7
+        '
+        Me.PictureBox7.Image = CType(resources.GetObject("PictureBox7.Image"), System.Drawing.Image)
+        Me.PictureBox7.Location = New System.Drawing.Point(362, 33)
+        Me.PictureBox7.Name = "PictureBox7"
+        Me.PictureBox7.Size = New System.Drawing.Size(100, 46)
+        Me.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PictureBox7.TabIndex = 24
+        Me.PictureBox7.TabStop = False
         '
         'PictureBox5
         '
@@ -139,143 +275,6 @@ Partial Class eewBanner
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.BackColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(13, Byte), Integer), CType(CType(14, Byte), Integer))
-        Me.Label4.Font = New System.Drawing.Font("M+ 1p", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.ForeColor = System.Drawing.Color.White
-        Me.Label4.Location = New System.Drawing.Point(362, 76)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(54, 19)
-        Me.Label4.TabIndex = 23
-        Me.Label4.Text = "KM (D)"
-        '
-        'PictureBox7
-        '
-        Me.PictureBox7.Image = CType(resources.GetObject("PictureBox7.Image"), System.Drawing.Image)
-        Me.PictureBox7.Location = New System.Drawing.Point(362, 33)
-        Me.PictureBox7.Name = "PictureBox7"
-        Me.PictureBox7.Size = New System.Drawing.Size(100, 46)
-        Me.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PictureBox7.TabIndex = 24
-        Me.PictureBox7.TabStop = False
-        '
-        'locationLbl
-        '
-        Me.locationLbl.AutoSize = True
-        Me.locationLbl.Font = New System.Drawing.Font("M+ 1p", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.locationLbl.ForeColor = System.Drawing.Color.White
-        Me.locationLbl.Location = New System.Drawing.Point(43, 49)
-        Me.locationLbl.Name = "locationLbl"
-        Me.locationLbl.Size = New System.Drawing.Size(142, 38)
-        Me.locationLbl.TabIndex = 26
-        Me.locationLbl.Text = "Off the Coast" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "of Iwate Prefecture"
-        '
-        'reportNumLbl
-        '
-        Me.reportNumLbl.AutoSize = True
-        Me.reportNumLbl.Font = New System.Drawing.Font("M+ 1p", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.reportNumLbl.ForeColor = System.Drawing.Color.Orange
-        Me.reportNumLbl.Location = New System.Drawing.Point(43, 95)
-        Me.reportNumLbl.Name = "reportNumLbl"
-        Me.reportNumLbl.Size = New System.Drawing.Size(86, 19)
-        Me.reportNumLbl.TabIndex = 29
-        Me.reportNumLbl.Text = "Report #: 0"
-        '
-        'distanceLbl
-        '
-        Me.distanceLbl.AutoSize = True
-        Me.distanceLbl.BackColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(13, Byte), Integer), CType(CType(14, Byte), Integer))
-        Me.distanceLbl.Font = New System.Drawing.Font("M+ 2p", 10.8!, System.Drawing.FontStyle.Bold)
-        Me.distanceLbl.ForeColor = System.Drawing.Color.White
-        Me.distanceLbl.Location = New System.Drawing.Point(371, 33)
-        Me.distanceLbl.Name = "distanceLbl"
-        Me.distanceLbl.Size = New System.Drawing.Size(71, 26)
-        Me.distanceLbl.TabIndex = 30
-        Me.distanceLbl.Text = "93 KM"
-        '
-        'secondLbl
-        '
-        Me.secondLbl.AutoSize = True
-        Me.secondLbl.BackColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(13, Byte), Integer), CType(CType(14, Byte), Integer))
-        Me.secondLbl.Font = New System.Drawing.Font("M+ 2p", 10.8!, System.Drawing.FontStyle.Bold)
-        Me.secondLbl.ForeColor = System.Drawing.Color.OrangeRed
-        Me.secondLbl.Location = New System.Drawing.Point(239, 33)
-        Me.secondLbl.Name = "secondLbl"
-        Me.secondLbl.Size = New System.Drawing.Size(54, 26)
-        Me.secondLbl.TabIndex = 31
-        Me.secondLbl.Text = "12 S"
-        '
-        'ProgressBar
-        '
-        Me.ProgressBar.Image = CType(resources.GetObject("ProgressBar.Image"), System.Drawing.Image)
-        Me.ProgressBar.Location = New System.Drawing.Point(584, 35)
-        Me.ProgressBar.Name = "ProgressBar"
-        Me.ProgressBar.Size = New System.Drawing.Size(716, 46)
-        Me.ProgressBar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.ProgressBar.TabIndex = 33
-        Me.ProgressBar.TabStop = False
-        '
-        'PictureBox6
-        '
-        Me.PictureBox6.Image = CType(resources.GetObject("PictureBox6.Image"), System.Drawing.Image)
-        Me.PictureBox6.Location = New System.Drawing.Point(524, 35)
-        Me.PictureBox6.Name = "PictureBox6"
-        Me.PictureBox6.Size = New System.Drawing.Size(35, 40)
-        Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PictureBox6.TabIndex = 34
-        Me.PictureBox6.TabStop = False
-        '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("M+ 1p", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.ForeColor = System.Drawing.Color.White
-        Me.Label13.Location = New System.Drawing.Point(503, 84)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(87, 19)
-        Me.Label13.TabIndex = 35
-        Me.Label13.Text = "Hypocenter"
-        '
-        'PictureBox8
-        '
-        Me.PictureBox8.Image = CType(resources.GetObject("PictureBox8.Image"), System.Drawing.Image)
-        Me.PictureBox8.Location = New System.Drawing.Point(1335, 33)
-        Me.PictureBox8.Name = "PictureBox8"
-        Me.PictureBox8.Size = New System.Drawing.Size(29, 32)
-        Me.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PictureBox8.TabIndex = 36
-        Me.PictureBox8.TabStop = False
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("M+ 1p", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.ForeColor = System.Drawing.Color.White
-        Me.Label14.Location = New System.Drawing.Point(1307, 76)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(100, 19)
-        Me.Label14.TabIndex = 37
-        Me.Label14.Text = "Your Location"
-        '
-        'PictureBox9
-        '
-        Me.PictureBox9.Location = New System.Drawing.Point(1419, 33)
-        Me.PictureBox9.Name = "PictureBox9"
-        Me.PictureBox9.Size = New System.Drawing.Size(100, 62)
-        Me.PictureBox9.TabIndex = 38
-        Me.PictureBox9.TabStop = False
-        '
-        'PictureBox10
-        '
-        Me.PictureBox10.Image = CType(resources.GetObject("PictureBox10.Image"), System.Drawing.Image)
-        Me.PictureBox10.Location = New System.Drawing.Point(1878, -2)
-        Me.PictureBox10.Name = "PictureBox10"
-        Me.PictureBox10.Size = New System.Drawing.Size(464, 50)
-        Me.PictureBox10.TabIndex = 39
-        Me.PictureBox10.TabStop = False
-        '
         'eewBanner
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -289,7 +288,7 @@ Partial Class eewBanner
         Me.Controls.Add(Me.PictureBox6)
         Me.Controls.Add(Me.ProgressBar)
         Me.Controls.Add(Me.secondLbl)
-        Me.Controls.Add(Me.distanceLbl)
+        Me.Controls.Add(Me.lineMagLbl)
         Me.Controls.Add(Me.reportNumLbl)
         Me.Controls.Add(Me.locationLbl)
         Me.Controls.Add(Me.Label4)
@@ -304,17 +303,17 @@ Partial Class eewBanner
         Me.Controls.Add(Me.PictureBox1)
         Me.Name = "eewBanner"
         Me.Size = New System.Drawing.Size(2254, 124)
+        CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ProgressBar, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ProgressBar, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -332,7 +331,7 @@ Partial Class eewBanner
     Friend WithEvents PictureBox7 As PictureBox
     Friend WithEvents locationLbl As Label
     Friend WithEvents reportNumLbl As Label
-    Friend WithEvents distanceLbl As Label
+    Friend WithEvents lineMagLbl As Label
     Friend WithEvents secondLbl As Label
     Friend WithEvents ProgressBar As PictureBox
     Friend WithEvents PictureBox6 As PictureBox

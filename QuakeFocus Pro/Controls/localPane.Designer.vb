@@ -22,6 +22,7 @@ Partial Class localPane
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(localPane))
         Me.pgaColorGradient = New System.Windows.Forms.Panel()
         Me.Panel2 = New System.Windows.Forms.Panel()
@@ -31,8 +32,12 @@ Partial Class localPane
         Me.intGradientColor = New System.Windows.Forms.Panel()
         Me.intLbl = New System.Windows.Forms.Label()
         Me.settingsBTN = New System.Windows.Forms.Button()
+        Me.ctxHlp = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ReplayToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel2.SuspendLayout()
         Me.intGradientColor.SuspendLayout()
+        Me.ctxHlp.SuspendLayout()
         Me.SuspendLayout()
         '
         'pgaColorGradient
@@ -66,24 +71,22 @@ Partial Class localPane
         '
         'Label1
         '
-        Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Gen Shin Gothic P Regular", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(64, 11)
+        Me.Label1.Location = New System.Drawing.Point(38, 11)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(47, 42)
+        Me.Label1.Size = New System.Drawing.Size(73, 42)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Local" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "PGA:"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Label3
         '
-        Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Gen Shin Gothic P Regular", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.White
-        Me.Label3.Location = New System.Drawing.Point(213, 14)
+        Me.Label3.Location = New System.Drawing.Point(195, 14)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(47, 42)
+        Me.Label3.Size = New System.Drawing.Size(65, 42)
         Me.Label3.TabIndex = 5
         Me.Label3.Text = "Local" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Int:"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -123,6 +126,27 @@ Partial Class localPane
         Me.settingsBTN.TabIndex = 23
         Me.settingsBTN.UseVisualStyleBackColor = False
         '
+        'ctxHlp
+        '
+        Me.ctxHlp.ImageScalingSize = New System.Drawing.Size(20, 20)
+        Me.ctxHlp.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReplayToolStripMenuItem, Me.SettingsToolStripMenuItem})
+        Me.ctxHlp.Name = "ctxHlp"
+        Me.ctxHlp.Size = New System.Drawing.Size(215, 86)
+        '
+        'ReplayToolStripMenuItem
+        '
+        Me.ReplayToolStripMenuItem.Image = CType(resources.GetObject("ReplayToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ReplayToolStripMenuItem.Name = "ReplayToolStripMenuItem"
+        Me.ReplayToolStripMenuItem.Size = New System.Drawing.Size(214, 26)
+        Me.ReplayToolStripMenuItem.Text = "Replay"
+        '
+        'SettingsToolStripMenuItem
+        '
+        Me.SettingsToolStripMenuItem.Image = CType(resources.GetObject("SettingsToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem"
+        Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(214, 26)
+        Me.SettingsToolStripMenuItem.Text = "Settings"
+        '
         'localPane
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -140,8 +164,8 @@ Partial Class localPane
         Me.Panel2.PerformLayout()
         Me.intGradientColor.ResumeLayout(False)
         Me.intGradientColor.PerformLayout()
+        Me.ctxHlp.ResumeLayout(False)
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 
@@ -153,4 +177,7 @@ Partial Class localPane
     Friend WithEvents intGradientColor As Panel
     Friend WithEvents intLbl As Label
     Friend WithEvents settingsBTN As Button
+    Friend WithEvents ctxHlp As ContextMenuStrip
+    Friend WithEvents ReplayToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SettingsToolStripMenuItem As ToolStripMenuItem
 End Class

@@ -117,26 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="infoToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <data name="SfMap1.CentrePoint2D" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFRFR0lTLlNoYXBlRmlsZUxpYiwgVmVyc2lvbj00LjcuMC4wLCBD
-        dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTA1Yjk4Yzg2OWI1ZmZlNmEFAQAAABhFR0lTLlNo
-        YXBlRmlsZUxpYi5Qb2ludEQCAAAAAXgBeQAABgYCAAAAAAAAAAAAAAAVAAAAAADgPws=
-</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnWebsite.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAThJREFUOE/F
-        lEsuBFEYhSs9aAQJLcEGtInHArqjmWrPVQgjJuxAzNiLbQhWQfcGGJCU71SdW24qhRDFSb7kf99Ubv03
-        +RelaboIbbvfF80z0LW9D6/wAruOdaEl+0tRuA6PsAyTMISgAUzAKjxAz23VomADnuHW/hGUdeDcHTxB
-        9VASTbiGGzh27Mp+zKVzJ/bV01SsPnFCA07hzEzBbOSXUU41wVdvw+OygSsQaw46uVkp5VQTa8njsoFb
-        eazQCGznZqVUr5pYfY/LBvbzWKFRKB8SS/VjuVlo0+Pq+WRdyjlcGG3KfOSXUU41wVfv+6XUIk74/R+b
-        hPZY6xRW7xDKCqt3D6pdk/+hKOiBFl8XpYcgfhz0aIxDeBw+HxZEYQs6tvcgPF87jumWp2X/SDS3YcHu
-        XypJ3gAirdjOBhNnkgAAAABJRU5ErkJggg==
-</value>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Earthquake events can be replayed during a certain period of time. When using map data, EEW can be replayed up to 2 hours after the initial event. When using JSON data, EEWs can be replayed up to 2 years after the initial event.</value>
   </data>
 </root>
