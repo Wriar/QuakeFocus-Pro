@@ -49,4 +49,23 @@ Public Class frmReplay
         btnStop.Enabled = False
         btnRewind.Enabled = True
     End Sub
+
+    Private Sub cusJsonServerCheck_CheckedChanged(sender As Object, e As EventArgs) Handles cusJsonServerCheck.CheckedChanged
+        If cusJsonServerCheck.Checked = True Then
+            cusJsonserver.Enabled = True
+        Else
+            cusJsonserver.Enabled = False
+            cusJsonserver.Text = "www.kmoni.bosai.go.jp"
+        End If
+    End Sub
+
+    Private Sub cusRealtimeServerCheck_CheckedChanged(sender As Object, e As EventArgs) Handles cusRealtimeServerCheck.CheckedChanged
+        If cusRealtimeServerCheck.Checked = True Then
+            cusRealtimeServer.Enabled = True
+        Else
+            cusRealtimeServer.Enabled = False
+            cusRealtimeServer.Text = "http://www.kmoni.bosai.go.jp/data/map_img"
+
+        End If
+    End Sub
 End Class

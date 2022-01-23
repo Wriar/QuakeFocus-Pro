@@ -1,4 +1,5 @@
 ﻿'ViewPage Settings Here
+Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Runtime.InteropServices
@@ -68,7 +69,7 @@ Public Class viewPage
 #End Region
         My.Settings.rewindTime = 0
         My.Settings.serverDelay = 0
-
+        mapInvalidate.Start()
 
 #Region "First Run"
         '   If My.Settings.prefixLang = "nothing" Then
@@ -309,6 +310,7 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
     End Sub
     Public Function drawMarkers(ByVal e As PaintEventArgs)
+
         For Each str As Tuple(Of String, String, Point, String, String, String, Tuple(Of String, String)) In apiTimer.initialLocationDB
             'Get Color of Point
 
@@ -323,7 +325,7 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             DrawMarker(e.Graphics, pt.X, pt.Y, "realtime", Color.FromArgb(255, 0, 0), Color.FromArgb(255, 0, 0), realtimeColor, realtimeInterpolated)
 
 
-            drawCircle(e.Graphics, SfMap1.GisPointToPixelCoord(139.839478, 35.652832).X, SfMap1.GisPointToPixelCoord(139.839478, 35.652832).Y, 1)
+
 
 
 
@@ -362,9 +364,18 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             End If
 
         Next
-
+        '    drawCircle(e.Graphics, SfMap1.GisPointToPixelCoord(139.839478, 35.652832).X, SfMap1.GisPointToPixelCoord(139.839478, 35.652832).Y, 1)
         '  SfMap1.Refresh()
+        Dim pt2 As Point = Me.SfMap1.GisPointToPixelCoord(DataStructureRaw.longitude, DataStructureRaw.latitude)
 
+        drawCircle(e.Graphics, e, pt2.X, pt2.Y, 1)
+
+        If showEpicenter = True Then
+            drawEpicenter(e, e.Graphics, pt2.X, pt2.Y, "epicenter")
+        End If
+
+        apiTimer.txtLong.Text = DataStructureRaw.longitude
+        apiTimer.txtLat.Text = DataStructureRaw.latitude
 
 
     End Function
@@ -375,7 +386,34 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
     End Function
     Dim rectH As Integer = 3
     Dim rectW As Integer = 3
+
+    Public epicenterPointer As Integer = 0
+    Public showEpicenter As Boolean = True
+
+    Private Sub mapInvalidate_Tick(sender As Object, e As EventArgs) Handles mapInvalidate.Tick
+        SfMap1.Invalidate()
+
+        epicenterPointer += 1
+
+        If epicenterPointer < 20 Then
+            '     epicenterPointer = 0
+            showEpicenter = True
+            epiShow.Text = "True " & epicenterPointer
+        ElseIf epicenterPointer > 20 And epicenterPointer < 30 Then
+            showEpicenter = False
+            epiShow.Text = "False " & epicenterPointer
+        ElseIf epicenterPointer > 30 Then
+            epicenterPointer = 0
+
+        End If
+    End Sub
+
     Private Sub SfMap1_Paint(sender As Object, e As PaintEventArgs) Handles SfMap1.Paint
+
+        'Refresh timer runs on 10 ms, 10x per second
+
+
+
 
 
         drawMarkers(e)
@@ -412,23 +450,130 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
     End Sub
 
+    ''' <summary>
+    ''' Dray an Epicenter Icon
+    ''' </summary>
+    ''' <param name="e">Paint Event Arguments</param>
+    ''' <param name="g">Graphics Object</param>
+    ''' <param name="locX">Pixel Epicenter X</param>
+    ''' <param name="locY">Pixel Epicenter Y</param>
+    ''' <param name="epiType">Type to Draw: epicenter,</param>
+    ''' <param name="evCode">In event of multiple EEW, alert number</param>
+    Public Sub drawEpicenter(ByVal e As PaintEventArgs, ByVal g As Graphics, locX As String, locY As String, epiType As String, Optional evCode As Integer = 0)
+        If locX IsNot Nothing And locY IsNot Nothing And locX <> 0 And locY <> 0 And locX > 0 And locY > 0 Then
+            Dim epImg As Image = My.Resources.epicenter
 
-    Public Sub drawCircle(ByVal g As Graphics, ByVal locX As Double, ByVal locY As Double, ByVal cDistance As Double)
-        Dim rectH2 As Integer = 50
-        Dim rectW2 As Integer = 50
+            Dim resourceHeight As Integer = epImg.Height / 2
+            Dim resourceWidth = epImg.Width / 2
 
-        Dim blueBrush As New System.Drawing.SolidBrush(Color.FromArgb(255, 0, 0))
-        Dim myRectangle As New Rectangle
-        Dim rectHeightHalf As Integer = rectH2 / 2
-        Dim rectWidthHalf As Integer = rectW2 / 2
-        '    Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(locX, locY)
-        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias
-        myRectangle.X = locX - rectWidthHalf
-        myRectangle.Y = locY - rectHeightHalf
-        myRectangle.Width = rectW2
-        myRectangle.Height = rectH2
+            Dim topLeftX As Integer = locX - resourceWidth / 2 'Scale Factor
+            Dim topLeftY As Integer = locY - resourceHeight / 2
 
-        g.FillEllipse(blueBrush, myRectangle)
+            Dim np As New PointF(topLeftX, topLeftY)
+
+            Dim epResize As Image = ResizeImage(epImg)
+            '  Dim ptD As New PointF(locX, locY)
+
+            g.DrawImage(epResize, np)
+        End If
+
+    End Sub
+
+    Public Shared Function ResizeImage(ByVal InputImage As Image) As Image
+        Return New Bitmap(InputImage, New Size(32, 32))
+    End Function
+
+    Public Shared Sub DrawOutlineCircle(ByVal g As Graphics, ByVal pen As Pen, ByVal centerX As Single, ByVal centerY As Single, ByVal radius As Single)
+        g.DrawEllipse(pen, centerX - radius, centerY - radius, radius + radius, radius + radius)
+    End Sub
+
+
+    Public Sub drawCircle(ByVal g As Graphics, ByVal e As PaintEventArgs, ByVal locX As String, ByVal locY As String, ByVal cDistance As Double)
+        If apiTimer.eewExists = True And locX > -999999 And locY > -999999 Then
+
+            Dim pWavePen As New Pen(Brushes.DeepSkyBlue)
+
+            ' Set the pen's width.
+            pWavePen.Width = 1.0F
+
+            DrawOutlineCircle(g, pWavePen, locX, locY, DataStructureRaw.swTotalPixelRadius * 2)
+
+
+
+
+            Dim rectH2 As Integer = DataStructureRaw.swTotalPixelRadius * 2
+            Dim rectW2 As Integer = DataStructureRaw.swTotalPixelRadius * 2
+
+            ' Dim blueBrush As New System.Drawing.SolidBrush(Color.FromArgb(255, 0, 0))
+            ' Dim myRectangle As New Rectangle
+            Dim rectHeightHalf As Integer = rectH2 / 2
+            Dim rectWidthHalf As Integer = rectW2 / 2
+            ' Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(locX, locY)
+            ' g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias
+            '  myRectangle.X = locX - rectWidthHalf
+            ' myRectangle.Y = locY - rectHeightHalf
+
+            '  myRectangle.X = locX
+            '  myRectangle.Y = locY
+
+            ' myRectangle.Width = rectW2
+            ' myRectangle.Height = rectH2
+
+            '  g.FillEllipse(blueBrush, myRectangle)
+
+            If rectWidthHalf <> 0 Then ' GDI+ Will throw outofmemoryexception
+
+
+                Dim centreX As String = locX
+                Dim centreY As String = locY
+
+                Dim radius = DataStructureRaw.swTotalPixelRadius
+                Dim diameter = radius * 2
+
+
+                Dim bounds = New RectangleF(centreX - radius,
+                                        centreY - radius,
+                                        diameter,
+                                        diameter)
+                e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
+                Using path As New GraphicsPath
+                    e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
+                    path.AddEllipse(bounds)
+                    e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
+                    Using brush As New PathGradientBrush(path)
+                        brush.CenterPoint = New PointF(centreX, centreY)
+                        If DataStructureRaw.alertFlagOrigin = "警報" Then
+                            brush.CenterColor = Color.FromArgb(0, Color.Red)
+                            brush.SurroundColors = {Color.FromArgb(120, 255, 0, 0)}
+                        ElseIf DataStructureRaw.alertFlagOrigin = "予報" Then
+                            brush.SurroundColors = {Color.FromArgb(120, 255, 174, 0)}
+                            brush.CenterColor = Color.FromArgb(0, Color.Gold)
+                        Else
+                            brush.SurroundColors = {Color.FromArgb(120, 255, 174, 0)}
+                            brush.CenterColor = Color.FromArgb(0, Color.Gold)
+                        End If
+
+                        brush.FocusScales = PointF.Empty
+                        e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
+                        e.Graphics.FillRectangle(brush, bounds)
+
+                        e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
+
+                        e.Graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+
+
+                        If DataStructureRaw.alertFlagOrigin = "警報" Then
+                            e.Graphics.DrawEllipse(New Pen(Color.Maroon, 1.0F), bounds)
+                        ElseIf DataStructureRaw.alertFlagOrigin = "予報" Then
+                            e.Graphics.DrawEllipse(New Pen(Color.Orange, 1.0F), bounds)
+                        Else
+                            e.Graphics.DrawEllipse(New Pen(Color.Orange, 1.0F), bounds)
+                        End If
+                    End Using
+                End Using
+
+            End If
+        End If
     End Sub
 
     Private Function DegreesToRadians(ByVal degrees As Double) As Double
@@ -576,5 +721,23 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
     Private Sub FlowNoAlertPane1_Load(sender As Object, e As EventArgs) Handles FlowNoAlertPane1.Load
 
+    End Sub
+
+    Private Sub PictureBox2_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub PictureBox2_Paint(sender As Object, e As PaintEventArgs)
+        drawMarkers(e)
+    End Sub
+
+
+
+    Private Sub SfMap1_MouseUp(sender As Object, e As MouseEventArgs) Handles SfMap1.MouseUp
+        SfMap1.Invalidate()
+    End Sub
+
+    Private Sub SfMap1_SizeChanged(sender As Object, e As EventArgs) Handles SfMap1.SizeChanged
+        SfMap1.Invalidate()
     End Sub
 End Class

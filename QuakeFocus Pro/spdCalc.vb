@@ -24,6 +24,13 @@ Public Class spdCalc
             'The report is new. Query will be needed
             previousReportNumber = reportNum
 
+            Dim pwSec As String = getPWTravelTime(hypoDepth)
+            Dim swSec As String = getSWTravelTime(hypoDepth)
+
+            DataStructureRaw.pWaveVelocity = pwSec
+            DataStructureRaw.sWaveVelocity = swSec
+
+
             'The report is new. A new time must be calculated
             'Get Time Delay in Seconds First
             Dim delaySec As Integer = (currentTime - originTime).TotalSeconds
@@ -82,6 +89,10 @@ Public Class spdCalc
 
             Dim delaySec As Integer = (currentTime - originTime).TotalSeconds
 
+
+            '    DataStructureRaw.eqElapsedSeconds = delaySec
+
+
             Dim pwElapsed As Double = pwSec * delaySec
             Dim swElapsed As Double = swSec * delaySec
 
@@ -137,7 +148,7 @@ Public Class spdCalc
     Public Shared Function getSWTravelTime(depth As String)
         Dim csvPath As String = Application.StartupPath & "/assets/vjma2001.csv"
         Dim sr As New IO.StreamReader(csvPath, True)
-        Dim rowNum As Integer = getRow(sr, depth, 3)
+        Dim rowNum As String = (getRow(sr, depth.Replace("km", ""), 3))
         sr.Close()
 
         Return GetValue(rowNum - 1, 1)
@@ -148,7 +159,7 @@ Public Class spdCalc
         Try
             Dim csvPath As String = Application.StartupPath & "/assets/vjma2001.csv"
             Dim sr As New IO.StreamReader(csvPath, True)
-            Dim rowNum As Integer = getRow(sr, depth, 3)
+            Dim rowNum As Integer = getRow(sr, depth.Replace("km", ""), 3)
             sr.Close()
 
             Return GetValue(rowNum - 1, 0)

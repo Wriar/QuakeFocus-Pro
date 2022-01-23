@@ -177,6 +177,8 @@ Public Class apiTimer
             Dim rwDelay As DateTime = jsonPartURLDate.AddSeconds(totalDelay)
 
             Dim jsonFullTime As String = rwDelay.ToString("yyyyMMddHHmmss")
+            DataStructureRaw.eqUrlTime = rwDelay
+
             jsonPartURL = jsonFullTime
 
             Console.WriteLine("URL Request Fragment:: " & jsonPartURL)
@@ -379,7 +381,9 @@ Public Class apiTimer
 
             '============
             'For LIVE USE
-            Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/" & jsonPartURL & ".json"
+            '   Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/" & jsonPartURL & ".json"
+            Dim constructedURL As String = DataStructureRaw.kmoniBasePath & jsonPartURL & ".json"
+            'For Live USE + Simulation Use
 
             'FOR DEBUGGING TSTFLAG1
 
@@ -538,7 +542,7 @@ Public Class apiTimer
 
     End Sub
     Public Sub drawPSCircles()
-
+        '
     End Sub
 
     Private Sub jsonImporter_Tick(sender As Object, e As EventArgs) Handles jsonImporter.Tick
@@ -560,11 +564,14 @@ Public Class apiTimer
     End Function
 
 
-
+    Public hasZoomedMap As Boolean = False
 
 
     Private Sub pushJson_Tick(sender As Object, e As EventArgs) Handles pushJson.Tick
-        viewPage.SfMap1.Invalidate()
+        '   viewPage.SfMap1.Refresh()
+        '    viewPage.PictureBox2.Invalidate()
+
+        '  viewPage.SfMap1.Invalidate()
 
         'This method is deprecated.
         If 1 = 2 Then
@@ -627,6 +634,14 @@ Public Class apiTimer
             viewPage.FlowLightShaking1.Visible = False
             viewPage.EewBanner1.Visible = True
 
+            'Zoom map to extent
+
+            If hasZoomedMap = False Then
+                hasZoomedMap = True
+                viewPage.SfMap1.SetZoomAndCentre(200, New EGIS.ShapeFileLib.PointD(DataStructureRaw.longitude, DataStructureRaw.latitude))
+            Else
+                'Map already zoomed
+            End If
             'Get the location data. This data can remain static
 
             Try
@@ -647,24 +662,109 @@ Public Class apiTimer
             PStimeCalculator.Start()
 
             'Start Drawing Utilities
-            eewGraphicDrawer.Start()
+            ' eewGraphicDrawer.Start()
+            '    If eewGraphicDrawer.Enabled = False Then
+            ' eewGraphicDrawer.Enabled = True
+            ' If
+
+            'Get VJMA Values, set them in the datastructure
+
+            If circlePlotter.Enabled = False Then
+                circlePlotter.Enabled = True
+            End If
+
+            If psTotalUpdater.Enabled = False Then
+                psTotalUpdater.Enabled = True
+
+            End If
 
 
         Else
             'Stop all current alerts.
             PStimeCalculator.Stop()
-            eewGraphicDrawer.Stop()
+            '  eewGraphicDrawer.Stop()
+            hasZoomedMap = False
+
+            circlePlotter.Stop()
+
+            psTotalUpdater.Stop()
 
             viewPage.FlowTsunami1.Visible = False
             viewPage.FlowNoAlertPane1.Visible = True
             viewPage.FlowLightShaking1.Visible = False
             viewPage.EewBanner1.Visible = False
 
+            ClearDataStruct()
 
         End If
 
     End Sub
     Dim prevReportID As String
+    Sub ClearDataStruct()
+        DataStructureRaw.reportTime = Nothing
+        DataStructureRaw.requestTime = Nothing
+        DataStructureRaw.regionNameJP = Nothing
+        DataStructureRaw.longitude = Nothing
+        DataStructureRaw.isCancel = Nothing
+        DataStructureRaw.depthOrigin = Nothing
+        DataStructureRaw.calcIntensity = Nothing
+        DataStructureRaw.isFinal = Nothing
+        DataStructureRaw.isTraining = Nothing
+        DataStructureRaw.latitude = Double.NaN
+        DataStructureRaw.originTime = Nothing
+        DataStructureRaw.magunitude = Nothing
+        DataStructureRaw.reportNumber = Nothing
+        DataStructureRaw.alertFlagOrigin = Nothing
+        DataStructureRaw.reportId = Nothing
+        DataStructureRaw.eqUrlTime = Nothing
+
+        DataStructureRaw.pWaveVelocity = Nothing
+        DataStructureRaw.sWaveRadius = Nothing
+        DataStructureRaw.sWaveVelocity = Nothing
+        DataStructureRaw.pWaveRadius = Nothing
+        DataStructureRaw.pwPixelDrawPerSec = Nothing
+        DataStructureRaw.swPixelDrawPerSec = Nothing
+
+        DataStructureRaw.pwPixelDrawPerTenthSec = Nothing
+        DataStructureRaw.swPixelDrawPerTenthSec = Nothing
+        DataStructureRaw.pwTotalPixelRadius = Nothing
+        DataStructureRaw.swTotalPixelRadius = Nothing
+    End Sub
+    Private Sub circlePlotter_Tick(sender As Object, e As EventArgs) Handles circlePlotter.Tick
+        'Get the wave velocities. This function WILL NOT draw circles. Responsibility belongs to the drawing timer
+
+        Dim pwVelocity As String = DataStructureRaw.pWaveVelocity 'KM Traveled Per Sec
+        Dim swVelocity As String = DataStructureRaw.sWaveVelocity 'KM Traveled Per Sec
+
+
+
+        'Get KM/S Velocity, convert that to pixel points
+        'Pass values to datastructure to draw circles
+
+        'Can use random point
+
+        Dim k As New geolocatePoint.GeoLocation
+
+        'Initial Points do NOT matter
+        k.Latitude = 35.658600859645539
+        k.Longitude = 139.7454446749598
+
+        Dim pwTravelPixelPerSecond As String = geolocatePoint.pixelPointFromDistance(k, pwVelocity)
+        Dim swTravelPixelPerSecond As String = geolocatePoint.pixelPointFromDistance(k, swVelocity)
+
+        ' MsgBox(pwTravelPixelPerSecond)
+        DataStructureRaw.pwPixelDrawPerSec = pwTravelPixelPerSecond
+        DataStructureRaw.pwPixelDrawPerTenthSec = pwTravelPixelPerSecond / 10
+
+        DataStructureRaw.swPixelDrawPerSec = swTravelPixelPerSecond
+        DataStructureRaw.swPixelDrawPerTenthSec = swTravelPixelPerSecond / 10
+
+
+        '  MsgBox(swTravelPixelPerSecond)
+        ListBox2.Items.Add("PER1/10S P: " & DataStructureRaw.pwPixelDrawPerTenthSec & " S: " & DataStructureRaw.swPixelDrawPerTenthSec & " RW: S/P" & pwVelocity & " " & swVelocity)
+
+
+    End Sub
 
     Private Sub PStimeCalculator_Tick(sender As Object, e As EventArgs) Handles PStimeCalculator.Tick
         Dim currentReportNumber As String = DataStructureRaw.reportNumber
@@ -678,8 +778,15 @@ Public Class apiTimer
 
         'spdCalc requires the unparsed time
         Dim provider As CultureInfo = CultureInfo.InvariantCulture
-        Dim parsedRequestTime As Date = DateTime.ParseExact(DataStructureRaw.requestTime, "yyyyMMddHHmmss", provider)
+        '    Dim parsedRequestTime As Date = DateTime.ParseExact(DataStructureRaw.eqUrlTime, "yyyyMMddHHmmss", provider)
+        Dim parsedRequestTime As Date = DataStructureRaw.eqUrlTime
+
         Dim parsedEventTime As Date = DateTime.ParseExact(DataStructureRaw.originTime, "yyyyMMddHHmmss", provider)
+        Dim delaySec As Integer = (parsedRequestTime - parsedEventTime).TotalSeconds
+
+        DataStructureRaw.eqElapsedSeconds = delaySec
+        dbgElpsSec.Text = DataStructureRaw.eqElapsedSeconds
+
 
         'Returns arrival times in form (<pwaveArrivalTimeInSeconds>,<swaveArrivalTimeInSeconds>) e.x (10,43)
         Dim timeUnsplitResult As String = spdCalc.calculateArrivalTime(currentReportNumber, parsedEventTime, parsedRequestTime, DataStructureRaw.longitude, DataStructureRaw.latitude, My.Settings.usrLat, My.Settings.usrLong, DataStructureRaw.depthOrigin)
@@ -761,16 +868,14 @@ Public Class apiTimer
 
     End Sub
 
-    Private Sub circlePlotter_Tick(sender As Object, e As EventArgs) Handles circlePlotter.Tick
 
-    End Sub
 
     Private Sub niedPointImporter_Tick(sender As Object, e As EventArgs) Handles niedPointImporter.Tick
         'Use the Picture Box
 
         If 1 = 1 Then 'For Demonstration
 
-            viewPage.SfMap1.Refresh()
+            ' viewPage.SfMap1.Refresh()
 
         End If
 
@@ -1579,6 +1684,39 @@ Public Class apiTimer
 
 
     End Sub
+
+    Private Sub psTotalUpdater_Tick(sender As Object, e As EventArgs) Handles psTotalUpdater.Tick
+        ' viewPage.SfMap1.Invalidate()
+        'Add pixel per 1/10 sec to total pixel count
+
+        'Get speed per second
+        Dim pswaveVel10 As String = DataStructureRaw.pwPixelDrawPerTenthSec
+        Dim swwaveVel10 As String = DataStructureRaw.swPixelDrawPerTenthSec
+
+        'Get total seconds elapsed after eew
+        Dim elapsSec As Integer = DataStructureRaw.eqElapsedSeconds
+
+        'Normalize Values
+        Dim elapsTenthSec As String = elapsSec * 10
+
+        Dim psTotalPX As Integer = pswaveVel10 * elapsTenthSec
+        Dim swTotalPX As Integer = swwaveVel10 * elapsTenthSec
+
+        DataStructureRaw.pwTotalPixelRadius = psTotalPX
+        DataStructureRaw.swTotalPixelRadius = swTotalPX
+
+        ListBox4.Items.Add(DataStructureRaw.eqElapsedSeconds & " RQ TIME: " & DataStructureRaw.requestTime & " ORIGIN TIME:" & DataStructureRaw.originTime)
+        Console.WriteLine(swTotalPX)
+        ListBox3.Items.Add("ELPS SEc: " & elapsSec & " psTotalPX: " & psTotalPX & " swTotalPX: " & swTotalPX)
+        viewPage.elpsDebug.Text = "ELPSSEC: PW: " & psTotalPX & " SW: " & swTotalPX
+
+
+    End Sub
+
+    Private Sub eewGraphicDrawer_Tick(sender As Object, e As EventArgs) Handles eewGraphicDrawer.Tick
+
+    End Sub
+
 
 
 #End Region

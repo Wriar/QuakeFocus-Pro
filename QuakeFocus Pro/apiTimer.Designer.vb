@@ -57,13 +57,26 @@ Partial Class apiTimer
         Me.workingPrefAvg = New System.Windows.Forms.Timer(Me.components)
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
-        Me.pgaImg = New System.Windows.Forms.PictureBox()
-        Me.pcImg = New System.Windows.Forms.PictureBox()
         Me.PStimeCalculator = New System.Windows.Forms.Timer(Me.components)
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.eewGraphicDrawer = New System.Windows.Forms.Timer(Me.components)
+        Me.pgaImg = New System.Windows.Forms.PictureBox()
+        Me.pcImg = New System.Windows.Forms.PictureBox()
+        Me.psTotalUpdater = New System.Windows.Forms.Timer(Me.components)
+        Me.ListBox2 = New System.Windows.Forms.ListBox()
+        Me.ListBox3 = New System.Windows.Forms.ListBox()
+        Me.ListBox4 = New System.Windows.Forms.ListBox()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.dbgElpsSec = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.dbgFuncRun = New System.Windows.Forms.Label()
+        Me.txtLong = New System.Windows.Forms.TextBox()
+        Me.txtLat = New System.Windows.Forms.TextBox()
+        Me.Label19 = New System.Windows.Forms.Label()
         CType(Me.pgaImg, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pcImg, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'xmlFetchTimer
@@ -227,6 +240,7 @@ Partial Class apiTimer
         '
         'circlePlotter
         '
+        Me.circlePlotter.Interval = 10
         '
         'niedPointImporter
         '
@@ -297,12 +311,28 @@ Partial Class apiTimer
         '
         'Button3
         '
-        Me.Button3.Location = New System.Drawing.Point(365, 326)
+        Me.Button3.Location = New System.Drawing.Point(617, 151)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(75, 23)
         Me.Button3.TabIndex = 21
         Me.Button3.Text = "Button3"
         Me.Button3.UseVisualStyleBackColor = True
+        '
+        'PStimeCalculator
+        '
+        Me.PStimeCalculator.Interval = 1000
+        '
+        'ListBox1
+        '
+        Me.ListBox1.FormattingEnabled = True
+        Me.ListBox1.ItemHeight = 16
+        Me.ListBox1.Location = New System.Drawing.Point(313, 90)
+        Me.ListBox1.Name = "ListBox1"
+        Me.ListBox1.Size = New System.Drawing.Size(186, 84)
+        Me.ListBox1.TabIndex = 22
+        '
+        'eewGraphicDrawer
+        '
         '
         'pgaImg
         '
@@ -322,24 +352,120 @@ Partial Class apiTimer
         Me.pcImg.TabIndex = 0
         Me.pcImg.TabStop = False
         '
-        'PStimeCalculator
+        'psTotalUpdater
         '
-        Me.PStimeCalculator.Interval = 1000
         '
-        'ListBox1
+        'ListBox2
         '
-        Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.ItemHeight = 16
-        Me.ListBox1.Location = New System.Drawing.Point(313, 90)
-        Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(186, 84)
-        Me.ListBox1.TabIndex = 22
+        Me.ListBox2.FormattingEnabled = True
+        Me.ListBox2.ItemHeight = 16
+        Me.ListBox2.Location = New System.Drawing.Point(119, 340)
+        Me.ListBox2.Name = "ListBox2"
+        Me.ListBox2.Size = New System.Drawing.Size(328, 116)
+        Me.ListBox2.TabIndex = 23
+        '
+        'ListBox3
+        '
+        Me.ListBox3.FormattingEnabled = True
+        Me.ListBox3.ItemHeight = 16
+        Me.ListBox3.Location = New System.Drawing.Point(472, 340)
+        Me.ListBox3.Name = "ListBox3"
+        Me.ListBox3.Size = New System.Drawing.Size(381, 116)
+        Me.ListBox3.TabIndex = 24
+        '
+        'ListBox4
+        '
+        Me.ListBox4.FormattingEnabled = True
+        Me.ListBox4.ItemHeight = 16
+        Me.ListBox4.Location = New System.Drawing.Point(532, 6)
+        Me.ListBox4.Name = "ListBox4"
+        Me.ListBox4.Size = New System.Drawing.Size(306, 100)
+        Me.ListBox4.TabIndex = 25
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.dbgFuncRun)
+        Me.GroupBox1.Controls.Add(Me.Label20)
+        Me.GroupBox1.Controls.Add(Me.dbgElpsSec)
+        Me.GroupBox1.Controls.Add(Me.Label18)
+        Me.GroupBox1.Location = New System.Drawing.Point(870, 27)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(200, 292)
+        Me.GroupBox1.TabIndex = 26
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "GroupBox1"
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(11, 40)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(74, 16)
+        Me.Label18.TabIndex = 0
+        Me.Label18.Text = "ELPS SEC:"
+        '
+        'dbgElpsSec
+        '
+        Me.dbgElpsSec.AutoSize = True
+        Me.dbgElpsSec.Location = New System.Drawing.Point(91, 40)
+        Me.dbgElpsSec.Name = "dbgElpsSec"
+        Me.dbgElpsSec.Size = New System.Drawing.Size(55, 16)
+        Me.dbgElpsSec.TabIndex = 1
+        Me.dbgElpsSec.Text = "Label19"
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Location = New System.Drawing.Point(11, 63)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(75, 16)
+        Me.Label20.TabIndex = 1
+        Me.Label20.Text = "Funct RUN:"
+        '
+        'dbgFuncRun
+        '
+        Me.dbgFuncRun.AutoSize = True
+        Me.dbgFuncRun.Location = New System.Drawing.Point(91, 63)
+        Me.dbgFuncRun.Name = "dbgFuncRun"
+        Me.dbgFuncRun.Size = New System.Drawing.Size(14, 16)
+        Me.dbgFuncRun.TabIndex = 2
+        Me.dbgFuncRun.Text = "0"
+        '
+        'txtLong
+        '
+        Me.txtLong.Location = New System.Drawing.Point(692, 218)
+        Me.txtLong.Name = "txtLong"
+        Me.txtLong.Size = New System.Drawing.Size(146, 22)
+        Me.txtLong.TabIndex = 27
+        '
+        'txtLat
+        '
+        Me.txtLat.Location = New System.Drawing.Point(692, 250)
+        Me.txtLat.Name = "txtLat"
+        Me.txtLat.Size = New System.Drawing.Size(146, 22)
+        Me.txtLat.TabIndex = 28
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Location = New System.Drawing.Point(620, 224)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(72, 16)
+        Me.Label19.TabIndex = 29
+        Me.Label19.Text = "LONGLAT:"
         '
         'apiTimer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(723, 431)
+        Me.ClientSize = New System.Drawing.Size(1231, 479)
+        Me.Controls.Add(Me.Label19)
+        Me.Controls.Add(Me.txtLat)
+        Me.Controls.Add(Me.txtLong)
+        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.ListBox4)
+        Me.Controls.Add(Me.ListBox3)
+        Me.Controls.Add(Me.ListBox2)
         Me.Controls.Add(Me.ListBox1)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Button2)
@@ -369,6 +495,8 @@ Partial Class apiTimer
         Me.Text = "apiTimer"
         CType(Me.pgaImg, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pcImg, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -412,4 +540,16 @@ Partial Class apiTimer
     Friend WithEvents PStimeCalculator As Timer
     Friend WithEvents ListBox1 As ListBox
     Friend WithEvents eewGraphicDrawer As Timer
+    Friend WithEvents psTotalUpdater As Timer
+    Friend WithEvents ListBox2 As ListBox
+    Friend WithEvents ListBox3 As ListBox
+    Friend WithEvents ListBox4 As ListBox
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents dbgFuncRun As Label
+    Friend WithEvents Label20 As Label
+    Friend WithEvents dbgElpsSec As Label
+    Friend WithEvents Label18 As Label
+    Friend WithEvents txtLong As TextBox
+    Friend WithEvents txtLat As TextBox
+    Friend WithEvents Label19 As Label
 End Class

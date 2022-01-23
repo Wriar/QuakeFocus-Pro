@@ -30,11 +30,13 @@ Partial Class viewPage
         Me.Button1 = New System.Windows.Forms.Button()
         Me.topDocker = New System.Windows.Forms.Panel()
         Me.mapDocker = New System.Windows.Forms.Panel()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.elpsDebug = New System.Windows.Forms.Label()
         Me.mapZoomLevel = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnWebsite = New System.Windows.Forms.Button()
         Me.btnReplay = New System.Windows.Forms.Button()
+        Me.mapInvalidate = New System.Windows.Forms.Timer(Me.components)
+        Me.epiShow = New System.Windows.Forms.Label()
         Me.localPga = New QuakeFocus_Pro.localPane()
         Me.EewBanner1 = New QuakeFocus_Pro.eewBanner()
         Me.FlowLightShaking1 = New QuakeFocus_Pro.flowLightShaking()
@@ -95,7 +97,7 @@ Partial Class viewPage
         Me.SfMap1.RenderQuality = EGIS.ShapeFileLib.RenderQuality.[Auto]
         Me.SfMap1.Size = New System.Drawing.Size(1112, 680)
         Me.SfMap1.TabIndex = 18
-        Me.SfMap1.UseMemoryStreams = True
+        Me.SfMap1.UseMemoryStreams = False
         Me.SfMap1.UseMercatorProjection = True
         Me.SfMap1.ZoomLevel = 1.0016611295681064R
         Me.SfMap1.ZoomToSelectedExtentWhenCtrlKeydown = True
@@ -123,7 +125,8 @@ Partial Class viewPage
         '
         'mapDocker
         '
-        Me.mapDocker.Controls.Add(Me.Label2)
+        Me.mapDocker.Controls.Add(Me.epiShow)
+        Me.mapDocker.Controls.Add(Me.elpsDebug)
         Me.mapDocker.Controls.Add(Me.mapZoomLevel)
         Me.mapDocker.Controls.Add(Me.Label1)
         Me.mapDocker.Controls.Add(Me.Button1)
@@ -133,17 +136,18 @@ Partial Class viewPage
         Me.mapDocker.Size = New System.Drawing.Size(1112, 680)
         Me.mapDocker.TabIndex = 21
         '
-        'Label2
+        'elpsDebug
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.BackColor = System.Drawing.Color.Maroon
-        Me.Label2.Font = New System.Drawing.Font("Segoe UI Semibold", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(15, 48)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(370, 34)
-        Me.Label2.TabIndex = 22
-        Me.Label2.Text = "WARNING: THIS IS AN EARLY RELEASE BUILD." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "閲覧注意です。これは初期リリースのビルドバージョンです。"
+        Me.elpsDebug.AutoSize = True
+        Me.elpsDebug.BackColor = System.Drawing.Color.Maroon
+        Me.elpsDebug.Font = New System.Drawing.Font("Segoe UI Semibold", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.elpsDebug.ForeColor = System.Drawing.Color.White
+        Me.elpsDebug.Location = New System.Drawing.Point(15, 48)
+        Me.elpsDebug.Name = "elpsDebug"
+        Me.elpsDebug.Size = New System.Drawing.Size(61, 17)
+        Me.elpsDebug.TabIndex = 22
+        Me.elpsDebug.Text = "ELPSSEC:"
+        Me.elpsDebug.Visible = False
         '
         'mapZoomLevel
         '
@@ -192,6 +196,23 @@ Partial Class viewPage
         Me.btnReplay.Size = New System.Drawing.Size(34, 32)
         Me.btnReplay.TabIndex = 15
         Me.btnReplay.UseVisualStyleBackColor = False
+        '
+        'mapInvalidate
+        '
+        Me.mapInvalidate.Interval = 10
+        '
+        'epiShow
+        '
+        Me.epiShow.AutoSize = True
+        Me.epiShow.BackColor = System.Drawing.Color.Maroon
+        Me.epiShow.Font = New System.Drawing.Font("Segoe UI Semibold", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.epiShow.ForeColor = System.Drawing.Color.White
+        Me.epiShow.Location = New System.Drawing.Point(15, 77)
+        Me.epiShow.Name = "epiShow"
+        Me.epiShow.Size = New System.Drawing.Size(61, 17)
+        Me.epiShow.TabIndex = 23
+        Me.epiShow.Text = "ELPSSEC:"
+        Me.epiShow.Visible = False
         '
         'localPga
         '
@@ -456,5 +477,7 @@ Partial Class viewPage
     Friend WithEvents mapZoomLevel As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents ViewPageLocalMonitor1 As viewPageLocalMonitor
-    Friend WithEvents Label2 As Label
+    Friend WithEvents elpsDebug As Label
+    Friend WithEvents mapInvalidate As Timer
+    Friend WithEvents epiShow As Label
 End Class

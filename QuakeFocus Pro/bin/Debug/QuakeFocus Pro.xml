@@ -175,6 +175,17 @@ QuakeFocus Pro
  Returns False if Error exists.
  </summary>
 </member>
+<member name="M:QuakeFocus_Pro.viewPage.drawEpicenter(System.Windows.Forms.PaintEventArgs,System.Drawing.Graphics,System.String,System.String,System.String,System.Int32)">
+ <summary>
+ Dray an Epicenter Icon
+ </summary>
+ <param name="e">Paint Event Arguments</param>
+ <param name="g">Graphics Object</param>
+ <param name="locX">Pixel Epicenter X</param>
+ <param name="locY">Pixel Epicenter Y</param>
+ <param name="epiType">Type to Draw: epicenter,</param>
+ <param name="evCode">In event of multiple EEW, alert number</param>
+</member>
 <member name="M:QuakeFocus_Pro.viewPage.DrawMarker(System.Drawing.Graphics,System.Double,System.Double,System.String,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.String)">
  <summary>
  Plot graphics object on map. Marker types are:

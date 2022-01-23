@@ -12,7 +12,7 @@
     Public Shared requestTime As String
     Public Shared regionNameJP As String
     Public Shared longitude As String
-    Public Shared latitude As String
+    Public Shared latitude As Double
     Public Shared isCancel As String
     Public Shared depthOrigin As String
     Public Shared calcIntensity As String
@@ -24,16 +24,38 @@
     Public Shared reportId As String
     Public Shared alertFlagOrigin As String
 
+    Public Shared eqUrlTime As DateTime
+
     'Raw Production Timings
     Public Shared sWaveRawArrivalTime As String
     Public Shared pWaveRawArrivalTime As String
 
-    'P-Wave and S-Wave Velocities
-    Public Shared pWaveVelocity As Double
-    Public Shared sWaveVelocity As Double
+    'Total Earthquake Elapsed Time
+    Public Shared eqElapsedSeconds As Integer
+
+
+
+    'P-Wave and S-Wave Velocities. Should be in form km/seconds
+    Public Shared pWaveVelocity As String
+    Public Shared sWaveVelocity As String
 
     'P-Wave and S-Wave Radius
-    Public Shared pWaveRadius As Double
-    Public Shared sWaveRadius As Double
+    Public Shared pWaveRadius As String
+    Public Shared sWaveRadius As String
 
+    'Pixels to draw (on p/swaves) PER SECOND
+    Public Shared pwPixelDrawPerSec As String
+    Public Shared swPixelDrawPerSec As String
+
+    'Pixels to draw (on p/swaves) PER 1/10 SECOND
+    Public Shared pwPixelDrawPerTenthSec As String
+    Public Shared swPixelDrawPerTenthSec As String
+
+    'Total Pixels used by viewPage Refreshing
+    Public Shared pwTotalPixelRadius As String
+    Public Shared swTotalPixelRadius As String
+
+
+    'Shared URLS
+    Public Shared kmoniBasePath As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/"
 End Class
