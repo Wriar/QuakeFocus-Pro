@@ -47,6 +47,11 @@ QuakeFocus Pro
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
 </member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.homeico">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:QuakeFocus_Pro.My.Resources.Resources.JapanSvgCss">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.

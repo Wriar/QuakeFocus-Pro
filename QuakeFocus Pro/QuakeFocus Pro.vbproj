@@ -170,6 +170,7 @@
     <Compile Include="apiTimer.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Utils\clsIni.vb" />
     <Compile Include="Utils\colorProcessing.vb" />
     <Compile Include="Controls\eewBanner.Designer.vb">
       <DependentUpon>eewBanner.vb</DependentUpon>

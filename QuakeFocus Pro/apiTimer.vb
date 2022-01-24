@@ -186,11 +186,73 @@ Public Class apiTimer
 
         End Try
     End Sub
+    Private Async Sub methodDownloadNIED()
 
 
+
+        If newImageTimers.Enabled = False Then
+            newImageTimers.Enabled = True
+        End If
+
+        Dim urlToDownload As String = My.Settings.dataImgChannel & "data/map_img/RealTimeImg/jma_s/" & My.Settings.privateImgDate & "/" & My.Settings.privateImgDateTime & ".jma_s.gif"
+        Try
+            Using client As New WebClient
+                Using MemStream As New MemoryStream(Await Client.DownloadDataTaskAsync(urlToDownload)) ' wait the downloading and append into memory stream
+                    pcImg.Image = (Image.FromStream(MemStream))  ' add a list with image from loaded memory stream.
+                End Using
+            End Using
+
+        Catch ex As Exception
+            errorHandler.HandleError("service", "NIED Downloader Thrown an Error whilst downloading REALTIME. If the error contains a status code, such as 404, 500, etc, then there is nothing to worry about. Check your connection or if JMA's API is currently under repair. ERR CONTENT: " & ex.Message, False)
+        End Try
+
+
+
+        '   Try
+        'Dim client As WebClient = New WebClient()
+        'Dim stream As Stream = Await client.OpenReadTaskAsync(New Uri(urlToDownload, UriKind.Absolute))
+        'Dim bitmap As Bitmap
+        '   Bitmap = New Bitmap(stream)
+
+        'If bitmap IsNot Nothing Then
+        'Download is OK
+        'pcImg.Image = bitmap
+
+        'Else
+        'Download is not OKAY
+        'errorHandler.HandleError("service", "Failed to Retrieve REALTIME Images. (Do NOT report this) No Error Text Present", False)
+        ' If
+
+        '       stream.Flush()
+        '       stream.Close()
+        '    client.Dispose()
+        '    Catch ex As Exception
+        '   errorHandler.HandleError("service", "Failed to Retrieve REALTIME Images. (Do NOT report this) ERROR CONTENT: " & ex.Message, False)
+        '   End Try
+    End Sub
+
+    Private Async Sub methodDownloadPga()
+        If newImageTimers.Enabled = False Then
+            newImageTimers.Enabled = True
+        End If
+        Dim urlToDownload As String = My.Settings.dataImgChannel & "data/map_img/RealTimeImg/acmap_s/" & My.Settings.privateImgDate & "/" & My.Settings.privateImgDateTime & ".acmap_s.gif"
+        '  Dim urlToDownload As String = My.Settings.dataImgChannel & "data/map_img/RealTimeImg/jma_s/" & My.Settings.privateImgDate & "/" & My.Settings.privateImgDateTime & ".jma_s.gif"
+        Try
+            Using client As New WebClient
+                Using MemStream As New MemoryStream(Await client.DownloadDataTaskAsync(urlToDownload)) ' wait the downloading and append into memory stream
+                    pgaImg.Image = (Image.FromStream(MemStream))  ' add a list with image from loaded memory stream.
+                End Using
+            End Using
+
+        Catch ex As Exception
+            errorHandler.HandleError("service", "NIED Downloader Thrown an Error whilst downloading PGA. If the error contains a status code, such as 404, 500, etc, then there is nothing to worry about. Check your connection or if JMA's API is currently under repair. ERR CONTENT: " & ex.Message, False)
+        End Try
+
+    End Sub
+#Region "Old Downloader Methods"
     Private tokyoTimer As System.Timers.Timer = Nothing
     Private tokyoClient As WebClient
-    Private Sub methodDownloadNIED()
+    Private Sub methodDownloadNIEDOLD()
 
         tokyoTimer = New System.Timers.Timer() With {.Interval = 1000}
         tokyoClient = New WebClient()
@@ -206,8 +268,10 @@ Public Class apiTimer
                 Dim data As Byte()
                 If My.Settings.currentMode = "live" Then
                     data = tokyoClient.DownloadData(New Uri(My.Settings.dataImgChannel & "data/map_img/RealTimeImg/jma_s/" & My.Settings.privateImgDate & "/" & My.Settings.privateImgDateTime & ".jma_s.gif"))
+                    Console.WriteLine("ATTEMPTING TO DOWNLOAD: " & My.Settings.dataImgChannel & "data/map_img/RealTimeImg/jma_s/" & My.Settings.privateImgDate & "/" & My.Settings.privateImgDateTime & ".jma_s.gif")
                 Else
-                    data = tokyoClient.DownloadData(New Uri(My.Settings.dataImgChannel & "data/map_img/RealTimeImg/jma_s/" & My.Settings.privateImgDate & "/" & My.Settings.privateImgDateTime & ".gif"))
+                    data = tokyoClient.DownloadData(New Uri(My.Settings.dataImgChannel & "data/map_img/RealTimeImg/jma_s/" & My.Settings.privateImgDate & "/" & My.Settings.privateImgDateTime & ".jma_s.gif"))
+                    Console.WriteLine("ATTEMPTING TO DOWNLOAD: " & My.Settings.dataImgChannel & "data/map_img/RealTimeImg/jma_s/" & My.Settings.privateImgDate & "/" & My.Settings.privateImgDateTime & ".jma_s.gif")
                 End If
 
                 BeginInvoke(New MethodInvoker(
@@ -218,7 +282,7 @@ Public Class apiTimer
             Catch ex As Exception
                 ' The exception hadling can be quite extensive here, since many factor can cause it: 
                 ' No server response, no Internet connection, internal server (500+) faults etc.
-                Console.WriteLine(ex.Message)
+                Console.WriteLine("NIED METHOD FAILED: " & ex.Message)
             End Try
         End Sub
         tokyoTimer.Enabled = True
@@ -227,7 +291,7 @@ Public Class apiTimer
     End Sub
     Private pgaTimer As Timers.Timer = Nothing
     Private pgaClient As WebClient
-    Private Sub methodDownloadPGA()
+    Private Sub methodDownloadPGAOLD()
 
         tokyoTimer = New System.Timers.Timer() With {.Interval = 1000}
         tokyoClient = New WebClient()
@@ -294,6 +358,7 @@ Public Class apiTimer
         End Sub
         tokyoTimer.Enabled = True
     End Sub
+#End Region
 
     Private Sub localPGAIdentifier_Tick(sender As Object, e As EventArgs) Handles localPGAIdentifier.Tick
         ' Both are combined into one timer.
@@ -902,6 +967,8 @@ Public Class apiTimer
     End Sub
 
     Private Sub apiTimer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        My.Settings.dataChannel = "http://www.kmoni.bosai.go.jp/data/map_img"
+        My.Settings.dataImgChannel = "http://www.kmoni.bosai.go.jp/"
         '    prefAvg.Start()
         Try
             Dim cDir As String = Application.StartupPath()
@@ -1714,6 +1781,12 @@ Public Class apiTimer
     End Sub
 
     Private Sub eewGraphicDrawer_Tick(sender As Object, e As EventArgs) Handles eewGraphicDrawer.Tick
+
+    End Sub
+
+    Private Sub newImageTimers_Tick(sender As Object, e As EventArgs) Handles newImageTimers.Tick
+        methodDownloadNIED()
+        methodDownloadPga()
 
     End Sub
 

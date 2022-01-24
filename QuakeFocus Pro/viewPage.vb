@@ -444,6 +444,7 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             SfMap1.ZoomLevel = 190000
         End If
 
+        drawHome(e, e.Graphics, SfMap1.GisPointToPixelCoord(My.Settings.usrLong, My.Settings.usrLat).X, SfMap1.GisPointToPixelCoord(My.Settings.usrLong, My.Settings.usrLat).Y)
         'Demo Demo P/S Circle
 
 
@@ -479,8 +480,33 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
     End Sub
 
+
+    Public Sub drawHome(ByVal e As PaintEventArgs, ByVal g As Graphics, locX As String, locY As String)
+        If locX IsNot Nothing And locY IsNot Nothing And locX <> 0 And locY <> 0 And locX > 0 And locY > 0 Then
+            Dim epImg As Image = My.Resources.homeico
+
+            Dim resourceHeight As Integer = epImg.Height / 2
+            Dim resourceWidth = epImg.Width / 2
+
+            Dim topLeftX As Integer = locX - resourceWidth / 2 'Scale Factor
+            Dim topLeftY As Integer = locY - resourceHeight / 2
+
+            Dim np As New PointF(topLeftX, topLeftY)
+
+            Dim epResize As Image = ResizeImageHome(epImg)
+            '  Dim ptD As New PointF(locX, locY)
+
+            g.DrawImage(epResize, np)
+        End If
+
+    End Sub
+
     Public Shared Function ResizeImage(ByVal InputImage As Image) As Image
         Return New Bitmap(InputImage, New Size(32, 32))
+    End Function
+
+    Public Shared Function ResizeImageHome(ByVal InputImage As Image) As Image
+        Return New Bitmap(InputImage, New Size(25, 25))
     End Function
 
     Public Shared Sub DrawOutlineCircle(ByVal g As Graphics, ByVal pen As Pen, ByVal centerX As Single, ByVal centerY As Single, ByVal radius As Single)
