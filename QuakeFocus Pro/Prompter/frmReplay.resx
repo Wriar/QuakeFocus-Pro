@@ -117,16 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="settingsBTN.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAUBJREFUOE+9
-        1LtKwwAUh/EUFKnSQa23joJ0qpcuLlXqpm/gpviAVsXFy6wPILrr4uCsDirx++wppbZiCaF/+NFwzslJ
-        Q9MkI0+aphUsh0qUs4clT+jkMcrZwoKF9p60Ecx8tP8Pw6vYxxTWcIk3jGEc77hADc44W4vTe0OjgFt8
-        4RUuukIzRpzZwTXsy9kbFGKkG4qHcMkK9nCEn0E+JxTHXtieM856zoG9nlA8wTOqUbI2h3N8hjOUo22/
-        Cs9pRakbikW49AWLUTvFHTaDx8fRW4KzLRSt9YXGBswsJuG3akTb/hY+4MXLMOvR7g/NensmnYa/ogu3
-        o22/CRd6sRmYerR7Q+OvW76Hi/SA4W6ZYu4/Su6Pze8HW9kfbEMjv7/eoDDceTnswls0w78cBoUF+b2+
-        DEtK8LlUKcqjSpJ8A/mlirYBTHXEAAAAAElFTkSuQmCC
-</value>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Earthquake events can be replayed during a certain period of time. When using map data, EEW can be replayed up to 2 hours after the initial event. When using JSON data, EEWs can be replayed up to 2 years after the initial event.</value>
   </data>
 </root>

@@ -1,4 +1,4 @@
-' MAIN PROCESSES OF APP CODE CONDENSED ON THIS PAGE
+﻿' MAIN PROCESSES OF APP CODE CONDENSED ON THIS PAGE
 Imports System.IO
 Imports System.Net
 Imports System.Threading
@@ -6,8 +6,15 @@ Imports Newtonsoft.Json
 Imports Dangl.Calculator 'This is deprecated no need but I'll still leave it in here.
 Imports KyoshinMonitorLib.Images
 Imports System.Text
+Imports System.IO.Compression
+Imports System.Globalization
 
 Public Class apiTimer
+    'Use these; the ones in My.Settings can be corrupted
+
+    Public Shared rwTime As Integer
+    Public Shared serverDelay As Integer
+
 
     Dim realtimeNIED As PictureBox
 
@@ -31,7 +38,7 @@ Public Class apiTimer
 
     Private eewPresent As Boolean
 
-
+    Public onlineCurrentTime As DateTime
     Sub importImgTime()
         Dim TimeSync As String
         Dim rawJSON1 As String = ""
@@ -79,6 +86,8 @@ Public Class apiTimer
         Dim oDate As DateTime
         Try
             oDate = DateTime.ParseExact(TimeSync, "yyyy/MM/dd HH:mm:ss", Nothing)
+            onlineCurrentTime = oDate
+
         Catch ex As Exception
 
         End Try
@@ -87,7 +96,7 @@ Public Class apiTimer
 
         'Get Usable DateTime
 
-        Dim serverTimeDelaySeconds As Integer = My.Settings.serverDelay + My.Settings.rewindTime
+        Dim serverTimeDelaySeconds As Integer = My.Settings.serverDelay + rwTime
 
         '   Console.WriteLine("SD IS " & My.Settings.serverDelay)
         '   Console.WriteLine("RW IS " & My.Settings.rewindTime)
@@ -162,14 +171,23 @@ Public Class apiTimer
             'For JSON Functions
             jsonPartURLDate = DateTime.ParseExact(TimeSync, "yyyy/MM/dd HH:mm:ss", Nothing)
 
+            'For rewinding JSON Features
+            Dim totalDelay As Integer = (CInt(My.Settings.serverDelay) + CInt(rwTime)) * (-1)
 
-            Dim jsonFullTime As String = jsonPartURLDate.ToString("yyyyMMddHHmmss")
+            Dim rwDelay As DateTime = jsonPartURLDate.AddSeconds(totalDelay)
+
+            Dim jsonFullTime As String = rwDelay.ToString("yyyyMMddHHmmss")
+            DataStructureRaw.eqUrlTime = rwDelay
+
             jsonPartURL = jsonFullTime
 
+            Console.WriteLine("URL Request Fragment:: " & jsonPartURL)
         Catch Ex As Exception
 
         End Try
     End Sub
+
+
     Private tokyoTimer As System.Timers.Timer = Nothing
     Private tokyoClient As WebClient
     Private Sub methodDownloadNIED()
@@ -289,13 +307,13 @@ Public Class apiTimer
         'Use Color Picker
         Dim imgToBitmap As Bitmap = pgaImg.Image
 
-            Dim localPGAColor = imgToBitmap.GetPixel(My.Settings.userLocalPointX, My.Settings.userLocalPointY)
+        Dim localPGAColor = imgToBitmap.GetPixel(My.Settings.userLocalPointX, My.Settings.userLocalPointY)
 
-            Dim pgaR As Integer = localPGAColor.R
-            Dim pgaG As Integer = localPGAColor.G
-            Dim pgaB As Integer = localPGAColor.B
+        Dim pgaR As Integer = localPGAColor.R
+        Dim pgaG As Integer = localPGAColor.G
+        Dim pgaB As Integer = localPGAColor.B
 
-            viewPage.localPga.pgaColorGradient.BackColor = Color.FromArgb(pgaR, pgaG, pgaB)
+        viewPage.localPga.pgaColorGradient.BackColor = Color.FromArgb(pgaR, pgaG, pgaB)
 
 
         Dim longstr As String = colorProcessing.ProcessColor(localPGAColor, "pga", False) & "00000"
@@ -311,8 +329,8 @@ Public Class apiTimer
 
         Else
 
-                viewPage.localPga.pgaLbl.Text = ">900"
-            End If
+            viewPage.localPga.pgaLbl.Text = ">900"
+        End If
 
 
 
@@ -344,8 +362,8 @@ Public Class apiTimer
 
         Else
 
-                viewPage.localPga.intLbl.Text = ">900"
-            End If
+            viewPage.localPga.intLbl.Text = ">900"
+        End If
 
 
     End Sub
@@ -363,17 +381,29 @@ Public Class apiTimer
 
             '============
             'For LIVE USE
-            Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/" & jsonPartURL & ".json"
+            '   Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/" & jsonPartURL & ".json"
+            Dim constructedURL As String = DataStructureRaw.kmoniBasePath & jsonPartURL & ".json"
+            'For Live USE + Simulation Use
 
             'FOR DEBUGGING TSTFLAG1
 
-            '  Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/20210320181258.json"
+            ' Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/20210320181258.json"
+            '   Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/20210320180958.json"
             '==============
 
             'Create Webclient for JSON Request
 
             Dim webClient As New WebClient
+            webClient.Encoding = UTF8Encoding.UTF8
             Dim result As String = webClient.DownloadString(constructedURL)
+
+            '  Dim client = New WebClient()
+            ' client.Encoding = UTF8Encoding.UTF8
+            'client.Headers(HttpRequestHeader.AcceptEncoding) = "gzip"
+            ' Dim responseStream = New GZipStream(client.OpenRead(constructedURL), CompressionMode.Decompress)
+            ' Dim reader = New StreamReader(responseStream)
+            ' Dim textResponse = reader.ReadToEnd()
+            ' Dim result As String = textResponse
 
             '   MsgBox(result)
             jsonResult = result 'Allow to be accessed via function.
@@ -385,60 +415,82 @@ Public Class apiTimer
         End Try
 
 
+
         'Begin to Process the JSON with Newtonsoft
+        If jsonStatus = True Then
+            Try
+                Dim jsonResulttodict = JsonConvert.DeserializeObject(Of Dictionary(Of String, Object))(jsonResult)
+                '  MsgBox(jsonResult)
+                Dim AlertStatus As String = jsonResulttodict.Item("security")("realm")
 
-        Try
-            Dim jsonResulttodict = JsonConvert.DeserializeObject(Of Dictionary(Of String, Object))(jsonResult)
-            Dim AlertStatus As String = jsonResulttodict.Item("security")("realm")
+                If AlertStatus = "/kyoshin_monitor/static/jsondata/eew_est/" Then
+                    'If this exists, this means that an EEW exists
 
-            If AlertStatus = "/kyoshin_monitor/static/jsondata/eew_est/" Then
-                'If this exists, this means that an EEW exists
+                    reportTime = jsonResulttodict.Item("report_time")
+                    requestTime = jsonResulttodict.Item("request_time")
+                    regionNameJP = jsonResulttodict.Item("region_name")
+                    longitude = jsonResulttodict.Item("longitude")
+                    isCancel = jsonResulttodict.Item("is_cancel")
+                    depthOrigin = jsonResulttodict.Item("depth")
+                    calcIntensity = jsonResulttodict.Item("calcintensity")
+                    isFinal = jsonResulttodict.Item("is_final")
+                    isTraining = jsonResulttodict.Item("is_training")
+                    latitude = jsonResulttodict.Item("latitude")
+                    originTime = jsonResulttodict.Item("origin_time")
+                    magunitude = jsonResulttodict.Item("magunitude")
+                    reportNumber = jsonResulttodict.Item("report_num")
+                    alertFlagOrigin = jsonResulttodict.Item("alertflg")
+                    reportId = jsonResulttodict.Item("report_id")
 
-                reportTime = jsonResulttodict.Item("report_time")
-                requestTime = jsonResulttodict.Item("request_time")
-                regionNameJP = jsonResulttodict.Item("region_name")
-                longitude = jsonResulttodict.Item("longitude")
-                isCancel = jsonResulttodict.Item("is_cancel")
-                depthOrigin = jsonResulttodict.Item("depth")
-                calcIntensity = jsonResulttodict.Item("calcintensity")
-                isFinal = jsonResulttodict.Item("is_final")
-                isTraining = jsonResulttodict.Item("is_training")
-                latitude = jsonResulttodict.Item("latitude")
-                originTime = jsonResulttodict.Item("origin_time")
-                magunitude = jsonResulttodict.Item("magunitude")
-                reportNumber = jsonResulttodict.Item("report_num")
-                alertFlagOrigin = jsonResulttodict.Item("alertflg")
-                reportId = jsonResulttodict.Item("report_id")
-                eewExists = True
 
-                'IF MULTITHREADING IS USED THIS WON'T WORK.
-                Label1.Text = reportTime
-                Label2.Text = requestTime
-                Label3.Text = regionNameJP
-                Label4.Text = longitude
-                Label5.Text = latitude
-                Label6.Text = isCancel
-                Label7.Text = depthOrigin
-                Label8.Text = calcIntensity
-                Label9.Text = isFinal
-                Label10.Text = isTraining
-                Label11.Text = originTime
-                Label12.Text = magunitude
-                Label13.Text = reportNumber
-                Label15.Text = alertFlagOrigin
-                Label14.Text = reportId
+                    DataStructureRaw.reportTime = jsonResulttodict.Item("report_time")
+                    DataStructureRaw.requestTime = jsonResulttodict.Item("request_time")
+                    DataStructureRaw.regionNameJP = jsonResulttodict.Item("region_name")
+                    DataStructureRaw.longitude = jsonResulttodict.Item("longitude")
+                    DataStructureRaw.isCancel = jsonResulttodict.Item("is_cancel")
+                    DataStructureRaw.depthOrigin = jsonResulttodict.Item("depth")
+                    DataStructureRaw.calcIntensity = jsonResulttodict.Item("calcintensity")
+                    DataStructureRaw.isFinal = jsonResulttodict.Item("is_final")
+                    DataStructureRaw.isTraining = jsonResulttodict.Item("is_training")
+                    DataStructureRaw.latitude = jsonResulttodict.Item("latitude")
+                    DataStructureRaw.originTime = jsonResulttodict.Item("origin_time")
+                    DataStructureRaw.magunitude = jsonResulttodict.Item("magunitude")
+                    DataStructureRaw.reportNumber = jsonResulttodict.Item("report_num")
+                    DataStructureRaw.alertFlagOrigin = jsonResulttodict.Item("alertflg")
+                    DataStructureRaw.reportId = jsonResulttodict.Item("report_id")
+                    eewExists = True
 
-                eewExists = True
+                    'IF MULTITHREADING IS USED THIS WON'T WORK. (Which it does not).
+                    Label1.Text = reportTime
+                    Label2.Text = requestTime
+                    Label3.Text = regionNameJP
+                    Label4.Text = longitude
+                    Label5.Text = latitude
+                    Label6.Text = isCancel
+                    Label7.Text = depthOrigin
+                    Label8.Text = calcIntensity
+                    Label9.Text = isFinal
+                    Label10.Text = isTraining
+                    Label11.Text = originTime
+                    Label12.Text = magunitude
+                    Label13.Text = reportNumber
+                    Label15.Text = alertFlagOrigin
+                    Label14.Text = reportId
 
-            Else
-                eewExists = False
+                    eewExists = True
 
-            End If
+                Else
+                    eewExists = False
 
-        Catch ex As Exception
+                End If
 
-        End Try
+            Catch ex As Exception
 
+            End Try
+        Else
+            errorHandler.HandleError("service", "Could Not Contact Japan Meteorological Agency (JSON SERVICE). This error is usually normal and can be due to network changes/loss of connection/maitnence. Please do not report this issue.", False)
+            Console.WriteLine("Could not Contact JMA JSON API.")
+        End If
 
 
     End Sub
@@ -469,8 +521,28 @@ Public Class apiTimer
     'Important
     Public eewExists As Boolean
 
-    Public Sub drawPSCircles()
+#Region "GZIP Compression"
+    Protected Function GzipGetWebRequest(myUrl As String)
+        Dim client = New WebClient()
+        client.Encoding = UTF8Encoding.UTF8
+        client.Headers(HttpRequestHeader.AcceptEncoding) = "gzip"
+        Dim responseStream = New GZipStream(client.OpenRead(myUrl), CompressionMode.Decompress)
+        Dim reader = New StreamReader(responseStream)
+        Dim textResponse = reader.ReadToEnd()
+        Return textResponse
+    End Function
+#End Region
+    Public Sub queryPlum()
+        Dim constructedURL As String = "https://svir.jp/eew/data.json"
+        '==============
 
+        'Create Webclient for JSON Request
+        Dim reqData As String = GzipGetWebRequest(constructedURL)
+        '   MsgBox(result)
+
+    End Sub
+    Public Sub drawPSCircles()
+        '
     End Sub
 
     Private Sub jsonImporter_Tick(sender As Object, e As EventArgs) Handles jsonImporter.Tick
@@ -480,54 +552,281 @@ Public Class apiTimer
         ' MsgBox(magunitude)
     End Sub
 
-    Private Sub pushJson_Tick(sender As Object, e As EventArgs) Handles pushJson.Tick
-        If eewExists = True Then
-            'Show the Banners
+    Function getMetersPerPixel()
+        Dim sfClientWidth As Integer = viewPage.SfMap1.Width / viewPage.SfMap1.VisibleExtent.Width
+        MsgBox(viewPage.SfMap1.VisibleExtent.Width)
+        Return sfClientWidth
+    End Function
 
-            Console.WriteLine("EEW Exists")
+    Function eh()
+        ' Dim topLeft As String =
+        '  Dim bottomRight As String
+    End Function
+
+
+    Public hasZoomedMap As Boolean = False
+
+
+    Private Sub pushJson_Tick(sender As Object, e As EventArgs) Handles pushJson.Tick
+        '   viewPage.SfMap1.Refresh()
+        '    viewPage.PictureBox2.Invalidate()
+
+        '  viewPage.SfMap1.Invalidate()
+
+        'This method is deprecated.
+        If 1 = 2 Then
+            If eewExists = True Then
+                'Show the Banners
+
+                Console.WriteLine("EEW Exists")
+                viewPage.FlowTsunami1.Visible = False
+                viewPage.FlowNoAlertPane1.Visible = False
+                viewPage.FlowLightShaking1.Visible = False
+                viewPage.EewBanner1.Visible = True
+
+
+                'Create a Calculation for Velocity (used to draw P-W)
+                Dim velocityPW As Double = hsEpicenterLocator.getPWTravelTime(depthOrigin.Replace("km", ""))
+                Dim velocitySW As Double = hsEpicenterLocator.getSWTravelTime(depthOrigin.Replace("km", ""))
+
+                'Create a Calculation for Time Travel Per Second
+
+
+
+
+
+
+
+                'Get language to use
+                Try
+                    If My.Settings.prefixLang = "jp" Then
+                        'Do not require translations
+                        viewPage.EewBanner1.locationLbl.Text = DataStructureRaw.regionNameJP
+                        MsgBox(DataStructureRaw.regionNameJP)
+                    Else
+                        'Language is english; attempt translation
+                        viewPage.EewBanner1.locationLbl.Text = translationSource.DecodeEpicenterToEnglish(regionNameJP)
+                    End If
+
+                Catch ex As Exception
+                    errorHandler.HandleError("service", "Could not translate EEW String", False)
+                End Try
+
+
+
+            Else
+                'There is no worry about EEW.
+                viewPage.EewBanner1.Visible = False
+                viewPage.FlowNoAlertPane1.Visible = True
+
+
+            End If
+        End If
+        '  MsgBox(My.Settings.rewindTime)
+
+        If eewExists = True Then
+            'Multiple Events must be started here
+            Console.WriteLine("EEW Detected. ")
+
+            'Show or hide current elements
             viewPage.FlowTsunami1.Visible = False
             viewPage.FlowNoAlertPane1.Visible = False
             viewPage.FlowLightShaking1.Visible = False
             viewPage.EewBanner1.Visible = True
 
+            'Zoom map to extent
 
-            'Create a Calculation for Velocity (used to draw P-W)
-            Dim velocityPW As Double = hsEpicenterLocator.getPWTravelTime(depthOrigin.Replace("km", ""))
-            Dim velocitySW As Double = hsEpicenterLocator.getSWTravelTime(depthOrigin.Replace("km", ""))
+            If hasZoomedMap = False Then
+                hasZoomedMap = True
+                viewPage.SfMap1.SetZoomAndCentre(200, New EGIS.ShapeFileLib.PointD(DataStructureRaw.longitude, DataStructureRaw.latitude))
+            Else
+                'Map already zoomed
+            End If
+            'Get the location data. This data can remain static
 
-            'Create a Calculation for Time Travel Per Second
-
-
-
-
-
-
-
-            'Get language to use
             Try
-                If My.Settings.prefixLang = "jp" Then
+                If My.Settings.prefixLang = "en" Then
                     'Do not require translations
-                    viewPage.EewBanner1.locationLbl.Text = regionNameJP
+                    viewPage.EewBanner1.locationLbl.Text = "Location: " & translationSource.DecodeEpicenterToEnglish(regionNameJP)
                 Else
                     'Language is english; attempt translation
-                    viewPage.EewBanner1.locationLbl.Text = translationSource.DecodeEpicenterToEnglish(regionNameJP)
+                    viewPage.EewBanner1.locationLbl.Text = "場所: " & DataStructureRaw.regionNameJP
                 End If
 
             Catch ex As Exception
-                errorHandler.HandleError("service", "Could not translate EEW String", False)
+                errorHandler.HandleError("service", "Could not translate EEW String.", False)
             End Try
 
 
+            'Start Time Calculations
+            PStimeCalculator.Start()
+
+            'Start Drawing Utilities
+            ' eewGraphicDrawer.Start()
+            '    If eewGraphicDrawer.Enabled = False Then
+            ' eewGraphicDrawer.Enabled = True
+            ' If
+
+            'Get VJMA Values, set them in the datastructure
+
+            If circlePlotter.Enabled = False Then
+                circlePlotter.Enabled = True
+            End If
+
+            If psTotalUpdater.Enabled = False Then
+                psTotalUpdater.Enabled = True
+
+            End If
+
 
         Else
-            'There is no worry about EEW.
-            viewPage.EewBanner1.Visible = False
-            viewPage.FlowNoAlertPane1.Visible = True
+            'Stop all current alerts.
+            PStimeCalculator.Stop()
+            '  eewGraphicDrawer.Stop()
+            hasZoomedMap = False
 
+            circlePlotter.Stop()
+
+            psTotalUpdater.Stop()
+
+            viewPage.FlowTsunami1.Visible = False
+            viewPage.FlowNoAlertPane1.Visible = True
+            viewPage.FlowLightShaking1.Visible = False
+            viewPage.EewBanner1.Visible = False
+
+            ClearDataStruct()
 
         End If
+
+    End Sub
+    Dim prevReportID As String
+    Sub ClearDataStruct()
+        DataStructureRaw.reportTime = Nothing
+        DataStructureRaw.requestTime = Nothing
+        DataStructureRaw.regionNameJP = Nothing
+        DataStructureRaw.longitude = Nothing
+        DataStructureRaw.isCancel = Nothing
+        DataStructureRaw.depthOrigin = Nothing
+        DataStructureRaw.calcIntensity = Nothing
+        DataStructureRaw.isFinal = Nothing
+        DataStructureRaw.isTraining = Nothing
+        DataStructureRaw.latitude = Double.NaN
+        DataStructureRaw.originTime = Nothing
+        DataStructureRaw.magunitude = Nothing
+        DataStructureRaw.reportNumber = Nothing
+        DataStructureRaw.alertFlagOrigin = Nothing
+        DataStructureRaw.reportId = Nothing
+        DataStructureRaw.eqUrlTime = Nothing
+
+        DataStructureRaw.pWaveVelocity = Nothing
+        DataStructureRaw.sWaveRadius = Nothing
+        DataStructureRaw.sWaveVelocity = Nothing
+        DataStructureRaw.pWaveRadius = Nothing
+        DataStructureRaw.pwPixelDrawPerSec = Nothing
+        DataStructureRaw.swPixelDrawPerSec = Nothing
+
+        DataStructureRaw.pwPixelDrawPerTenthSec = Nothing
+        DataStructureRaw.swPixelDrawPerTenthSec = Nothing
+        DataStructureRaw.pwTotalPixelRadius = Nothing
+        DataStructureRaw.swTotalPixelRadius = Nothing
+    End Sub
+    Private Sub circlePlotter_Tick(sender As Object, e As EventArgs) Handles circlePlotter.Tick
+        'Get the wave velocities. This function WILL NOT draw circles. Responsibility belongs to the drawing timer
+
+        Dim pwVelocity As String = DataStructureRaw.pWaveVelocity 'KM Traveled Per Sec
+        Dim swVelocity As String = DataStructureRaw.sWaveVelocity 'KM Traveled Per Sec
+
+
+
+        'Get KM/S Velocity, convert that to pixel points
+        'Pass values to datastructure to draw circles
+
+        'Can use random point
+
+        Dim k As New geolocatePoint.GeoLocation
+
+        'Initial Points do NOT matter
+        k.Latitude = 35.658600859645539
+        k.Longitude = 139.7454446749598
+
+        Dim pwTravelPixelPerSecond As String = geolocatePoint.pixelPointFromDistance(k, pwVelocity)
+        Dim swTravelPixelPerSecond As String = geolocatePoint.pixelPointFromDistance(k, swVelocity)
+
+        ' MsgBox(pwTravelPixelPerSecond)
+        DataStructureRaw.pwPixelDrawPerSec = pwTravelPixelPerSecond
+        DataStructureRaw.pwPixelDrawPerTenthSec = pwTravelPixelPerSecond / 10
+
+        DataStructureRaw.swPixelDrawPerSec = swTravelPixelPerSecond
+        DataStructureRaw.swPixelDrawPerTenthSec = swTravelPixelPerSecond / 10
+
+
+        '  MsgBox(swTravelPixelPerSecond)
+        ListBox2.Items.Add("PER1/10S P: " & DataStructureRaw.pwPixelDrawPerTenthSec & " S: " & DataStructureRaw.swPixelDrawPerTenthSec & " RW: S/P" & pwVelocity & " " & swVelocity)
+
+
     End Sub
 
+    Private Sub PStimeCalculator_Tick(sender As Object, e As EventArgs) Handles PStimeCalculator.Tick
+        Dim currentReportNumber As String = DataStructureRaw.reportNumber
+
+        If prevReportID = "" Then
+            prevReportID = currentReportNumber
+
+        Else
+
+        End If
+
+        'spdCalc requires the unparsed time
+        Dim provider As CultureInfo = CultureInfo.InvariantCulture
+        '    Dim parsedRequestTime As Date = DateTime.ParseExact(DataStructureRaw.eqUrlTime, "yyyyMMddHHmmss", provider)
+        Dim parsedRequestTime As Date = DataStructureRaw.eqUrlTime
+
+        Dim parsedEventTime As Date = DateTime.ParseExact(DataStructureRaw.originTime, "yyyyMMddHHmmss", provider)
+        Dim delaySec As Integer = (parsedRequestTime - parsedEventTime).TotalSeconds
+
+        DataStructureRaw.eqElapsedSeconds = delaySec
+        dbgElpsSec.Text = DataStructureRaw.eqElapsedSeconds
+
+
+        'Returns arrival times in form (<pwaveArrivalTimeInSeconds>,<swaveArrivalTimeInSeconds>) e.x (10,43)
+        Dim timeUnsplitResult As String = spdCalc.calculateArrivalTime(currentReportNumber, parsedEventTime, parsedRequestTime, DataStructureRaw.longitude, DataStructureRaw.latitude, My.Settings.usrLat, My.Settings.usrLong, DataStructureRaw.depthOrigin)
+
+        Dim tsplitResult = timeUnsplitResult.Split(",")
+
+        Dim PWaveArriveTimeLeft As Integer = tsplitResult(0)
+        Dim SWaveArriveTimeLeft As Integer = tsplitResult(1)
+
+        DataStructureRaw.pWaveRawArrivalTime = PWaveArriveTimeLeft
+        DataStructureRaw.sWaveRawArrivalTime = SWaveArriveTimeLeft
+
+
+        'Set the current seconds
+        viewPage.EewBanner1.secondLbl.Text = secondConstructor(SWaveArriveTimeLeft)
+
+        'set eq mag in the EEWBANNER
+
+        viewPage.EewBanner1.lineMagLbl.Text = DataStructureRaw.magunitude
+        viewPage.EewBanner1.lineMagLbl.ForeColor = colorProcessing.ReturnTileColorJMAplusMinus(colorProcessing.ReturnPlusMinusJma(DataStructureRaw.magunitude))
+
+        'set report number
+        If My.Settings.prefixLang = "en" Then
+            viewPage.EewBanner1.reportNumLbl.Text = "Report Number: " & DataStructureRaw.reportNumber
+        Else
+            viewPage.EewBanner1.reportNumLbl.Text = "報告書番号: " & DataStructureRaw.reportNumber
+        End If
+
+
+
+
+    End Sub
+    Function secondConstructor(rawSec As Double)
+        Dim iSpan As TimeSpan = TimeSpan.FromSeconds(rawSec)
+        Dim hrs As String = iSpan.Hours.ToString.PadLeft(2, "0"c)
+        Dim mins As String = iSpan.Minutes.ToString.PadLeft(2, "0"c)
+        Dim secs As String = iSpan.Seconds.ToString.PadLeft(2, "0"c)
+
+        Return mins & ":" & secs
+    End Function
     Private Sub viewPageFlowAdjust_Tick(sender As Object, e As EventArgs) Handles viewPageFlowAdjust.Tick
         If viewPage.FlowTsunami1.Visible = True And viewPage.FlowNoAlertPane1.Visible = False And viewPage.EewBanner1.Visible = False And viewPage.FlowLightShaking1.Visible = False Then
             'one pane is visible. 
@@ -569,16 +868,14 @@ Public Class apiTimer
 
     End Sub
 
-    Private Sub circlePlotter_Tick(sender As Object, e As EventArgs) Handles circlePlotter.Tick
 
-    End Sub
 
     Private Sub niedPointImporter_Tick(sender As Object, e As EventArgs) Handles niedPointImporter.Tick
         'Use the Picture Box
 
         If 1 = 1 Then 'For Demonstration
 
-            viewPage.SfMap1.Refresh()
+            ' viewPage.SfMap1.Refresh()
 
         End If
 
@@ -1374,6 +1671,54 @@ Public Class apiTimer
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         globalSettings.Show()
     End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        'Dim unparsedEventTime As String = originTime
+        ' Parse Text to DateTime
+        Dim provider As CultureInfo = CultureInfo.InvariantCulture
+        Dim parsedRequestTime As Date = DateTime.ParseExact(DataStructureRaw.requestTime, "yyyyMMddHHmmss", provider)
+        Dim parsedEventTime As Date = DateTime.ParseExact(DataStructureRaw.originTime, "yyyyMMddHHmmss", provider)
+
+
+        '  MsgBox(spdCalc.calculateArrivalTime(parsedEventTime, parsedRequestTime, DataStructureRaw.longitude, DataStructureRaw.latitude, My.Settings.usrLat, My.Settings.usrLong, DataStructureRaw.depthOrigin))
+
+
+    End Sub
+
+    Private Sub psTotalUpdater_Tick(sender As Object, e As EventArgs) Handles psTotalUpdater.Tick
+        ' viewPage.SfMap1.Invalidate()
+        'Add pixel per 1/10 sec to total pixel count
+
+        'Get speed per second
+        Dim pswaveVel10 As String = DataStructureRaw.pwPixelDrawPerTenthSec
+        Dim swwaveVel10 As String = DataStructureRaw.swPixelDrawPerTenthSec
+
+        'Get total seconds elapsed after eew
+        Dim elapsSec As Integer = DataStructureRaw.eqElapsedSeconds
+
+        'Normalize Values
+        Dim elapsTenthSec As String = elapsSec * 10
+
+        Dim psTotalPX As Integer = pswaveVel10 * elapsTenthSec
+        Dim swTotalPX As Integer = swwaveVel10 * elapsTenthSec
+
+        DataStructureRaw.pwTotalPixelRadius = psTotalPX
+        DataStructureRaw.swTotalPixelRadius = swTotalPX
+
+        ListBox4.Items.Add(DataStructureRaw.eqElapsedSeconds & " RQ TIME: " & DataStructureRaw.requestTime & " ORIGIN TIME:" & DataStructureRaw.originTime)
+        Console.WriteLine(swTotalPX)
+        ListBox3.Items.Add("ELPS SEc: " & elapsSec & " psTotalPX: " & psTotalPX & " swTotalPX: " & swTotalPX)
+        viewPage.elpsDebug.Text = "ELPSSEC: PW: " & psTotalPX & " SW: " & swTotalPX
+
+
+    End Sub
+
+    Private Sub eewGraphicDrawer_Tick(sender As Object, e As EventArgs) Handles eewGraphicDrawer.Tick
+
+    End Sub
+
+
+
 #End Region
 
 End Class

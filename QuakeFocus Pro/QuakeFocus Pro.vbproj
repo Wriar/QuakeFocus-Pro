@@ -151,103 +151,123 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlertBoxSet.vb" />
+    <Compile Include="Prompter\abtForm.Designer.vb">
+      <DependentUpon>abtForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Prompter\abtForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Prompter\frmReplay.Designer.vb">
+      <DependentUpon>frmReplay.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Prompter\frmReplay.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Deprecated\AlertBoxSet.vb" />
     <Compile Include="apiTimer.Designer.vb">
       <DependentUpon>apiTimer.vb</DependentUpon>
     </Compile>
     <Compile Include="apiTimer.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="colorProcessing.vb" />
-    <Compile Include="eewBanner.Designer.vb">
+    <Compile Include="Utils\colorProcessing.vb" />
+    <Compile Include="Controls\eewBanner.Designer.vb">
       <DependentUpon>eewBanner.vb</DependentUpon>
     </Compile>
-    <Compile Include="eewBanner.vb">
+    <Compile Include="Controls\eewBanner.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="errorHandler.vb" />
-    <Compile Include="eventList.vb" />
-    <Compile Include="ExtendedPanel.vb">
+    <Compile Include="Utils\errorHandler.vb" />
+    <Compile Include="Deprecated\eventList.vb" />
+    <Compile Include="Controls\ExtendedPanel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="flowIntensityLbl.Designer.vb">
+    <Compile Include="Controls\flowIntensityLbl.Designer.vb">
       <DependentUpon>flowIntensityLbl.vb</DependentUpon>
     </Compile>
-    <Compile Include="flowIntensityLbl.vb">
+    <Compile Include="Controls\flowIntensityLbl.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="flowLightShaking.Designer.vb">
+    <Compile Include="Controls\flowLightShaking.Designer.vb">
       <DependentUpon>flowLightShaking.vb</DependentUpon>
     </Compile>
-    <Compile Include="flowLightShaking.vb">
+    <Compile Include="Controls\flowLightShaking.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="flowNoAlertPane.Designer.vb">
+    <Compile Include="Controls\flowNoAlertPane.Designer.vb">
       <DependentUpon>flowNoAlertPane.vb</DependentUpon>
     </Compile>
-    <Compile Include="flowNoAlertPane.vb">
+    <Compile Include="Controls\flowNoAlertPane.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="flowSmallEvent.Designer.vb">
+    <Compile Include="Controls\flowSmallEvent.Designer.vb">
       <DependentUpon>flowSmallEvent.vb</DependentUpon>
     </Compile>
-    <Compile Include="flowSmallEvent.vb">
+    <Compile Include="Controls\flowSmallEvent.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="flowTsunami.Designer.vb">
+    <Compile Include="Controls\flowTsunami.Designer.vb">
       <DependentUpon>flowTsunami.vb</DependentUpon>
     </Compile>
-    <Compile Include="flowTsunami.vb">
+    <Compile Include="Controls\flowTsunami.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Form1.vb">
+    <Compile Include="Deprecated\Form1.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.vb">
+    <Compile Include="Deprecated\Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="gisRenderObjects.vb" />
-    <Compile Include="globalServers.vb" />
+    <Compile Include="Deprecated\gisRenderObjects.vb" />
+    <Compile Include="Deprecated\globalServers.vb" />
     <Compile Include="globalSettings.Designer.vb">
       <DependentUpon>globalSettings.vb</DependentUpon>
     </Compile>
     <Compile Include="globalSettings.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="hsEpicenterLocator.vb" />
+    <Compile Include="Utils\geolocatePoint.vb" />
+    <Compile Include="Utils\hsEpicenterLocator.vb" />
+    <Compile Include="Prompter\isdDialog.Designer.vb">
+      <DependentUpon>isdDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Prompter\isdDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="lightDetect.Designer.vb">
       <DependentUpon>lightDetect.vb</DependentUpon>
     </Compile>
     <Compile Include="lightDetect.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="line.vb" />
-    <Compile Include="lmsVar.Designer.vb">
+    <Compile Include="Utils\line.vb" />
+    <Compile Include="Tests\lmsVar.Designer.vb">
       <DependentUpon>lmsVar.vb</DependentUpon>
     </Compile>
-    <Compile Include="lmsVar.vb">
+    <Compile Include="Tests\lmsVar.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="localPane.Designer.vb">
+    <Compile Include="Controls\localPane.Designer.vb">
       <DependentUpon>localPane.vb</DependentUpon>
     </Compile>
-    <Compile Include="localPane.vb">
+    <Compile Include="Controls\localPane.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="mapViewFrame.Designer.vb">
+    <Compile Include="Controls\mapViewFrame.Designer.vb">
       <DependentUpon>mapViewFrame.vb</DependentUpon>
     </Compile>
-    <Compile Include="mapViewFrame.vb">
+    <Compile Include="Controls\mapViewFrame.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MultiSounds.vb" />
+    <Compile Include="Utils\MultiSounds.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="My Project\DataStructureRaw.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -265,30 +285,31 @@
     <Compile Include="nhkDownloader.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NIEDImageDownloader.vb" />
-    <Compile Include="pgaImgDownloader.vb" />
-    <Compile Include="pointDecoder.vb" />
-    <Compile Include="soundLangHandler.vb" />
-    <Compile Include="startup.vb" />
-    <Compile Include="svgColorConstruct.vb" />
-    <Compile Include="svgStaticLocations.vb" />
-    <Compile Include="translationSource.vb" />
-    <Compile Include="tsCoastLine.Designer.vb">
+    <Compile Include="Utils\NIEDImageDownloader.vb" />
+    <Compile Include="Imaging\pgaImgDownloader.vb" />
+    <Compile Include="Deprecated\pointDecoder.vb" />
+    <Compile Include="Utils\soundLangHandler.vb" />
+    <Compile Include="spdCalc.vb" />
+    <Compile Include="Deprecated\startup.vb" />
+    <Compile Include="Deprecated\svgColorConstruct.vb" />
+    <Compile Include="Deprecated\svgStaticLocations.vb" />
+    <Compile Include="Utils\translationSource.vb" />
+    <Compile Include="Controls\tsCoastLine.Designer.vb">
       <DependentUpon>tsCoastLine.vb</DependentUpon>
     </Compile>
-    <Compile Include="tsCoastLine.vb">
+    <Compile Include="Controls\tsCoastLine.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="updateAvailable.Designer.vb">
+    <Compile Include="Prompter\updateAvailable.Designer.vb">
       <DependentUpon>updateAvailable.vb</DependentUpon>
     </Compile>
-    <Compile Include="updateAvailable.vb">
+    <Compile Include="Prompter\updateAvailable.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="v1GISmap.Designer.vb">
+    <Compile Include="Controls\v1GISmap.Designer.vb">
       <DependentUpon>v1GISmap.vb</DependentUpon>
     </Compile>
-    <Compile Include="v1GISmap.vb">
+    <Compile Include="Controls\v1GISmap.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="viewPage.Designer.vb">
@@ -297,52 +318,61 @@
     <Compile Include="viewPage.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="viewPageLocalMonitor.Designer.vb">
+    <Compile Include="Controls\viewPageLocalMonitor.Designer.vb">
       <DependentUpon>viewPageLocalMonitor.vb</DependentUpon>
     </Compile>
-    <Compile Include="viewPageLocalMonitor.vb">
+    <Compile Include="Controls\viewPageLocalMonitor.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="XMLViewParse.vb" />
+    <Compile Include="Utils\XMLViewParse.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="apiTimer.resx">
       <DependentUpon>apiTimer.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="eewBanner.resx">
+    <EmbeddedResource Include="Controls\eewBanner.resx">
       <DependentUpon>eewBanner.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="flowIntensityLbl.resx">
+    <EmbeddedResource Include="Controls\flowIntensityLbl.resx">
       <DependentUpon>flowIntensityLbl.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="flowLightShaking.resx">
+    <EmbeddedResource Include="Controls\flowLightShaking.resx">
       <DependentUpon>flowLightShaking.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="flowNoAlertPane.resx">
+    <EmbeddedResource Include="Controls\flowNoAlertPane.resx">
       <DependentUpon>flowNoAlertPane.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="flowSmallEvent.resx">
+    <EmbeddedResource Include="Controls\flowSmallEvent.resx">
       <DependentUpon>flowSmallEvent.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="flowTsunami.resx">
+    <EmbeddedResource Include="Controls\flowTsunami.resx">
       <DependentUpon>flowTsunami.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="Deprecated\Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="globalSettings.resx">
       <DependentUpon>globalSettings.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Prompter\abtForm.resx">
+      <DependentUpon>abtForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Prompter\frmReplay.resx">
+      <DependentUpon>frmReplay.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Prompter\isdDialog.resx">
+      <DependentUpon>isdDialog.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="lightDetect.resx">
       <DependentUpon>lightDetect.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="lmsVar.resx">
+    <EmbeddedResource Include="Tests\lmsVar.resx">
       <DependentUpon>lmsVar.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="localPane.resx">
+    <EmbeddedResource Include="Controls\localPane.resx">
       <DependentUpon>localPane.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="mapViewFrame.resx">
+    <EmbeddedResource Include="Controls\mapViewFrame.resx">
       <DependentUpon>mapViewFrame.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -354,19 +384,19 @@
     <EmbeddedResource Include="nhkDownloader.resx">
       <DependentUpon>nhkDownloader.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="tsCoastLine.resx">
+    <EmbeddedResource Include="Controls\tsCoastLine.resx">
       <DependentUpon>tsCoastLine.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="updateAvailable.resx">
+    <EmbeddedResource Include="Prompter\updateAvailable.resx">
       <DependentUpon>updateAvailable.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="v1GISmap.resx">
+    <EmbeddedResource Include="Controls\v1GISmap.resx">
       <DependentUpon>v1GISmap.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="viewPage.resx">
       <DependentUpon>viewPage.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="viewPageLocalMonitor.resx">
+    <EmbeddedResource Include="Controls\viewPageLocalMonitor.resx">
       <DependentUpon>viewPageLocalMonitor.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

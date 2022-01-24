@@ -117,29 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="infoToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="settingsBTN.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAACnSURBVDhP7ZG9DYMwFIQtJQULhBlgglBEMAwZID9dsk5QFgmrMAOdufM7CltKgWj9SZ9knfzO
+        GLtMZgfe+xq+4RUWipmX8CFLxcwLyL0vWCs2EDRwhis/eIAsmxgIrpkd4chAcLZRXSj8hjimhU9bRvBL
+        O1tGDKoLhYNlERfI4ZQb5GEpH9VtvvIJ8srcs8LZs+oMBBXkD+5h+ih3+e9RKsWZzHacWwDta1pEgMdR
+        7AAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <metadata name="ctxHlp.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="SfMap1.CentrePoint2D" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="ReplayToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFRFR0lTLlNoYXBlRmlsZUxpYiwgVmVyc2lvbj00LjcuMC4wLCBD
-        dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTA1Yjk4Yzg2OWI1ZmZlNmEFAQAAABhFR0lTLlNo
-        YXBlRmlsZUxpYi5Qb2ludEQCAAAAAXgBeQAABgYCAAAAAAAAAAAAAAAVAAAAAADgPws=
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAESSURBVDhP1ZRLTgJREABHE1l6B7fy2bvyHMYYEW/AHQA3ioGtJ/AKegs/XAOQnRipmhkSPvNm
+        mISFVlKh5wU60/26if4dx+mnVHGAHzhLfcdHrOFOPOE5DvEHTdbBa2xiNz2bo9+pYC7P+ItjvMQD3MSz
+        C/Q7r5ibdJlwgmce5FBHk9qWIG00qVr+ak+zsArLt997wfI/8SF+2hM9fEvCde7xJAlL0cJpEq7j4U0S
+        luIWvcQtljNXlmDJfTRp1uyFOMQR2q4tvHpHwKHdlSv0N6fxUwauk8Pq0BbRQHvnbgdxjVynotXzzUz2
+        gkeYi0ldJ0txaO/QPwY1tmff6JsVJlvFnroB3uBXqrEXEOzZXyeKFv6XPQVXgIB7AAAAAElFTkSuQmCC
 </value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnWebsite.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="SettingsToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAThJREFUOE/F
-        lEsuBFEYhSs9aAQJLcEGtInHArqjmWrPVQgjJuxAzNiLbQhWQfcGGJCU71SdW24qhRDFSb7kf99Ubv03
-        +RelaboIbbvfF80z0LW9D6/wAruOdaEl+0tRuA6PsAyTMISgAUzAKjxAz23VomADnuHW/hGUdeDcHTxB
-        9VASTbiGGzh27Mp+zKVzJ/bV01SsPnFCA07hzEzBbOSXUU41wVdvw+OygSsQaw46uVkp5VQTa8njsoFb
-        eazQCGznZqVUr5pYfY/LBvbzWKFRKB8SS/VjuVlo0+Pq+WRdyjlcGG3KfOSXUU41wVfv+6XUIk74/R+b
-        hPZY6xRW7xDKCqt3D6pdk/+hKOiBFl8XpYcgfhz0aIxDeBw+HxZEYQs6tvcgPF87jumWp2X/SDS3YcHu
-        XypJ3gAirdjOBhNnkgAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAE+SURBVDhPxZQxTgNBDEW3JBItNEAVWjqgCPQcAKWB9FBSAAfgCjSEhoLkHBwFJOoEOECA96QZ
+        aXYygYRFypeeZHltr63xTLUMHUM3oN1IW/CVsQl/1glY5DagrW9uncMdHMEQPsEiuwFtfQMwxlhzilqH
+        NzAp8gSHEKWtL415B3On1AcDLuAGzkC14CCwogP5zRhjzbmHmlZhDI7T0xG0Dy8Qu3mGPYg6BXPMtUZN
+        O/AKBmyDnVnsAy7hKtgWtdM2GGuOuUU9gJ34N0fUtljUNejzmzHa5sxUqaCdRS1UMB/ZsRzPMS1qsXRk
+        Y2aO7N9Kh+IB/HQoxpozAmvU5NGblK+N3ThiJ9gqXxtXbkoup0sau5F5FtvLsAZFpVfP6+U4JqVXbwKP
+        8OvVK6nx45DLp8oiKRvQSP/6wC6oqvoGcPN07m2yHI8AAAAASUVORK5CYII=
 </value>
   </data>
-  <metadata name="mapInvalidate.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>151, 17</value>
-  </metadata>
 </root>

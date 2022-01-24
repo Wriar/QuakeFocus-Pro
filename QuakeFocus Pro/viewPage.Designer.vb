@@ -26,14 +26,17 @@ Partial Class viewPage
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(viewPage))
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.infoToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.btnWebsite = New System.Windows.Forms.Button()
-        Me.btnReplay = New System.Windows.Forms.Button()
         Me.SfMap1 = New EGIS.Controls.SFMap()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.topDocker = New System.Windows.Forms.Panel()
         Me.mapDocker = New System.Windows.Forms.Panel()
+        Me.elpsDebug = New System.Windows.Forms.Label()
         Me.mapZoomLevel = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.btnWebsite = New System.Windows.Forms.Button()
+        Me.btnReplay = New System.Windows.Forms.Button()
+        Me.mapInvalidate = New System.Windows.Forms.Timer(Me.components)
+        Me.epiShow = New System.Windows.Forms.Label()
         Me.localPga = New QuakeFocus_Pro.localPane()
         Me.EewBanner1 = New QuakeFocus_Pro.eewBanner()
         Me.FlowLightShaking1 = New QuakeFocus_Pro.flowLightShaking()
@@ -54,7 +57,6 @@ Partial Class viewPage
         Me.FlowSmallEvent7 = New QuakeFocus_Pro.flowSmallEvent()
         Me.FlowSmallEvent9 = New QuakeFocus_Pro.flowSmallEvent()
         Me.ViewPageLocalMonitor1 = New QuakeFocus_Pro.viewPageLocalMonitor()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.FlowLayoutPanel1.SuspendLayout()
         Me.topDocker.SuspendLayout()
         Me.mapDocker.SuspendLayout()
@@ -78,34 +80,6 @@ Partial Class viewPage
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
         Me.FlowLayoutPanel1.Size = New System.Drawing.Size(425, 829)
         Me.FlowLayoutPanel1.TabIndex = 0
-        '
-        'btnWebsite
-        '
-        Me.btnWebsite.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(119, Byte), Integer))
-        Me.btnWebsite.FlatAppearance.BorderSize = 2
-        Me.btnWebsite.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnWebsite.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnWebsite.ForeColor = System.Drawing.Color.White
-        Me.btnWebsite.Image = CType(resources.GetObject("btnWebsite.Image"), System.Drawing.Image)
-        Me.btnWebsite.Location = New System.Drawing.Point(284, 41)
-        Me.btnWebsite.Name = "btnWebsite"
-        Me.btnWebsite.Size = New System.Drawing.Size(34, 32)
-        Me.btnWebsite.TabIndex = 16
-        Me.btnWebsite.UseVisualStyleBackColor = False
-        '
-        'btnReplay
-        '
-        Me.btnReplay.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(119, Byte), Integer))
-        Me.btnReplay.FlatAppearance.BorderSize = 2
-        Me.btnReplay.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnReplay.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnReplay.ForeColor = System.Drawing.Color.White
-        Me.btnReplay.Image = Global.QuakeFocus_Pro.My.Resources.Resources.replay
-        Me.btnReplay.Location = New System.Drawing.Point(244, 41)
-        Me.btnReplay.Name = "btnReplay"
-        Me.btnReplay.Size = New System.Drawing.Size(34, 32)
-        Me.btnReplay.TabIndex = 15
-        Me.btnReplay.UseVisualStyleBackColor = False
         '
         'SfMap1
         '
@@ -136,7 +110,6 @@ Partial Class viewPage
         Me.Button1.TabIndex = 19
         Me.Button1.Text = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
-        Me.Button1.Visible = False
         '
         'topDocker
         '
@@ -152,7 +125,8 @@ Partial Class viewPage
         '
         'mapDocker
         '
-        Me.mapDocker.Controls.Add(Me.Label2)
+        Me.mapDocker.Controls.Add(Me.epiShow)
+        Me.mapDocker.Controls.Add(Me.elpsDebug)
         Me.mapDocker.Controls.Add(Me.mapZoomLevel)
         Me.mapDocker.Controls.Add(Me.Label1)
         Me.mapDocker.Controls.Add(Me.Button1)
@@ -162,13 +136,26 @@ Partial Class viewPage
         Me.mapDocker.Size = New System.Drawing.Size(1112, 680)
         Me.mapDocker.TabIndex = 21
         '
+        'elpsDebug
+        '
+        Me.elpsDebug.AutoSize = True
+        Me.elpsDebug.BackColor = System.Drawing.Color.Maroon
+        Me.elpsDebug.Font = New System.Drawing.Font("Segoe UI Semibold", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.elpsDebug.ForeColor = System.Drawing.Color.White
+        Me.elpsDebug.Location = New System.Drawing.Point(15, 48)
+        Me.elpsDebug.Name = "elpsDebug"
+        Me.elpsDebug.Size = New System.Drawing.Size(61, 17)
+        Me.elpsDebug.TabIndex = 22
+        Me.elpsDebug.Text = "ELPSSEC:"
+        Me.elpsDebug.Visible = False
+        '
         'mapZoomLevel
         '
         Me.mapZoomLevel.AutoSize = True
         Me.mapZoomLevel.ForeColor = System.Drawing.Color.White
         Me.mapZoomLevel.Location = New System.Drawing.Point(144, 18)
         Me.mapZoomLevel.Name = "mapZoomLevel"
-        Me.mapZoomLevel.Size = New System.Drawing.Size(16, 17)
+        Me.mapZoomLevel.Size = New System.Drawing.Size(14, 16)
         Me.mapZoomLevel.TabIndex = 21
         Me.mapZoomLevel.Text = "0"
         '
@@ -178,9 +165,54 @@ Partial Class viewPage
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(16, 18)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(125, 17)
+        Me.Label1.Size = New System.Drawing.Size(119, 16)
         Me.Label1.TabIndex = 20
         Me.Label1.Text = "CURRENT ZOOM:"
+        '
+        'btnWebsite
+        '
+        Me.btnWebsite.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(119, Byte), Integer))
+        Me.btnWebsite.FlatAppearance.BorderSize = 2
+        Me.btnWebsite.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnWebsite.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnWebsite.ForeColor = System.Drawing.Color.White
+        Me.btnWebsite.Image = CType(resources.GetObject("btnWebsite.Image"), System.Drawing.Image)
+        Me.btnWebsite.Location = New System.Drawing.Point(284, 41)
+        Me.btnWebsite.Name = "btnWebsite"
+        Me.btnWebsite.Size = New System.Drawing.Size(34, 32)
+        Me.btnWebsite.TabIndex = 16
+        Me.btnWebsite.UseVisualStyleBackColor = False
+        '
+        'btnReplay
+        '
+        Me.btnReplay.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(119, Byte), Integer))
+        Me.btnReplay.FlatAppearance.BorderSize = 2
+        Me.btnReplay.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnReplay.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnReplay.ForeColor = System.Drawing.Color.White
+        Me.btnReplay.Image = Global.QuakeFocus_Pro.My.Resources.Resources.replay
+        Me.btnReplay.Location = New System.Drawing.Point(244, 41)
+        Me.btnReplay.Name = "btnReplay"
+        Me.btnReplay.Size = New System.Drawing.Size(34, 32)
+        Me.btnReplay.TabIndex = 15
+        Me.btnReplay.UseVisualStyleBackColor = False
+        '
+        'mapInvalidate
+        '
+        Me.mapInvalidate.Interval = 10
+        '
+        'epiShow
+        '
+        Me.epiShow.AutoSize = True
+        Me.epiShow.BackColor = System.Drawing.Color.Maroon
+        Me.epiShow.Font = New System.Drawing.Font("Segoe UI Semibold", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.epiShow.ForeColor = System.Drawing.Color.White
+        Me.epiShow.Location = New System.Drawing.Point(15, 77)
+        Me.epiShow.Name = "epiShow"
+        Me.epiShow.Size = New System.Drawing.Size(61, 17)
+        Me.epiShow.TabIndex = 23
+        Me.epiShow.Text = "ELPSSEC:"
+        Me.epiShow.Visible = False
         '
         'localPga
         '
@@ -198,6 +230,7 @@ Partial Class viewPage
         Me.EewBanner1.Name = "EewBanner1"
         Me.EewBanner1.Size = New System.Drawing.Size(2254, 130)
         Me.EewBanner1.TabIndex = 21
+        Me.EewBanner1.Visible = False
         '
         'FlowLightShaking1
         '
@@ -391,18 +424,6 @@ Partial Class viewPage
         Me.ViewPageLocalMonitor1.Size = New System.Drawing.Size(418, 150)
         Me.ViewPageLocalMonitor1.TabIndex = 10
         '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.BackColor = System.Drawing.Color.Maroon
-        Me.Label2.Font = New System.Drawing.Font("Segoe UI Semibold", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(15, 48)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(323, 38)
-        Me.Label2.TabIndex = 22
-        Me.Label2.Text = "WARNING: THIS IS AN EARLY RELEASE BUILD." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "閲覧注意です。これは初期リリースのビルドバージョンです。"
-        '
         'viewPage
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -456,5 +477,7 @@ Partial Class viewPage
     Friend WithEvents mapZoomLevel As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents ViewPageLocalMonitor1 As viewPageLocalMonitor
-    Friend WithEvents Label2 As Label
+    Friend WithEvents elpsDebug As Label
+    Friend WithEvents mapInvalidate As Timer
+    Friend WithEvents epiShow As Label
 End Class

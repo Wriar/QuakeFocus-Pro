@@ -152,3 +152,80 @@ C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFoc
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.xml
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.pdb
 C:\Users\natha\source\repos\QuakeFocus Pro\repostage\qfp\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.vbproj.AssemblyReference.cache
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\QuakeFocus Pro.exe.config
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\QuakeFocus Pro.exe
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\QuakeFocus Pro.pdb
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\QuakeFocus Pro.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\Antlr4.Runtime.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\Dangl.Calculator.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\Fizzler.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\KyoshinMonitorLib.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\KyoshinMonitorLib.Images.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\MessagePack.Annotations.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\MessagePack.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\Microsoft.WindowsAPICodePack.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\Newtonsoft.Json.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\Svg.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Buffers.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Collections.Immutable.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Drawing.Common.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Memory.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Text.Encodings.Web.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Text.Json.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.ValueTuple.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\Antlr4.Runtime.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\Dangl.Calculator.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\KyoshinMonitorLib.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\KyoshinMonitorLib.Images.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\MessagePack.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\MessagePack.Annotations.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\Microsoft.WindowsAPICodePack.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\Newtonsoft.Json.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\Svg.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Buffers.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Collections.Immutable.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Memory.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Text.Encodings.Web.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Text.Json.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\bin\Debug\System.ValueTuple.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.vbproj.AssemblyReference.cache
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.vbproj.SuggestedBindingRedirects.cache
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\Interop.SHDocVw.dll
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.vbproj.ResolveComReference.cache
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.apiTimer.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.eewBanner.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.flowIntensityLbl.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.flowLightShaking.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.flowNoAlertPane.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.flowSmallEvent.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.flowTsunami.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.Form1.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.globalSettings.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.lightDetect.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.lmsVar.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.localPane.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.mapViewFrame.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.Resources.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.nhkDownloader.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.tsCoastLine.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.updateAvailable.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.v1GISmap.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.viewPage.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.viewPageLocalMonitor.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.vbproj.GenerateResource.cache
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.vbproj.CoreCompileInputs.cache
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.vbproj.CopyComplete
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.exe
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.xml
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus Pro.pdb
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.isdDialog.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.frmReplay.resources
+C:\Users\natha\Documents\GitHub\QuakeFocus-Pro\QuakeFocus Pro\obj\Debug\QuakeFocus_Pro.abtForm.resources

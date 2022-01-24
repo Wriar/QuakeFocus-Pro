@@ -65,5 +65,11 @@
     <Setting Name="lmsPrefAutoAlertThreshold" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
+    <Setting Name="usrLong" Type="System.String" Scope="User">
+      <Value Profile="(Default)">139.839478</Value>
+    </Setting>
+    <Setting Name="usrLat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">35.652832</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

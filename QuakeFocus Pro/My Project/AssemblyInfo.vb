@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("QuakeFocus Pro")>
-<Assembly: AssemblyCopyright("Copyright ©  2021")>
+<Assembly: AssemblyCopyright("Compiled by Wriar (c) 2022. Code is licensed under appropriate license listed in repository")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>

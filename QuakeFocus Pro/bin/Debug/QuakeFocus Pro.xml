@@ -93,6 +93,24 @@ QuakeFocus Pro
  <param name="sender"></param>
  <param name="e"></param>
 </member>
+<member name="M:QuakeFocus_Pro.geolocatePoint.FindPointAtDistanceFrom(QuakeFocus_Pro.geolocatePoint.GeoLocation,System.Double,System.Double)">
+ <summary>
+ Provides a function for Geolocating a Point on SFMAP. QuakeFOCUS Pro uses EASYGIS utilities which does not account for distance drawing.
+ </summary>
+ <param name="startPoint">Initial Point (e.x Epicenter)</param>
+ <param name="initialBearingRadians">Give any Point. Straighter points allow for better calculation</param>
+ <param name="distanceKilometres">Distance (e.x total distance calculated from velocity table)</param>
+ <returns></returns>
+</member>
+<member name="M:QuakeFocus_Pro.geolocatePoint.pixelPointFromDistance(QuakeFocus_Pro.geolocatePoint.GeoLocation,System.Double)">
+ <summary>
+ Convert a Longitude/Latitude Point and a Length (in Kilometers) to Pixel Points.
+ Returns Pixel Points of the Radius (if needed can use any point in place for CenterPoint Variable.
+ </summary>
+ <param name="centerPoint">Initial Point</param>
+ <param name="circleRadius">Distance in KM</param>
+ <returns></returns>
+</member>
 <member name="M:QuakeFocus_Pro.lightDetect.lightDetect_Load(System.Object,System.EventArgs)">
  <summary>
  1. IMPORT TABLE INTO THE DATAGRID (IMPORT TABLE)
@@ -156,6 +174,17 @@ QuakeFocus Pro
  Loads the Image into the image viewer.
  Returns False if Error exists.
  </summary>
+</member>
+<member name="M:QuakeFocus_Pro.viewPage.drawEpicenter(System.Windows.Forms.PaintEventArgs,System.Drawing.Graphics,System.String,System.String,System.String,System.Int32)">
+ <summary>
+ Dray an Epicenter Icon
+ </summary>
+ <param name="e">Paint Event Arguments</param>
+ <param name="g">Graphics Object</param>
+ <param name="locX">Pixel Epicenter X</param>
+ <param name="locY">Pixel Epicenter Y</param>
+ <param name="epiType">Type to Draw: epicenter,</param>
+ <param name="evCode">In event of multiple EEW, alert number</param>
 </member>
 <member name="M:QuakeFocus_Pro.viewPage.DrawMarker(System.Drawing.Graphics,System.Double,System.Double,System.String,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.String)">
  <summary>
