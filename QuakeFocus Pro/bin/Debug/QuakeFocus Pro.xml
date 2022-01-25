@@ -42,6 +42,21 @@ QuakeFocus Pro
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
 </member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.fivem">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.fivep">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.four">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:QuakeFocus_Pro.My.Resources.Resources.hi_demo">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
@@ -53,6 +68,11 @@ QuakeFocus Pro
 </summary>
 </member>
 <member name="P:QuakeFocus_Pro.My.Resources.Resources.JapanSvgCss">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.one">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
@@ -77,7 +97,32 @@ QuakeFocus Pro
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
 </member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.seven">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.sixm">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.sixp">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:QuakeFocus_Pro.My.Resources.Resources.smp1">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.three">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:QuakeFocus_Pro.My.Resources.Resources.two">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>

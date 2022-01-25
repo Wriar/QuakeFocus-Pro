@@ -341,6 +341,18 @@ Namespace My
                 Me("showHomeIcon") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property drawIntensityIcons() As Boolean
+            Get
+                Return CType(Me("drawIntensityIcons"),Boolean)
+            End Get
+            Set
+                Me("drawIntensityIcons") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

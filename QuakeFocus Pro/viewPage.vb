@@ -322,8 +322,15 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
             Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(str.Item4, str.Item5)
             '  Console.WriteLine(pt)
-            DrawMarker(e.Graphics, pt.X, pt.Y, "realtime", Color.FromArgb(255, 0, 0), Color.FromArgb(255, 0, 0), realtimeColor, realtimeInterpolated)
 
+            If realtimeInterpolated < 1 Then
+                DrawMarker(e.Graphics, pt.X, pt.Y, "realtime", Color.FromArgb(255, 0, 0), Color.FromArgb(255, 0, 0), realtimeColor, realtimeInterpolated)
+            ElseIf realtimeInterpolated >= 1 And My.Settings.drawIntensityIcons = True Then
+                DrawMarker(e.Graphics, pt.X, pt.Y, "measured", Color.FromArgb(255, 0, 0), Color.FromArgb(255, 0, 0), realtimeColor, realtimeInterpolated)
+            End If
+
+
+            'TODO: Light Detection Availability
 
 
 
@@ -717,7 +724,43 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
         End If
 
+        If markerType = "measured" Then
+            'Draw images by priority
+            Dim epImg As Image = My.Resources.one
+            If intensity >= 1 And intensity < 2 Then
+                epImg = My.Resources.one
 
+
+            ElseIf intensity >= 2 And intensity < 3 Then
+                epImg = My.Resources.two
+            ElseIf intensity >= 3 And intensity < 4 Then
+                epImg = My.Resources.three
+            ElseIf intensity >= 4 And intensity < 5 Then
+                epImg = My.Resources.four
+            ElseIf intensity >= 5 And intensity < 5.5 Then
+                epImg = My.Resources.fivem
+            ElseIf intensity >= 5.5 And intensity < 6 Then
+                epImg = My.Resources.fivep
+            ElseIf intensity >= 6 And intensity < 6.5 Then
+                epImg = My.Resources.sixm
+            ElseIf intensity >= 6.5 And intensity < 7 Then
+                epImg = My.Resources.sixp
+            ElseIf intensity >= 7 And intensity < 99999999999 Then
+                epImg = My.Resources.seven
+            End If
+
+            Dim resourceHeight As Integer = epImg.Height / 2
+            Dim resourceWidth = epImg.Width / 2
+            Dim topLeftX As Integer = locX - resourceWidth / 2 'Scale Factor
+            Dim topLeftY As Integer = locY - resourceHeight / 2
+            Dim np As New PointF(topLeftX, topLeftY)
+            Dim epResize As Image = ResizeImageMeasured(epImg)
+            '  Dim ptD As New PointF(locX, locY)
+            g.DrawImage(epResize, np)
+
+
+
+        End If
         'Longitude goes first, latitude goes second.
 
 
@@ -740,7 +783,9 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
         'g.FillEllipse(blueBrush, myRectangle)
     End Sub
-
+    Public Shared Function ResizeImageMeasured(ByVal InputImage As Image) As Image
+        Return New Bitmap(InputImage, New Size(InputImage.Size.Width * 1.3, InputImage.Size.Height * 1.3))
+    End Function
     Private Sub viewPage_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
 
     End Sub

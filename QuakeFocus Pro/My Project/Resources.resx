@@ -127,6 +127,15 @@
   <data name="epicenter" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\epicenter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="fivem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>D:\QuakeFocus Lite\QuakeFocus Lite\Resources\fivem.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fivep" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>D:\QuakeFocus Lite\QuakeFocus Lite\Resources\fivep.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="four" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>D:\QuakeFocus Lite\QuakeFocus Lite\Resources\four.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="hi_demo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\20110311145000.jma_s.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -135,6 +144,9 @@
   </data>
   <data name="JapanSvgCss" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\JapanSvgCss.emf;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="one" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>D:\QuakeFocus Lite\QuakeFocus Lite\Resources\one.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="polbnda_jpn" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\polbnda_jpn.shx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -148,8 +160,23 @@
   <data name="sampleimg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\sampleimg.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="seven" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>D:\QuakeFocus Lite\QuakeFocus Lite\Resources\seven.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sixm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>D:\QuakeFocus Lite\QuakeFocus Lite\Resources\sixm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sixp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>D:\QuakeFocus Lite\QuakeFocus Lite\Resources\sixp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="smp1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\smp1.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="three" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>D:\QuakeFocus Lite\QuakeFocus Lite\Resources\three.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="two" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>D:\QuakeFocus Lite\QuakeFocus Lite\Resources\two.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="_stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
