@@ -135,17 +135,17 @@ Public Class apiTimer
 
 
         If niedDownloadStarted = False Then
-            Dim imageDonwloder As NIEDImageDownloader = Nothing
+            '  Dim imageDonwloder As NIEDImageDownloader = Nothing
 
-            imageDonwloder = New NIEDImageDownloader()
+            'imageDonwloder = New NIEDImageDownloader()
 
             'Toggle this on/off for Testing Mode Only TSTFLAG1
 
             ' pcImg.Image = My.Resources.smp1
-            imageDonwloder.StartDownload(Me.pcImg, 1, My.Settings.serverDelay)
+            '  imageDonwloder.StartDownload(Me.pcImg, 1, My.Settings.serverDelay)
 
 
-            '   methodDownloadNIED()
+            methodDownloadNIED()
 
             niedDownloadStarted = True
         Else
@@ -186,6 +186,9 @@ Public Class apiTimer
 
         End Try
     End Sub
+
+    Private downloadDebugStat As Boolean = False
+
     Private Async Sub methodDownloadNIED()
 
 
@@ -199,6 +202,23 @@ Public Class apiTimer
             Using client As New WebClient
                 Using MemStream As New MemoryStream(Await Client.DownloadDataTaskAsync(urlToDownload)) ' wait the downloading and append into memory stream
                     pcImg.Image = (Image.FromStream(MemStream))  ' add a list with image from loaded memory stream.
+
+                    If downloadDebugStat = True Then
+                        Try
+                            'For Debugging Purposes Only
+
+                            Dim bmpLock As Bitmap = Image.FromStream(MemStream)
+                            Dim fileName As String = My.Settings.privateImgDateTime & ".jma_s.gif"
+                            Dim appPath As String = Application.StartupPath() & "\archiver\realtime\"
+
+                            bmpLock.Save(appPath & fileName, System.Drawing.Imaging.ImageFormat.Gif)
+
+                        Catch Ex As Exception
+                            Console.WriteLine("Archiver Failed: " & Ex.Message)
+                        End Try
+
+                    End If
+
                 End Using
             End Using
 
@@ -241,6 +261,25 @@ Public Class apiTimer
             Using client As New WebClient
                 Using MemStream As New MemoryStream(Await client.DownloadDataTaskAsync(urlToDownload)) ' wait the downloading and append into memory stream
                     pgaImg.Image = (Image.FromStream(MemStream))  ' add a list with image from loaded memory stream.
+
+
+                    If downloadDebugStat = True Then
+                        Try
+                            'For Debugging Purposes Only
+
+                            Dim bmpLock As Bitmap = Image.FromStream(MemStream)
+                            Dim fileName As String = My.Settings.privateImgDateTime & ".acmap_s.gif"
+                            Dim appPath As String = Application.StartupPath() & "\archiver\pga\"
+
+                            bmpLock.Save(appPath & fileName, System.Drawing.Imaging.ImageFormat.Gif)
+
+                        Catch Ex As Exception
+                            Console.WriteLine("Archiver Failed: " & Ex.Message)
+                        End Try
+
+                    End If
+
+
                 End Using
             End Using
 
@@ -612,7 +651,7 @@ Public Class apiTimer
 
     Private Sub jsonImporter_Tick(sender As Object, e As EventArgs) Handles jsonImporter.Tick
         Dim eThread As New Thread(AddressOf eewJsonImport)
-        eThread.Start()
+        '  eThread.Start()
 
         ' MsgBox(magunitude)
     End Sub
@@ -630,7 +669,9 @@ Public Class apiTimer
 
 
     Public hasZoomedMap As Boolean = False
+    Public hasLightDetectZoomed As Boolean = False
 
+    Public selfDetectionExist As Boolean = False
 
     Private Sub pushJson_Tick(sender As Object, e As EventArgs) Handles pushJson.Tick
         '   viewPage.SfMap1.Refresh()
@@ -646,7 +687,7 @@ Public Class apiTimer
                 Console.WriteLine("EEW Exists")
                 viewPage.FlowTsunami1.Visible = False
                 viewPage.FlowNoAlertPane1.Visible = False
-                viewPage.FlowLightShaking1.Visible = False
+                '   viewPage.FlowLightShaking1.Visible = False
                 viewPage.EewBanner1.Visible = True
 
 
@@ -679,7 +720,11 @@ Public Class apiTimer
 
 
 
+            ElseIf selfDetectionExist = True Then
+
+                'TODO.
             Else
+
                 'There is no worry about EEW.
                 viewPage.EewBanner1.Visible = False
                 viewPage.FlowNoAlertPane1.Visible = True
@@ -696,7 +741,7 @@ Public Class apiTimer
             'Show or hide current elements
             viewPage.FlowTsunami1.Visible = False
             viewPage.FlowNoAlertPane1.Visible = False
-            viewPage.FlowLightShaking1.Visible = False
+            '  viewPage.FlowLightShaking1.Visible = False
             viewPage.EewBanner1.Visible = True
 
             'Zoom map to extent
@@ -753,15 +798,21 @@ Public Class apiTimer
             circlePlotter.Stop()
 
             psTotalUpdater.Stop()
+            '   viewPage.FlowTsunami1.Visible = False
 
-            viewPage.FlowTsunami1.Visible = False
-            viewPage.FlowNoAlertPane1.Visible = True
-            viewPage.FlowLightShaking1.Visible = False
+            If viewPage.lightShakeDetected = True Or viewPage.strongShakeDetected = True Or viewPage.moderateShakeDetected = True Then
+            Else
+
+                viewPage.FlowNoAlertPane1.Visible = True
+
+                '   viewPage.FlowLightShaking1.Visible = False
+            End If
+
             viewPage.EewBanner1.Visible = False
 
-            ClearDataStruct()
+                ClearDataStruct()
 
-        End If
+            End If
 
     End Sub
     Dim prevReportID As String
@@ -1168,7 +1219,7 @@ Public Class apiTimer
 #Region "OLD Light Detect"
 
     Private Sub prefAvg_Tick(sender As Object, e As EventArgs) Handles prefAvg.Tick
-
+#Region "Deprect"
         'DEPRECATED. USE REAL PREFAVG TIMER.
 
 
@@ -1380,8 +1431,9 @@ Public Class apiTimer
 
         Next
         Console.WriteLine("PREFAVG Run")
+#End Region
 
-        Console.WriteLine(lightDetectDB.ToString)
+        '  Console.WriteLine(lightDetectDB.ToString)
     End Sub
     Private alertTimeOutprefix As Integer = My.Settings.alertTimeoutSec
     Private alertTimeOutCount As Integer = 0
@@ -1431,6 +1483,7 @@ Public Class apiTimer
     Public zone4Tuple As New List(Of Tuple(Of String, String, Point, String, String, String, String))
     Public zone5Tuple As New List(Of Tuple(Of String, String, Point, String, String, String, String))
     Public zone6Tuple As New List(Of Tuple(Of String, String, Point, String, String, String, String))
+
     Function avgMainFunction()
         If lightTuplesLoaded = False Then
             'Load the Tuples (raw) to be processed to average.
@@ -1618,9 +1671,17 @@ Public Class apiTimer
                 Catch ex As Exception
 
                 End Try
-                Console.WriteLine("AVG 1 IS: " & avg1)
-                Console.WriteLine("AVG 2 IS: " & avg2)
+                '  Console.WriteLine("AVG 1 IS: " & avg1)
+                'Console.WriteLine("AVG 2 IS: " & avg2)
 #End Region
+
+                DataStructureRaw.zone1Average = avg1
+                DataStructureRaw.zone2Average = avg2
+                DataStructureRaw.zone3Average = avg3
+                DataStructureRaw.zone4Average = avg4
+                DataStructureRaw.zone5Average = avg5
+                DataStructureRaw.zone6Average = avg6
+
 
             Catch ex As Exception
                 errorHandler.HandleError("info", "Bitmap AVG Not Loaded F2. Do not report this issue.", False)
@@ -1630,6 +1691,8 @@ Public Class apiTimer
 
 
         End If
+
+        'Set Averages
     End Function
 
     Sub loadLightTuple()

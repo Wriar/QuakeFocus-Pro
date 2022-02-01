@@ -353,6 +353,30 @@ Namespace My
                 Me("drawIntensityIcons") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("realtime")>  _
+        Public Property passivePointDraw() As String
+            Get
+                Return CType(Me("passivePointDraw"),String)
+            End Get
+            Set
+                Me("passivePointDraw") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("measuredOnly")>  _
+        Public Property activePointDraw() As String
+            Get
+                Return CType(Me("activePointDraw"),String)
+            End Get
+            Set
+                Me("activePointDraw") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

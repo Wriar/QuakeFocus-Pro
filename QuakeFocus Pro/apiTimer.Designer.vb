@@ -60,24 +60,25 @@ Partial Class apiTimer
         Me.PStimeCalculator = New System.Windows.Forms.Timer(Me.components)
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.eewGraphicDrawer = New System.Windows.Forms.Timer(Me.components)
-        Me.pgaImg = New System.Windows.Forms.PictureBox()
-        Me.pcImg = New System.Windows.Forms.PictureBox()
         Me.psTotalUpdater = New System.Windows.Forms.Timer(Me.components)
         Me.ListBox2 = New System.Windows.Forms.ListBox()
         Me.ListBox3 = New System.Windows.Forms.ListBox()
         Me.ListBox4 = New System.Windows.Forms.ListBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.dbgElpsSec = New System.Windows.Forms.Label()
-        Me.Label20 = New System.Windows.Forms.Label()
         Me.dbgFuncRun = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.dbgElpsSec = New System.Windows.Forms.Label()
+        Me.Label18 = New System.Windows.Forms.Label()
         Me.txtLong = New System.Windows.Forms.TextBox()
         Me.txtLat = New System.Windows.Forms.TextBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.newImageTimers = New System.Windows.Forms.Timer(Me.components)
+        Me.pgaImg = New System.Windows.Forms.PictureBox()
+        Me.pcImg = New System.Windows.Forms.PictureBox()
+        Me.ColorBar1 = New ColorBar.ColorBar()
+        Me.GroupBox1.SuspendLayout()
         CType(Me.pgaImg, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pcImg, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'xmlFetchTimer
@@ -335,24 +336,6 @@ Partial Class apiTimer
         'eewGraphicDrawer
         '
         '
-        'pgaImg
-        '
-        Me.pgaImg.Image = CType(resources.GetObject("pgaImg.Image"), System.Drawing.Image)
-        Me.pgaImg.Location = New System.Drawing.Point(129, 12)
-        Me.pgaImg.Name = "pgaImg"
-        Me.pgaImg.Size = New System.Drawing.Size(304, 40)
-        Me.pgaImg.TabIndex = 1
-        Me.pgaImg.TabStop = False
-        '
-        'pcImg
-        '
-        Me.pcImg.Image = Global.QuakeFocus_Pro.My.Resources.Resources.hi_demo
-        Me.pcImg.Location = New System.Drawing.Point(12, 12)
-        Me.pcImg.Name = "pcImg"
-        Me.pcImg.Size = New System.Drawing.Size(100, 50)
-        Me.pcImg.TabIndex = 0
-        Me.pcImg.TabStop = False
-        '
         'psTotalUpdater
         '
         '
@@ -396,23 +379,14 @@ Partial Class apiTimer
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "GroupBox1"
         '
-        'Label18
+        'dbgFuncRun
         '
-        Me.Label18.AutoSize = True
-        Me.Label18.Location = New System.Drawing.Point(11, 40)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(74, 16)
-        Me.Label18.TabIndex = 0
-        Me.Label18.Text = "ELPS SEC:"
-        '
-        'dbgElpsSec
-        '
-        Me.dbgElpsSec.AutoSize = True
-        Me.dbgElpsSec.Location = New System.Drawing.Point(91, 40)
-        Me.dbgElpsSec.Name = "dbgElpsSec"
-        Me.dbgElpsSec.Size = New System.Drawing.Size(55, 16)
-        Me.dbgElpsSec.TabIndex = 1
-        Me.dbgElpsSec.Text = "Label19"
+        Me.dbgFuncRun.AutoSize = True
+        Me.dbgFuncRun.Location = New System.Drawing.Point(91, 63)
+        Me.dbgFuncRun.Name = "dbgFuncRun"
+        Me.dbgFuncRun.Size = New System.Drawing.Size(14, 16)
+        Me.dbgFuncRun.TabIndex = 2
+        Me.dbgFuncRun.Text = "0"
         '
         'Label20
         '
@@ -423,14 +397,23 @@ Partial Class apiTimer
         Me.Label20.TabIndex = 1
         Me.Label20.Text = "Funct RUN:"
         '
-        'dbgFuncRun
+        'dbgElpsSec
         '
-        Me.dbgFuncRun.AutoSize = True
-        Me.dbgFuncRun.Location = New System.Drawing.Point(91, 63)
-        Me.dbgFuncRun.Name = "dbgFuncRun"
-        Me.dbgFuncRun.Size = New System.Drawing.Size(14, 16)
-        Me.dbgFuncRun.TabIndex = 2
-        Me.dbgFuncRun.Text = "0"
+        Me.dbgElpsSec.AutoSize = True
+        Me.dbgElpsSec.Location = New System.Drawing.Point(91, 40)
+        Me.dbgElpsSec.Name = "dbgElpsSec"
+        Me.dbgElpsSec.Size = New System.Drawing.Size(55, 16)
+        Me.dbgElpsSec.TabIndex = 1
+        Me.dbgElpsSec.Text = "Label19"
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(11, 40)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(74, 16)
+        Me.Label18.TabIndex = 0
+        Me.Label18.Text = "ELPS SEC:"
         '
         'txtLong
         '
@@ -459,11 +442,49 @@ Partial Class apiTimer
         '
         Me.newImageTimers.Interval = 1000
         '
+        'pgaImg
+        '
+        Me.pgaImg.Image = CType(resources.GetObject("pgaImg.Image"), System.Drawing.Image)
+        Me.pgaImg.Location = New System.Drawing.Point(129, 12)
+        Me.pgaImg.Name = "pgaImg"
+        Me.pgaImg.Size = New System.Drawing.Size(304, 40)
+        Me.pgaImg.TabIndex = 1
+        Me.pgaImg.TabStop = False
+        '
+        'pcImg
+        '
+        Me.pcImg.Image = Global.QuakeFocus_Pro.My.Resources.Resources.hi_demo
+        Me.pcImg.Location = New System.Drawing.Point(12, 12)
+        Me.pcImg.Name = "pcImg"
+        Me.pcImg.Size = New System.Drawing.Size(100, 50)
+        Me.pcImg.TabIndex = 0
+        Me.pcImg.TabStop = False
+        '
+        'ColorBar1
+        '
+        Me.ColorBar1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.ColorBar1.ColorList = Nothing
+        Me.ColorBar1.HeightThickness = 0.2!
+        Me.ColorBar1.Location = New System.Drawing.Point(1093, 48)
+        Me.ColorBar1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ColorBar1.Maximum = 100
+        Me.ColorBar1.Minimum = 0
+        Me.ColorBar1.Name = "ColorBar1"
+        Me.ColorBar1.Orientation = ColorBar.ColorBar.enumOrientation.Vertical
+        Me.ColorBar1.Reversed = False
+        Me.ColorBar1.Size = New System.Drawing.Size(29, 208)
+        Me.ColorBar1.Smoothness = 7
+        Me.ColorBar1.Style = ColorBar.ColorBar.BarStyle.Flow
+        Me.ColorBar1.TabIndex = 30
+        Me.ColorBar1.Value = 67
+        Me.ColorBar1.WidthThickness = 0.2!
+        '
         'apiTimer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1231, 479)
+        Me.Controls.Add(Me.ColorBar1)
         Me.Controls.Add(Me.Label19)
         Me.Controls.Add(Me.txtLat)
         Me.Controls.Add(Me.txtLong)
@@ -498,10 +519,10 @@ Partial Class apiTimer
         Me.Name = "apiTimer"
         Me.Opacity = 0.8R
         Me.Text = "apiTimer"
-        CType(Me.pgaImg, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pcImg, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        CType(Me.pgaImg, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pcImg, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -558,4 +579,5 @@ Partial Class apiTimer
     Friend WithEvents txtLat As TextBox
     Friend WithEvents Label19 As Label
     Friend WithEvents newImageTimers As Timer
+    Friend WithEvents ColorBar1 As ColorBar.ColorBar
 End Class

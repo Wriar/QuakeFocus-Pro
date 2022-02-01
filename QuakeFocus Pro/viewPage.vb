@@ -94,7 +94,8 @@ Public Class viewPage
         Dim customMsgbox = New updateAvailable("アプリケーションの言語を日本語にする場合は、「はい」を選択します。
 アプリケーションの言語を英語にするには、「no」を選択します。
 To set the default application language to Japanese, click YES. 
-To set the default application language to English, click NO.")
+To set the default application language to English, click NO.
+**ENGLISH IS NOT AVAILABLE IN THIS BUILD.")
         If customMsgbox.ShowDialog() = DialogResult.Yes Then
             ' do something
             My.Settings.prefixLang = "jp"
@@ -309,6 +310,8 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
     Private Sub SfMap1_Load(sender As Object, e As EventArgs) Handles SfMap1.Load
 
     End Sub
+
+    'Main Function Called
     Public Function drawMarkers(ByVal e As PaintEventArgs)
 
         For Each str As Tuple(Of String, String, Point, String, String, String, Tuple(Of String, String)) In apiTimer.initialLocationDB
@@ -323,11 +326,46 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(str.Item4, str.Item5)
             '  Console.WriteLine(pt)
 
-            If realtimeInterpolated < 1 Then
-                DrawMarker(e.Graphics, pt.X, pt.Y, "realtime", Color.FromArgb(255, 0, 0), Color.FromArgb(255, 0, 0), realtimeColor, realtimeInterpolated)
-            ElseIf realtimeInterpolated >= 1 And My.Settings.drawIntensityIcons = True Then
-                DrawMarker(e.Graphics, pt.X, pt.Y, "measured", Color.FromArgb(255, 0, 0), Color.FromArgb(255, 0, 0), realtimeColor, realtimeInterpolated)
+
+            If apiTimer.eewExists = True Then
+                'EEW Exists
+
+
+                If My.Settings.activePointDraw.ToLower() = "measuredonly" Then
+
+                    If realtimeInterpolated < 1 Then
+                        '  DrawMarker(e.Graphics, pt.X, pt.Y, "realtime", Color.FromArgb(255, 0, 0), Color.FromArgb(255, 0, 0), realtimeColor, realtimeInterpolated)
+                    ElseIf realtimeInterpolated >= 1 And My.Settings.drawIntensityIcons = True Then
+                        ' DrawMarker(e.Graphics, pt.X, pt.Y, "measuredNative", Color.FromArgb(255, 0, 0), Color.FromArgb(255, 0, 0), realtimeColor, realtimeInterpolated)
+
+                        'This will be handled in second section.
+
+
+
+
+                    End If
+
+
+                End If
+
+
+            Else
+                'EEW Doesnt exist
+
+                If My.Settings.passivePointDraw.ToLower() = "realtime" Then
+                    If realtimeInterpolated < 1 Then
+                        DrawMarker(e.Graphics, pt.X, pt.Y, "realtime", Color.FromArgb(255, 0, 0), Color.FromArgb(255, 0, 0), realtimeColor, realtimeInterpolated)
+                    ElseIf realtimeInterpolated >= 1 And My.Settings.drawIntensityIcons = True Then
+                        '    DrawMarker(e.Graphics, pt.X, pt.Y, "measured", Color.FromArgb(255, 0, 0), Color.FromArgb(255, 0, 0), realtimeColor, realtimeInterpolated)
+                        ' drawIntensityIcons(e.Graphics)
+
+                    End If
+                End If
             End If
+
+
+
+
 
 
             'TODO: Light Detection Availability
@@ -371,6 +409,10 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             End If
 
         Next
+
+
+        drawIntensityIcons(e.Graphics)
+
         '    drawCircle(e.Graphics, SfMap1.GisPointToPixelCoord(139.839478, 35.652832).X, SfMap1.GisPointToPixelCoord(139.839478, 35.652832).Y, 1)
         '  SfMap1.Refresh()
         Dim pt2 As Point = Me.SfMap1.GisPointToPixelCoord(DataStructureRaw.longitude, DataStructureRaw.latitude)
@@ -387,6 +429,796 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
     End Function
 
+    ''' <summary>
+    ''' Used to individually draw Picture-Based Intensity Icons.
+    ''' </summary>
+    ''' <param name="g">Map Graphics Object</param>
+    Public Sub drawIntensityIcons(ByVal g As Graphics)
+
+        Dim lightDiscoverCount As Integer = 0 '<-- Not Implemented Here
+        Dim modDiscoverCount As Integer = 0
+        Dim strongDiscoverCount As Integer = 0
+
+        '1: Light Shaking   2: Moderate Shaking     3: Strong Shaking
+        Dim flowLightContainerType As Integer = 0
+
+        'Draw all 1 Icons
+        For Each str As Tuple(Of String, String, Point, String, String, String, Tuple(Of String, String)) In apiTimer.initialLocationDB
+            'Get Color of Point
+
+
+            Dim realtimeTemp As Bitmap = apiTimer.pcImg.Image
+            Dim realtimeColor As Color = realtimeTemp.GetPixel(str.Item3.X, str.Item3.Y)
+            Dim realtimeInterpolated As String = colorProcessing.ProcessColor(realtimeColor, "jma", False, False)
+            If realtimeInterpolated >= 1 And realtimeInterpolated < 2 Then
+                Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(str.Item4, str.Item5)
+
+
+
+
+
+                If 1 = 1 Then ' apiTimer.eewExists = True Then
+                    'EEW Exists
+
+                    Dim locx As Integer = pt.X
+                    Dim locy As Integer = pt.Y
+
+                    Dim intensity As String = realtimeInterpolated
+
+                    Dim cWidth As Integer = 18
+                    Dim topLeftX As Integer = locx - cWidth / 2 'Scale Factor
+                    Dim topLeftY As Integer = locy - cWidth / 2
+                    Dim colorOut As Color = colorProcessing.ReturnTileColorJMAplusMinus(colorProcessing.ReturnPlusMinusJma(intensity))
+
+                    Dim nativeBrush As New System.Drawing.SolidBrush(colorOut)
+                    Dim ntRectBounds As New Rectangle
+                    ntRectBounds.X = topLeftX
+                    ntRectBounds.Y = topLeftY
+                    ntRectBounds.Width = cWidth
+                    ntRectBounds.Height = cWidth
+
+                    g.FillEllipse(nativeBrush, ntRectBounds)
+
+                    'Draw the Text
+                    Dim textFont2 As New Font("Consolas", 8, FontStyle.Bold)
+                    Dim drawBrush2 As New SolidBrush(Color.White)
+
+                    Dim drawAreaX2 As Integer = pt.X - 5
+                    Dim drawAreaY2 As Integer = pt.Y - 7
+
+                    g.DrawString("1", textFont2, drawBrush2, drawAreaX2, drawAreaY2)
+
+
+                End If
+
+                flowLightContainerType = 2
+
+                modDiscoverCount += 1
+
+
+
+                'Get Name Properties
+                Dim locationName As String = str.Item1
+                Dim locationNameLocalized As String
+
+                If My.Settings.prefixLang = "en" Then
+                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                Else
+                    locationNameLocalized = locationName
+                    'Japanese
+
+                End If
+
+
+                'Check if ListBox Contains Values Already
+
+                If FlowLightShaking1.evList.Items.Contains(locationNameLocalized) Then
+
+                    'Item already exists
+                Else
+
+                    FlowLightShaking1.evList.Items.Add(locationNameLocalized)
+
+                End If
+
+
+            End If
+
+        Next
+
+        For Each str As Tuple(Of String, String, Point, String, String, String, Tuple(Of String, String)) In apiTimer.initialLocationDB
+            'Get Color of Point
+
+
+            Dim realtimeTemp As Bitmap = apiTimer.pcImg.Image
+            Dim realtimeColor As Color = realtimeTemp.GetPixel(str.Item3.X, str.Item3.Y)
+            Dim realtimeInterpolated As String = colorProcessing.ProcessColor(realtimeColor, "jma", False, False)
+            If realtimeInterpolated >= 2 And realtimeInterpolated < 3 Then
+                Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(str.Item4, str.Item5)
+
+                If 1 = 1 Then ' apiTimer.eewExists = True Then
+                    'EEW Exists
+
+                    Dim locx As Integer = pt.X
+                    Dim locy As Integer = pt.Y
+
+                    Dim intensity As String = realtimeInterpolated
+
+                    Dim cWidth As Integer = 18
+                    Dim topLeftX As Integer = locx - cWidth / 2 'Scale Factor
+                    Dim topLeftY As Integer = locy - cWidth / 2
+                    Dim colorOut As Color = colorProcessing.ReturnTileColorJMAplusMinus(colorProcessing.ReturnPlusMinusJma(intensity))
+
+                    Dim nativeBrush As New System.Drawing.SolidBrush(colorOut)
+                    Dim ntRectBounds As New Rectangle
+                    ntRectBounds.X = topLeftX
+                    ntRectBounds.Y = topLeftY
+                    ntRectBounds.Width = cWidth
+                    ntRectBounds.Height = cWidth
+
+                    g.FillEllipse(nativeBrush, ntRectBounds)
+                    'Draw the Text
+                    Dim textFont2 As New Font("Consolas", 8, FontStyle.Bold)
+                    Dim drawBrush2 As New SolidBrush(Color.White)
+
+                    Dim drawAreaX2 As Integer = pt.X - 5
+                    Dim drawAreaY2 As Integer = pt.Y - 7
+
+                    g.DrawString("2", textFont2, drawBrush2, drawAreaX2, drawAreaY2)
+
+                End If
+
+
+                flowLightContainerType = 2
+
+                modDiscoverCount += 1
+
+
+
+                'Get Name Properties
+                Dim locationName As String = str.Item1
+                Dim locationNameLocalized As String
+
+                If My.Settings.prefixLang = "en" Then
+                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                Else
+                    locationNameLocalized = locationName
+                    'Japanese
+
+                End If
+
+
+                'Check if ListBox Contains Values Already
+
+                If FlowLightShaking1.evList.Items.Contains(locationNameLocalized) Then
+
+                    'Item already exists
+                Else
+
+                    FlowLightShaking1.evList.Items.Add(locationNameLocalized)
+
+                End If
+
+
+            End If
+
+        Next
+
+        For Each str As Tuple(Of String, String, Point, String, String, String, Tuple(Of String, String)) In apiTimer.initialLocationDB
+            'Get Color of Point
+
+
+            Dim realtimeTemp As Bitmap = apiTimer.pcImg.Image
+            Dim realtimeColor As Color = realtimeTemp.GetPixel(str.Item3.X, str.Item3.Y)
+            Dim realtimeInterpolated As String = colorProcessing.ProcessColor(realtimeColor, "jma", False, False)
+            If realtimeInterpolated >= 3 And realtimeInterpolated < 4 Then
+                Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(str.Item4, str.Item5)
+
+                If 1 = 1 Then ' apiTimer.eewExists = True Then
+                    'EEW Exists
+
+                    Dim locx As Integer = pt.X
+                    Dim locy As Integer = pt.Y
+
+                    Dim intensity As String = realtimeInterpolated
+
+                    Dim cWidth As Integer = 18
+                    Dim topLeftX As Integer = locx - cWidth / 2 'Scale Factor
+                    Dim topLeftY As Integer = locy - cWidth / 2
+                    Dim colorOut As Color = colorProcessing.ReturnTileColorJMAplusMinus(colorProcessing.ReturnPlusMinusJma(intensity))
+
+                    Dim nativeBrush As New System.Drawing.SolidBrush(colorOut)
+                    Dim ntRectBounds As New Rectangle
+                    ntRectBounds.X = topLeftX
+                    ntRectBounds.Y = topLeftY
+                    ntRectBounds.Width = cWidth
+                    ntRectBounds.Height = cWidth
+
+                    g.FillEllipse(nativeBrush, ntRectBounds)
+
+                    'Draw the Text
+                    Dim textFont2 As New Font("Consolas", 8, FontStyle.Bold)
+                    Dim drawBrush2 As New SolidBrush(Color.White)
+
+                    Dim drawAreaX2 As Integer = pt.X - 5
+                    Dim drawAreaY2 As Integer = pt.Y - 7
+
+                    g.DrawString("3", textFont2, drawBrush2, drawAreaX2, drawAreaY2)
+                End If
+
+
+                flowLightContainerType = 2
+
+                modDiscoverCount += 1
+
+
+
+                'Get Name Properties
+                Dim locationName As String = str.Item1
+                Dim locationNameLocalized As String
+
+                If My.Settings.prefixLang = "en" Then
+                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                Else
+                    locationNameLocalized = locationName
+                    'Japanese
+
+                End If
+
+
+                'Check if ListBox Contains Values Already
+
+                If FlowLightShaking1.evList.Items.Contains(locationNameLocalized) Then
+
+                    'Item already exists
+                Else
+
+                    FlowLightShaking1.evList.Items.Add(locationNameLocalized)
+
+                End If
+
+            End If
+
+        Next
+
+        For Each str As Tuple(Of String, String, Point, String, String, String, Tuple(Of String, String)) In apiTimer.initialLocationDB
+            'Get Color of Point
+
+
+            Dim realtimeTemp As Bitmap = apiTimer.pcImg.Image
+            Dim realtimeColor As Color = realtimeTemp.GetPixel(str.Item3.X, str.Item3.Y)
+            Dim realtimeInterpolated As String = colorProcessing.ProcessColor(realtimeColor, "jma", False, False)
+            If realtimeInterpolated >= 4 And realtimeInterpolated < 5 Then
+                Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(str.Item4, str.Item5)
+
+                If 1 = 1 Then ' apiTimer.eewExists = True Then
+                    'EEW Exists
+
+                    Dim locx As Integer = pt.X
+                    Dim locy As Integer = pt.Y
+
+                    Dim intensity As String = realtimeInterpolated
+
+                    Dim cWidth As Integer = 18
+                    Dim topLeftX As Integer = locx - cWidth / 2 'Scale Factor
+                    Dim topLeftY As Integer = locy - cWidth / 2
+                    Dim colorOut As Color = colorProcessing.ReturnTileColorJMAplusMinus(colorProcessing.ReturnPlusMinusJma(intensity))
+
+                    Dim nativeBrush As New System.Drawing.SolidBrush(colorOut)
+                    Dim ntRectBounds As New Rectangle
+                    ntRectBounds.X = topLeftX
+                    ntRectBounds.Y = topLeftY
+                    ntRectBounds.Width = cWidth
+                    ntRectBounds.Height = cWidth
+
+                    g.FillEllipse(nativeBrush, ntRectBounds)
+                    'Draw the Text
+                    Dim textFont2 As New Font("Consolas", 8, FontStyle.Bold)
+                    Dim drawBrush2 As New SolidBrush(Color.White)
+
+                    Dim drawAreaX2 As Integer = pt.X - 5
+                    Dim drawAreaY2 As Integer = pt.Y - 7
+
+                    g.DrawString("4", textFont2, drawBrush2, drawAreaX2, drawAreaY2)
+
+                End If
+
+
+                flowLightContainerType = 3
+
+                strongDiscoverCount += 1
+
+
+
+                'Get Name Properties
+                Dim locationName As String = str.Item1
+                Dim locationNameLocalized As String
+
+                If My.Settings.prefixLang = "en" Then
+                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                Else
+                    locationNameLocalized = locationName
+                    'Japanese
+
+                End If
+
+
+                'Check if ListBox Contains Values Already
+
+                If FlowLightShaking1.evList.Items.Contains(locationNameLocalized) Then
+
+                    'Item already exists
+                Else
+
+                    FlowLightShaking1.evList.Items.Add(locationNameLocalized)
+
+                End If
+            End If
+
+        Next
+
+        For Each str As Tuple(Of String, String, Point, String, String, String, Tuple(Of String, String)) In apiTimer.initialLocationDB
+            'Get Color of Point
+
+
+            Dim realtimeTemp As Bitmap = apiTimer.pcImg.Image
+            Dim realtimeColor As Color = realtimeTemp.GetPixel(str.Item3.X, str.Item3.Y)
+            Dim realtimeInterpolated As String = colorProcessing.ProcessColor(realtimeColor, "jma", False, False)
+            If realtimeInterpolated >= 5 And realtimeInterpolated < 5.5 Then
+                Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(str.Item4, str.Item5)
+
+                If 1 = 1 Then ' apiTimer.eewExists = True Then
+                    'EEW Exists
+
+                    Dim locx As Integer = pt.X
+                    Dim locy As Integer = pt.Y
+
+                    Dim intensity As String = realtimeInterpolated
+
+                    Dim cWidth As Integer = 23
+                    Dim topLeftX As Integer = locx - cWidth / 2 'Scale Factor
+                    Dim topLeftY As Integer = locy - cWidth / 2
+                    Dim colorOut As Color = colorProcessing.ReturnTileColorJMAplusMinus(colorProcessing.ReturnPlusMinusJma(intensity))
+
+                    Dim nativeBrush As New System.Drawing.SolidBrush(colorOut)
+                    Dim ntRectBounds As New Rectangle
+                    ntRectBounds.X = topLeftX
+                    ntRectBounds.Y = topLeftY
+                    ntRectBounds.Width = cWidth
+                    ntRectBounds.Height = cWidth
+
+                    g.FillEllipse(nativeBrush, ntRectBounds)
+
+                    'Draw the Text
+                    Dim textFont2 As New Font("Consolas", 9, FontStyle.Bold)
+                    Dim drawBrush2 As New SolidBrush(Color.White)
+
+                    Dim drawAreaX2 As Integer = pt.X - 8
+                    Dim drawAreaY2 As Integer = pt.Y - 9
+
+                    g.DrawString("5-", textFont2, drawBrush2, drawAreaX2, drawAreaY2)
+                End If
+
+                flowLightContainerType = 3
+
+                strongDiscoverCount += 1
+
+
+
+                'Get Name Properties
+                Dim locationName As String = str.Item1
+                Dim locationNameLocalized As String
+
+                If My.Settings.prefixLang = "en" Then
+                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                Else
+                    locationNameLocalized = locationName
+                    'Japanese
+
+                End If
+
+
+                'Check if ListBox Contains Values Already
+
+                If FlowLightShaking1.evList.Items.Contains(locationNameLocalized) Then
+
+                    'Item already exists
+                Else
+
+                    FlowLightShaking1.evList.Items.Add(locationNameLocalized)
+
+                End If
+            End If
+
+        Next
+
+        For Each str As Tuple(Of String, String, Point, String, String, String, Tuple(Of String, String)) In apiTimer.initialLocationDB
+            'Get Color of Point
+
+
+            Dim realtimeTemp As Bitmap = apiTimer.pcImg.Image
+            Dim realtimeColor As Color = realtimeTemp.GetPixel(str.Item3.X, str.Item3.Y)
+            Dim realtimeInterpolated As String = colorProcessing.ProcessColor(realtimeColor, "jma", False, False)
+            If realtimeInterpolated >= 5.5 And realtimeInterpolated < 6 Then
+                Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(str.Item4, str.Item5)
+
+                If 1 = 1 Then ' apiTimer.eewExists = True Then
+                    'EEW Exists
+
+                    Dim locx As Integer = pt.X
+                    Dim locy As Integer = pt.Y
+
+                    Dim intensity As String = realtimeInterpolated
+
+                    Dim cWidth As Integer = 23
+                    Dim topLeftX As Integer = locx - cWidth / 2 'Scale Factor
+                    Dim topLeftY As Integer = locy - cWidth / 2
+                    Dim colorOut As Color = colorProcessing.ReturnTileColorJMAplusMinus(colorProcessing.ReturnPlusMinusJma(intensity))
+
+                    Dim nativeBrush As New System.Drawing.SolidBrush(colorOut)
+                    Dim ntRectBounds As New Rectangle
+                    ntRectBounds.X = topLeftX
+                    ntRectBounds.Y = topLeftY
+                    ntRectBounds.Width = cWidth
+                    ntRectBounds.Height = cWidth
+
+                    g.FillEllipse(nativeBrush, ntRectBounds)
+                    'Draw the Text
+                    Dim textFont2 As New Font("Consolas", 9, FontStyle.Bold)
+                    Dim drawBrush2 As New SolidBrush(Color.White)
+
+                    Dim drawAreaX2 As Integer = pt.X - 8
+                    Dim drawAreaY2 As Integer = pt.Y - 9
+
+                    g.DrawString("5+", textFont2, drawBrush2, drawAreaX2, drawAreaY2)
+
+                End If
+
+                flowLightContainerType = 3
+
+                strongDiscoverCount += 1
+
+
+
+                'Get Name Properties
+                Dim locationName As String = str.Item1
+                Dim locationNameLocalized As String
+
+                If My.Settings.prefixLang = "en" Then
+                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                Else
+                    locationNameLocalized = locationName
+                    'Japanese
+
+                End If
+
+
+                'Check if ListBox Contains Values Already
+
+                If FlowLightShaking1.evList.Items.Contains(locationNameLocalized) Then
+
+                    'Item already exists
+                Else
+
+                    FlowLightShaking1.evList.Items.Add(locationNameLocalized)
+
+                End If
+            End If
+
+        Next
+
+        For Each str As Tuple(Of String, String, Point, String, String, String, Tuple(Of String, String)) In apiTimer.initialLocationDB
+            'Get Color of Point
+
+
+            Dim realtimeTemp As Bitmap = apiTimer.pcImg.Image
+            Dim realtimeColor As Color = realtimeTemp.GetPixel(str.Item3.X, str.Item3.Y)
+            Dim realtimeInterpolated As String = colorProcessing.ProcessColor(realtimeColor, "jma", False, False)
+            If realtimeInterpolated >= 6 And realtimeInterpolated < 6.5 Then
+                Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(str.Item4, str.Item5)
+
+                If 1 = 1 Then ' apiTimer.eewExists = True Then
+                    'EEW Exists
+
+                    Dim locx As Integer = pt.X
+                    Dim locy As Integer = pt.Y
+
+                    Dim intensity As String = realtimeInterpolated
+
+                    Dim cWidth As Integer = 23
+                    Dim topLeftX As Integer = locx - cWidth / 2 'Scale Factor
+                    Dim topLeftY As Integer = locy - cWidth / 2
+                    Dim colorOut As Color = colorProcessing.ReturnTileColorJMAplusMinus(colorProcessing.ReturnPlusMinusJma(intensity))
+
+                    Dim nativeBrush As New System.Drawing.SolidBrush(colorOut)
+                    Dim ntRectBounds As New Rectangle
+                    ntRectBounds.X = topLeftX
+                    ntRectBounds.Y = topLeftY
+                    ntRectBounds.Width = cWidth
+                    ntRectBounds.Height = cWidth
+
+                    g.FillEllipse(nativeBrush, ntRectBounds)
+                    'Draw the Text
+                    Dim textFont2 As New Font("Consolas", 9, FontStyle.Bold)
+                    Dim drawBrush2 As New SolidBrush(Color.White)
+
+                    Dim drawAreaX2 As Integer = pt.X - 8
+                    Dim drawAreaY2 As Integer = pt.Y - 9
+
+                    g.DrawString("6-", textFont2, drawBrush2, drawAreaX2, drawAreaY2)
+
+                End If
+
+                flowLightContainerType = 3
+
+                strongDiscoverCount += 1
+
+
+
+                'Get Name Properties
+                Dim locationName As String = str.Item1
+                Dim locationNameLocalized As String
+
+                If My.Settings.prefixLang = "en" Then
+                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                Else
+                    locationNameLocalized = locationName
+                    'Japanese
+
+                End If
+
+
+                'Check if ListBox Contains Values Already
+
+
+                If FlowLightShaking1.evList.Items.Contains(locationNameLocalized) Then
+
+                    'Item already exists
+                Else
+
+                    FlowLightShaking1.evList.Items.Add(locationNameLocalized)
+
+                End If
+
+
+            End If
+
+        Next
+
+        For Each str As Tuple(Of String, String, Point, String, String, String, Tuple(Of String, String)) In apiTimer.initialLocationDB
+            'Get Color of Point
+
+
+            Dim realtimeTemp As Bitmap = apiTimer.pcImg.Image
+            Dim realtimeColor As Color = realtimeTemp.GetPixel(str.Item3.X, str.Item3.Y)
+            Dim realtimeInterpolated As String = colorProcessing.ProcessColor(realtimeColor, "jma", False, False)
+            If realtimeInterpolated >= 6.5 And realtimeInterpolated < 7 Then
+                Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(str.Item4, str.Item5)
+
+                If 1 = 1 Then ' apiTimer.eewExists = True Then
+                    'EEW Exists
+
+                    Dim locx As Integer = pt.X
+                    Dim locy As Integer = pt.Y
+
+                    Dim intensity As String = realtimeInterpolated
+
+                    Dim cWidth As Integer = 23
+                    Dim topLeftX As Integer = locx - cWidth / 2 'Scale Factor
+                    Dim topLeftY As Integer = locy - cWidth / 2
+                    Dim colorOut As Color = colorProcessing.ReturnTileColorJMAplusMinus(colorProcessing.ReturnPlusMinusJma(intensity))
+
+                    Dim nativeBrush As New System.Drawing.SolidBrush(colorOut)
+                    Dim ntRectBounds As New Rectangle
+                    ntRectBounds.X = topLeftX
+                    ntRectBounds.Y = topLeftY
+                    ntRectBounds.Width = cWidth
+                    ntRectBounds.Height = cWidth
+
+                    g.FillEllipse(nativeBrush, ntRectBounds)
+                    'Draw the Text
+                    Dim textFont2 As New Font("Consolas", 9, FontStyle.Bold)
+                    Dim drawBrush2 As New SolidBrush(Color.White)
+
+                    Dim drawAreaX2 As Integer = pt.X - 8
+                    Dim drawAreaY2 As Integer = pt.Y - 9
+
+                    g.DrawString("6+", textFont2, drawBrush2, drawAreaX2, drawAreaY2)
+
+                End If
+
+                flowLightContainerType = 3
+
+                strongDiscoverCount += 1
+
+
+
+                'Get Name Properties
+                Dim locationName As String = str.Item1
+                Dim locationNameLocalized As String
+
+                If My.Settings.prefixLang = "en" Then
+                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                Else
+                    locationNameLocalized = locationName
+                    'Japanese
+
+                End If
+
+
+                'Check if ListBox Contains Values Already
+
+                If FlowLightShaking1.evList.Items.Contains(locationNameLocalized) Then
+
+                    'Item already exists
+                Else
+
+                    FlowLightShaking1.evList.Items.Add(locationNameLocalized)
+
+                End If
+            End If
+
+        Next
+
+        For Each str As Tuple(Of String, String, Point, String, String, String, Tuple(Of String, String)) In apiTimer.initialLocationDB
+            'Get Color of Point
+
+
+            Dim realtimeTemp As Bitmap = apiTimer.pcImg.Image
+            Dim realtimeColor As Color = realtimeTemp.GetPixel(str.Item3.X, str.Item3.Y)
+            Dim realtimeInterpolated As String = colorProcessing.ProcessColor(realtimeColor, "jma", False, False)
+            If realtimeInterpolated >= 7 Then
+                Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(str.Item4, str.Item5)
+
+                If 1 = 1 Then ' apiTimer.eewExists = True Then
+                    'EEW Exists
+
+                    Dim locx As Integer = pt.X
+                    Dim locy As Integer = pt.Y
+
+                    Dim intensity As String = realtimeInterpolated
+
+                    Dim cWidth As Integer = 23
+                    Dim topLeftX As Integer = locx - cWidth / 2 'Scale Factor
+                    Dim topLeftY As Integer = locy - cWidth / 2
+                    Dim colorOut As Color = colorProcessing.ReturnTileColorJMAplusMinus(colorProcessing.ReturnPlusMinusJma(intensity))
+
+                    Dim nativeBrush As New System.Drawing.SolidBrush(colorOut)
+                    Dim ntRectBounds As New Rectangle
+                    ntRectBounds.X = topLeftX
+                    ntRectBounds.Y = topLeftY
+                    ntRectBounds.Width = cWidth
+                    ntRectBounds.Height = cWidth
+
+                    g.FillEllipse(nativeBrush, ntRectBounds)
+
+                    'Draw the Text
+                    Dim textFont2 As New Font("Consolas", 9, FontStyle.Bold)
+                    Dim drawBrush2 As New SolidBrush(Color.White)
+
+                    Dim drawAreaX2 As Integer = pt.X - 7
+                    Dim drawAreaY2 As Integer = pt.Y - 9
+
+                    g.DrawString("7", textFont2, drawBrush2, drawAreaX2, drawAreaY2)
+                End If
+
+
+                flowLightContainerType = 3
+
+                strongDiscoverCount += 1
+
+
+
+                'Get Name Properties
+                Dim locationName As String = str.Item1
+                Dim locationNameLocalized As String
+
+                If My.Settings.prefixLang = "en" Then
+                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                Else
+                    locationNameLocalized = locationName
+                    'Japanese
+
+                End If
+
+
+                'Check if ListBox Contains Values Already
+
+                If FlowLightShaking1.evList.Items.Contains(locationNameLocalized) Then
+
+                    'Item already exists
+                Else
+
+                    FlowLightShaking1.evList.Items.Add(locationNameLocalized)
+
+                End If
+            End If
+
+
+
+        Next
+        For Each str As Tuple(Of String, String, Point, String, String, String, Tuple(Of String, String)) In apiTimer.initialLocationDB
+            'Get Color of Point
+
+
+            Dim realtimeTemp As Bitmap = apiTimer.pcImg.Image
+            Dim realtimeColor As Color = realtimeTemp.GetPixel(str.Item3.X, str.Item3.Y)
+            Dim realtimeInterpolated As String = colorProcessing.ProcessColor(realtimeColor, "jma", False, False)
+            If realtimeInterpolated < 1 Then
+
+
+
+
+                'Get Name Properties
+                Dim locationName As String = str.Item1
+                Dim locationNameLocalized As String
+
+                If My.Settings.prefixLang = "en" Then
+                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                Else
+                    locationNameLocalized = locationName
+                    'Japanese
+                End If
+
+
+                'Remove Value if exists
+
+                For x As Integer = FlowLightShaking1.evList.Items.Count - 1 To 0 Step -1
+                    'Get the current item in the iteration
+                    Dim item As Object = FlowLightShaking1.evList.Items(x)
+
+                    'Check if the item(ToString because item is an Object) equals the Text in the TextBox
+                    If item.ToString() = locationNameLocalized Then
+                        'If so then remove the item by it's Index
+                        FlowLightShaking1.evList.Items.RemoveAt(x)
+                    End If
+                Next
+
+
+
+            End If
+
+
+
+
+        Next
+        'Appropratize Light Panes
+
+        If strongDiscoverCount > 0 Then
+            strongShakeDetected = True
+            moderateShakeDetected = False
+            lightShakeDetected = False
+            FlowNoAlertPane1.Visible = False
+
+            apiTimer.selfDetectionExist = True
+        ElseIf modDiscoverCount > 0 Then
+            moderateShakeDetected = True
+            strongShakeDetected = False
+            lightShakeDetected = False
+            FlowNoAlertPane1.Visible = False
+
+            apiTimer.selfDetectionExist = True
+        ElseIf lightDiscoverCount > 0 Then
+            lightShakeDetected = True
+            moderateShakeDetected = False
+            strongShakeDetected = False
+            FlowNoAlertPane1.Visible = False
+
+            apiTimer.selfDetectionExist = True
+        Else
+            lightShakeDetected = False
+            moderateShakeDetected = False
+            strongShakeDetected = False
+            FlowNoAlertPane1.Visible = True
+            apiTimer.selfDetectionExist = False
+
+
+        End If
+
+
+
+    End Sub
+
     Public Shared Function Truncate(ByVal value As String, ByVal maxLength As Integer) As String
         If String.IsNullOrEmpty(value) Then Return value
         Return If(value.Length <= maxLength, value, value.Substring(0, maxLength))
@@ -397,7 +1229,17 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
     Public epicenterPointer As Integer = 0
     Public showEpicenter As Boolean = True
 
+    Public lightShakeDetected As Boolean = False
+    Public moderateShakeDetected As Boolean = False
+    Public strongShakeDetected As Boolean = False
+
+
+
     Private Sub mapInvalidate_Tick(sender As Object, e As EventArgs) Handles mapInvalidate.Tick
+
+
+
+
         SfMap1.Invalidate()
 
         epicenterPointer += 1
@@ -411,6 +1253,32 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             epiShow.Text = "False " & epicenterPointer
         ElseIf epicenterPointer > 30 Then
             epicenterPointer = 0
+
+        End If
+
+        'Check for Moderate and Heavy Shaking Detection
+
+        If strongShakeDetected = True Then
+            Me.FlowLightShaking1.Visible = True
+            FlowLightShaking1.Panel1.BackColor = Color.Maroon
+            FlowLightShaking1.Label3.ForeColor = Color.FromArgb(255, 0, 0)
+            FlowLightShaking1.Label3.Text = "Strong Shaking Detected In:"
+
+        ElseIf moderateShakeDetected = True Then
+            Me.FlowLightShaking1.Visible = True
+            FlowLightShaking1.Panel1.BackColor = Color.Orange
+            FlowLightShaking1.Label3.ForeColor = Color.Orange
+            FlowLightShaking1.Label3.Text = "Moderate Shaking Detected In:"
+
+        ElseIf lightShakeDetected = True Then
+            Me.FlowLightShaking1.Visible = True
+            FlowLightShaking1.Panel1.BackColor = Color.ForestGreen
+            FlowLightShaking1.Label3.ForeColor = Color.LimeGreen
+            FlowLightShaking1.Label3.Text = "Light Shaking Detected In:"
+
+        Else
+            Me.FlowLightShaking1.Visible = False
+
 
         End If
     End Sub
@@ -682,7 +1550,7 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             If markerType = "realtime" Then
                 'Find the Color
 
-                Dim colorOut As Color = colorProcessing.ReturnTileColorJMAplusMinus(colorProcessing.ReturnPlusMinusJma(intensity))
+                '  Dim colorOut As Color = colorProcessing.ReturnTileColorJMAplusMinus(colorProcessing.ReturnPlusMinusJma(intensity))
 
 
                 'Draw the Circle
@@ -723,7 +1591,25 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             g.FillEllipse(blueBrush, myRectangle)
 
         End If
+        If markerType = "measuredNative" Then
 
+            'Create the Initial Circle
+            Dim cWidth As Integer = 20
+                Dim topLeftX As Integer = locX - cWidth / 2 'Scale Factor
+                Dim topLeftY As Integer = locY - cWidth / 2
+                Dim colorOut As Color = colorProcessing.ReturnTileColorJMAplusMinus(colorProcessing.ReturnPlusMinusJma(intensity))
+
+                Dim nativeBrush As New System.Drawing.SolidBrush(colorOut)
+                Dim ntRectBounds As New Rectangle
+                ntRectBounds.X = topLeftX
+                ntRectBounds.Y = topLeftY
+                ntRectBounds.Width = cWidth
+                ntRectBounds.Height = cWidth
+
+            g.FillEllipse(nativeBrush, ntRectBounds)
+
+
+        End If
         If markerType = "measured" Then
             'Draw images by priority
             Dim epImg As Image = My.Resources.one
@@ -761,6 +1647,10 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
 
         End If
+
+        'Native Drawing Method
+
+
         'Longitude goes first, latitude goes second.
 
 
@@ -810,5 +1700,36 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
     Private Sub SfMap1_SizeChanged(sender As Object, e As EventArgs) Handles SfMap1.SizeChanged
         SfMap1.Invalidate()
+    End Sub
+    Public allowLightDetection As Boolean = True
+    Private Sub tpTimeOut_Tick(sender As Object, e As EventArgs) Handles tpTimeOut.Tick
+        'If light detection levels have exceeded, stop the prefecture average timer.
+        'Start the timeout timer. Once timeout timer reaches desired time, restart the prefecture average timer.
+
+
+
+
+
+        If apiTimer.eewExists = True Then
+            'an eew exists. stop the timer
+            apiTimer.workingPrefAvg.Stop()
+        Else
+
+
+        End If
+    End Sub
+
+    Private Sub detectLightShaking_Tick(sender As Object, e As EventArgs) Handles detectLightShaking.Tick
+        If allowLightDetection = True Then
+            'Begin to check for shaking
+
+            Dim z1Avg As String = DataStructureRaw.zone1Average
+            Dim z2Avg As String = DataStructureRaw.zone2Average
+            Dim z3Avg As String = DataStructureRaw.zone3Average
+            Dim z4Avg As String = DataStructureRaw.zone4Average
+            Dim z5Avg As String = DataStructureRaw.zone5Average
+            Dim z6Avg As String = DataStructureRaw.zone6Average
+
+        End If
     End Sub
 End Class

@@ -77,5 +77,11 @@
     <Setting Name="drawIntensityIcons" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="passivePointDraw" Type="System.String" Scope="User">
+      <Value Profile="(Default)">realtime</Value>
+    </Setting>
+    <Setting Name="activePointDraw" Type="System.String" Scope="User">
+      <Value Profile="(Default)">measuredOnly</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

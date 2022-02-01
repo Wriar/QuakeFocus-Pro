@@ -225,6 +225,12 @@ QuakeFocus Pro
  Returns False if Error exists.
  </summary>
 </member>
+<member name="M:QuakeFocus_Pro.viewPage.drawIntensityIcons(System.Drawing.Graphics)">
+ <summary>
+ Used to individually draw Picture-Based Intensity Icons.
+ </summary>
+ <param name="g">Map Graphics Object</param>
+</member>
 <member name="M:QuakeFocus_Pro.viewPage.drawEpicenter(System.Windows.Forms.PaintEventArgs,System.Drawing.Graphics,System.String,System.String,System.String,System.Int32)">
  <summary>
  Dray an Epicenter Icon

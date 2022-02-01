@@ -55,6 +55,14 @@
     Public Shared pwTotalPixelRadius As String
     Public Shared swTotalPixelRadius As String
 
+    'Zone Averages for the Tuples
+    Public Shared zone1Average As String
+    Public Shared zone2Average As String
+    Public Shared zone3Average As String
+    Public Shared zone4Average As String
+    Public Shared zone5Average As String
+    Public Shared zone6Average As String
+
 
     'Shared URLS
     Public Shared kmoniBasePath As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/"
