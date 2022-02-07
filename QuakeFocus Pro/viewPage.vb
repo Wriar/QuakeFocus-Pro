@@ -310,9 +310,11 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
     Private Sub SfMap1_Load(sender As Object, e As EventArgs) Handles SfMap1.Load
 
     End Sub
-
+    Dim drawCout As Integer = 0
     'Main Function Called
     Public Function drawMarkers(ByVal e As PaintEventArgs)
+
+
 
         For Each str As Tuple(Of String, String, Point, String, String, String, Tuple(Of String, String)) In apiTimer.initialLocationDB
             'Get Color of Point
@@ -425,8 +427,39 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
         apiTimer.txtLong.Text = DataStructureRaw.longitude
         apiTimer.txtLat.Text = DataStructureRaw.latitude
+        If drawCout < 5 Then
+            drawCout += 1
+        ElseIf drawCout >= 5 And drawCout < 10 Then
+            drawCout += 1
+            If moderateShakeDetected = True And strongShakeDetected = False And apiTimer.eewExists = False Then
+                '   MsgBox("TRUE 1")
+                If apiTimer.ldPointX <> 0 Then
+                    Dim myPen As Pen
+                    myPen = New Pen(Drawing.Color.Gold, 2)
+                    '  MsgBox(lightDetectionPoint.X)
+
+                    Dim cord As Point = SfMap1.GisPointToPixelCoord(New EGIS.ShapeFileLib.PointD(apiTimer.ldPointX, apiTimer.ldPointY))
+                    e.Graphics.DrawRectangle(myPen, cord.X - 40, cord.Y - 40, 80, 80)
+
+                End If
+            End If
+
+            If strongShakeDetected = True And apiTimer.eewExists = False Then
+                If apiTimer.ldPointX <> 0 Then
+                    Dim myPen As Pen
+                    myPen = New Pen(Drawing.Color.Red, 2)
 
 
+                    Dim cord As Point = SfMap1.GisPointToPixelCoord(New EGIS.ShapeFileLib.PointD(apiTimer.ldPointX, apiTimer.ldPointY))
+                    e.Graphics.DrawRectangle(myPen, cord.X - 40, cord.Y - 40, 80, 80)
+
+                End If
+            End If
+        ElseIf drawCout >= 10 Then
+
+            drawCout = 0
+
+        End If
     End Function
 
     ''' <summary>
@@ -434,6 +467,11 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
     ''' </summary>
     ''' <param name="g">Map Graphics Object</param>
     Public Sub drawIntensityIcons(ByVal g As Graphics)
+
+        'Debugging
+        Dim tItems As Integer = apiTimer.initialLocationDB.Count
+        tpTotalItems.Text = "Total Items: " & tItems
+
 
         Dim lightDiscoverCount As Integer = 0 '<-- Not Implemented Here
         Dim modDiscoverCount As Integer = 0
@@ -447,6 +485,7 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             'Get Color of Point
 
 
+
             Dim realtimeTemp As Bitmap = apiTimer.pcImg.Image
             Dim realtimeColor As Color = realtimeTemp.GetPixel(str.Item3.X, str.Item3.Y)
             Dim realtimeInterpolated As String = colorProcessing.ProcessColor(realtimeColor, "jma", False, False)
@@ -454,7 +493,11 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
                 Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(str.Item4, str.Item5)
 
 
-
+                If apiTimer.ldPointX = "nothing" And apiTimer.ldPointY = "nothing" Then
+                    apiTimer.ldPointX = str.Item4
+                    apiTimer.ldPointY = str.Item5
+                    apiTimer.hasLightDetectZoomed = True
+                End If
 
 
                 If 1 = 1 Then ' apiTimer.eewExists = True Then
@@ -462,6 +505,10 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
                     Dim locx As Integer = pt.X
                     Dim locy As Integer = pt.Y
+
+
+
+
 
                     Dim intensity As String = realtimeInterpolated
 
@@ -502,9 +549,10 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
                 Dim locationNameLocalized As String
 
                 If My.Settings.prefixLang = "en" Then
-                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                    locationNameLocalized = str.Item6 & ", " & str.Item7.Item1
+
                 Else
-                    locationNameLocalized = locationName
+                    locationNameLocalized = locationName & "、" & str.Item2
                     'Japanese
 
                 End If
@@ -535,7 +583,11 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             Dim realtimeInterpolated As String = colorProcessing.ProcessColor(realtimeColor, "jma", False, False)
             If realtimeInterpolated >= 2 And realtimeInterpolated < 3 Then
                 Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(str.Item4, str.Item5)
-
+                If apiTimer.ldPointX = "nothing" And apiTimer.ldPointY = "nothing" Then
+                    apiTimer.ldPointX = str.Item4
+                    apiTimer.ldPointY = str.Item5
+                    apiTimer.hasLightDetectZoomed = True
+                End If
                 If 1 = 1 Then ' apiTimer.eewExists = True Then
                     'EEW Exists
 
@@ -580,9 +632,10 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
                 Dim locationNameLocalized As String
 
                 If My.Settings.prefixLang = "en" Then
-                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                    locationNameLocalized = str.Item6 & ", " & str.Item7.Item1
+
                 Else
-                    locationNameLocalized = locationName
+                    locationNameLocalized = locationName & "、" & str.Item2
                     'Japanese
 
                 End If
@@ -613,7 +666,11 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             Dim realtimeInterpolated As String = colorProcessing.ProcessColor(realtimeColor, "jma", False, False)
             If realtimeInterpolated >= 3 And realtimeInterpolated < 4 Then
                 Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(str.Item4, str.Item5)
-
+                If apiTimer.ldPointX = "nothing" And apiTimer.ldPointY = "nothing" Then
+                    apiTimer.ldPointX = str.Item4
+                    apiTimer.ldPointY = str.Item5
+                    apiTimer.hasLightDetectZoomed = True
+                End If
                 If 1 = 1 Then ' apiTimer.eewExists = True Then
                     'EEW Exists
 
@@ -658,9 +715,10 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
                 Dim locationNameLocalized As String
 
                 If My.Settings.prefixLang = "en" Then
-                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                    locationNameLocalized = str.Item6 & ", " & str.Item7.Item1
+
                 Else
-                    locationNameLocalized = locationName
+                    locationNameLocalized = locationName & "、" & str.Item2
                     'Japanese
 
                 End If
@@ -693,7 +751,11 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
                 If 1 = 1 Then ' apiTimer.eewExists = True Then
                     'EEW Exists
-
+                    If apiTimer.ldPointX = "nothing" And apiTimer.ldPointY = "nothing" Then
+                        apiTimer.ldPointX = str.Item4
+                        apiTimer.ldPointY = str.Item5
+                        apiTimer.hasLightDetectZoomed = True
+                    End If
                     Dim locx As Integer = pt.X
                     Dim locy As Integer = pt.Y
 
@@ -735,9 +797,10 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
                 Dim locationNameLocalized As String
 
                 If My.Settings.prefixLang = "en" Then
-                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                    locationNameLocalized = str.Item6 & ", " & str.Item7.Item1
+
                 Else
-                    locationNameLocalized = locationName
+                    locationNameLocalized = locationName & "、" & str.Item2
                     'Japanese
 
                 End If
@@ -769,7 +832,11 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
                 If 1 = 1 Then ' apiTimer.eewExists = True Then
                     'EEW Exists
-
+                    If apiTimer.ldPointX = "nothing" And apiTimer.ldPointY = "nothing" Then
+                        apiTimer.ldPointX = str.Item4
+                        apiTimer.ldPointY = str.Item5
+                        apiTimer.hasLightDetectZoomed = True
+                    End If
                     Dim locx As Integer = pt.X
                     Dim locy As Integer = pt.Y
 
@@ -810,9 +877,10 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
                 Dim locationNameLocalized As String
 
                 If My.Settings.prefixLang = "en" Then
-                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                    locationNameLocalized = str.Item6 & ", " & str.Item7.Item1
+
                 Else
-                    locationNameLocalized = locationName
+                    locationNameLocalized = locationName & "、" & str.Item2
                     'Japanese
 
                 End If
@@ -841,7 +909,11 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             Dim realtimeInterpolated As String = colorProcessing.ProcessColor(realtimeColor, "jma", False, False)
             If realtimeInterpolated >= 5.5 And realtimeInterpolated < 6 Then
                 Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(str.Item4, str.Item5)
-
+                If apiTimer.ldPointX = "nothing" And apiTimer.ldPointY = "nothing" Then
+                    apiTimer.ldPointX = str.Item4
+                    apiTimer.ldPointY = str.Item5
+                    apiTimer.hasLightDetectZoomed = True
+                End If
                 If 1 = 1 Then ' apiTimer.eewExists = True Then
                     'EEW Exists
 
@@ -885,9 +957,10 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
                 Dim locationNameLocalized As String
 
                 If My.Settings.prefixLang = "en" Then
-                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                    locationNameLocalized = str.Item6 & ", " & str.Item7.Item1
+
                 Else
-                    locationNameLocalized = locationName
+                    locationNameLocalized = locationName & "、" & str.Item2
                     'Japanese
 
                 End If
@@ -916,7 +989,11 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             Dim realtimeInterpolated As String = colorProcessing.ProcessColor(realtimeColor, "jma", False, False)
             If realtimeInterpolated >= 6 And realtimeInterpolated < 6.5 Then
                 Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(str.Item4, str.Item5)
-
+                If apiTimer.ldPointX = "nothing" And apiTimer.ldPointY = "nothing" Then
+                    apiTimer.ldPointX = str.Item4
+                    apiTimer.ldPointY = str.Item5
+                    apiTimer.hasLightDetectZoomed = True
+                End If
                 If 1 = 1 Then ' apiTimer.eewExists = True Then
                     'EEW Exists
 
@@ -960,9 +1037,10 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
                 Dim locationNameLocalized As String
 
                 If My.Settings.prefixLang = "en" Then
-                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                    locationNameLocalized = str.Item6 & ", " & str.Item7.Item1
+
                 Else
-                    locationNameLocalized = locationName
+                    locationNameLocalized = locationName & "、" & str.Item2
                     'Japanese
 
                 End If
@@ -994,7 +1072,11 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             Dim realtimeInterpolated As String = colorProcessing.ProcessColor(realtimeColor, "jma", False, False)
             If realtimeInterpolated >= 6.5 And realtimeInterpolated < 7 Then
                 Dim pt As Point = Me.SfMap1.GisPointToPixelCoord(str.Item4, str.Item5)
-
+                If apiTimer.ldPointX = "nothing" And apiTimer.ldPointY = "nothing" Then
+                    apiTimer.ldPointX = str.Item4
+                    apiTimer.ldPointY = str.Item5
+                    apiTimer.hasLightDetectZoomed = True
+                End If
                 If 1 = 1 Then ' apiTimer.eewExists = True Then
                     'EEW Exists
 
@@ -1038,9 +1120,10 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
                 Dim locationNameLocalized As String
 
                 If My.Settings.prefixLang = "en" Then
-                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                    locationNameLocalized = str.Item6 & ", " & str.Item7.Item1
+
                 Else
-                    locationNameLocalized = locationName
+                    locationNameLocalized = locationName & "、" & str.Item2
                     'Japanese
 
                 End If
@@ -1072,7 +1155,11 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
                 If 1 = 1 Then ' apiTimer.eewExists = True Then
                     'EEW Exists
-
+                    If apiTimer.ldPointX = "nothing" And apiTimer.ldPointY = "nothing" Then
+                        apiTimer.ldPointX = str.Item4
+                        apiTimer.ldPointY = str.Item5
+                        apiTimer.hasLightDetectZoomed = True
+                    End If
                     Dim locx As Integer = pt.X
                     Dim locy As Integer = pt.Y
 
@@ -1114,9 +1201,10 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
                 Dim locationNameLocalized As String
 
                 If My.Settings.prefixLang = "en" Then
-                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                    locationNameLocalized = str.Item6 & ", " & str.Item7.Item1
+
                 Else
-                    locationNameLocalized = locationName
+                    locationNameLocalized = locationName & "、" & str.Item2
                     'Japanese
 
                 End If
@@ -1154,10 +1242,12 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
                 Dim locationNameLocalized As String
 
                 If My.Settings.prefixLang = "en" Then
-                    locationNameLocalized = translationSource.DecodeEpicenterToEnglish(locationName)
+                    locationNameLocalized = str.Item6 & ", " & str.Item7.Item1
+
                 Else
-                    locationNameLocalized = locationName
+                    locationNameLocalized = locationName & "、" & str.Item2
                     'Japanese
+
                 End If
 
 
@@ -1189,21 +1279,21 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             moderateShakeDetected = False
             lightShakeDetected = False
             FlowNoAlertPane1.Visible = False
-
+            apiTimer.sdFound = True
             apiTimer.selfDetectionExist = True
         ElseIf modDiscoverCount > 0 Then
             moderateShakeDetected = True
             strongShakeDetected = False
             lightShakeDetected = False
             FlowNoAlertPane1.Visible = False
-
+            apiTimer.sdFound = True
             apiTimer.selfDetectionExist = True
         ElseIf lightDiscoverCount > 0 Then
             lightShakeDetected = True
             moderateShakeDetected = False
             strongShakeDetected = False
             FlowNoAlertPane1.Visible = False
-
+            apiTimer.sdFound = True
             apiTimer.selfDetectionExist = True
         Else
             lightShakeDetected = False
@@ -1211,12 +1301,17 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
             strongShakeDetected = False
             FlowNoAlertPane1.Visible = True
             apiTimer.selfDetectionExist = False
-
+            apiTimer.sdFound = False
+            apiTimer.ldPointX = "nothing"
+            apiTimer.ldPointY = "nothing"
+            ' lightDetectionPoint.X = 0
+            ' lightDetectionPoint.Y = 0
+            apiTimer.ldZoom2 = False
 
         End If
 
-
-
+        Console.WriteLine("LD POINT IS AT: " & lightDetectionPoint.X & " " & lightDetectionPoint.Y)
+        FlowLightShaking1.evList.TopIndex = FlowLightShaking1.evList.Items.Count - 1
     End Sub
 
     Public Shared Function Truncate(ByVal value As String, ByVal maxLength As Integer) As String
@@ -1233,6 +1328,7 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
     Public moderateShakeDetected As Boolean = False
     Public strongShakeDetected As Boolean = False
 
+    Public lightDetectionPoint As PointD
 
 
     Private Sub mapInvalidate_Tick(sender As Object, e As EventArgs) Handles mapInvalidate.Tick
@@ -1259,29 +1355,81 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
         'Check for Moderate and Heavy Shaking Detection
 
         If strongShakeDetected = True Then
+            If apiTimer.hasLightDetectZoomed = False And lightDetectionPoint.X <> 0 Then
+                SfMap1.SetZoomAndCentre(201.351, lightDetectionPoint)
+            End If
+
+
+
             Me.FlowLightShaking1.Visible = True
             FlowLightShaking1.Panel1.BackColor = Color.Maroon
             FlowLightShaking1.Label3.ForeColor = Color.FromArgb(255, 0, 0)
-            FlowLightShaking1.Label3.Text = "Strong Shaking Detected In:"
+            If My.Settings.prefixLang = "en" Then
+                FlowLightShaking1.Label3.Text = "Strong Shaking Detected In:"
+            Else
+                FlowLightShaking1.Label3.Text = "において強い揺れを検出"
+            End If
+
 
         ElseIf moderateShakeDetected = True Then
+
+            If apiTimer.hasLightDetectZoomed = False And lightDetectionPoint.X <> 0 Then
+                SfMap1.SetZoomAndCentre(201.351, lightDetectionPoint)
+            End If
             Me.FlowLightShaking1.Visible = True
             FlowLightShaking1.Panel1.BackColor = Color.Orange
             FlowLightShaking1.Label3.ForeColor = Color.Orange
-            FlowLightShaking1.Label3.Text = "Moderate Shaking Detected In:"
+            If My.Settings.prefixLang = "en" Then
+                FlowLightShaking1.Label3.Text = "Moderate Shaking Detected In:"
+            Else
+                FlowLightShaking1.Label3.Text = "中程度の揺れが観測された"
+            End If
+
 
         ElseIf lightShakeDetected = True Then
-            Me.FlowLightShaking1.Visible = True
-            FlowLightShaking1.Panel1.BackColor = Color.ForestGreen
+
+                If apiTimer.hasLightDetectZoomed = False And lightDetectionPoint.X <> 0 Then
+                    SfMap1.SetZoomAndCentre(201.351, lightDetectionPoint)
+                End If
+                Me.FlowLightShaking1.Visible = True
+                FlowLightShaking1.Panel1.BackColor = Color.ForestGreen
             FlowLightShaking1.Label3.ForeColor = Color.LimeGreen
-            FlowLightShaking1.Label3.Text = "Light Shaking Detected In:"
+            If My.Settings.prefixLang = "en" Then
+                FlowLightShaking1.Label3.Text = "Light Shaking Detected In:"
+            Else
+                FlowLightShaking1.Label3.Text = "で弱い揺れを検出"
+            End If
+
 
         Else
-            Me.FlowLightShaking1.Visible = False
+                Me.FlowLightShaking1.Visible = False
 
 
         End If
+
+        If apiTimer.ldZoom2 = False And apiTimer.ldPointX IsNot "nothing" And apiTimer.ldPointY IsNot "nothing" And apiTimer.ldPointX <> "0" And apiTimer.ldPointY <> "" Then
+            apiTimer.ldZoom2 = True
+            '  MsgBox("LDR RUN AT " & apiTimer.ldPointX & " " & apiTimer.ldPointY)
+            SfMap1.SetZoomAndCentre(201.351, New EGIS.ShapeFileLib.PointD(apiTimer.ldPointX, apiTimer.ldPointY))
+        Else
+            'Map already zoomed
+        End If
+
+        If apiTimer.eewExists = True And DataStructureRaw.longitude <> "0" And DataStructureRaw.longitude <> "" Then
+            If ebsZoomed = False Then
+
+                '    MsgBox(pX.X & vbCrLf & pX.Y)
+                SfMap1.SetZoomAndCentre(201.351, New EGIS.ShapeFileLib.PointD(DataStructureRaw.longitude, DataStructureRaw.latitude))
+                ebsZoomed = True
+            Else
+
+            End If
+        Else
+            ebsZoomed = False
+
+        End If
     End Sub
+    Public ebsZoomed As Boolean = False
 
     Private Sub SfMap1_Paint(sender As Object, e As PaintEventArgs) Handles SfMap1.Paint
 
@@ -1321,6 +1469,8 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
         drawHome(e, e.Graphics, SfMap1.GisPointToPixelCoord(My.Settings.usrLong, My.Settings.usrLat).X, SfMap1.GisPointToPixelCoord(My.Settings.usrLong, My.Settings.usrLat).Y)
         'Demo Demo P/S Circle
+
+        'Draw Boxes if Needed
 
 
 
@@ -1390,8 +1540,9 @@ Indev V0.2ビルドをご利用いただきありがとうございます。ア�
 
 
     Public Sub drawCircle(ByVal g As Graphics, ByVal e As PaintEventArgs, ByVal locX As String, ByVal locY As String, ByVal cDistance As Double)
+        ' Console.WriteLine("DS OUT RUN")
         If apiTimer.eewExists = True And locX > -999999 And locY > -999999 Then
-
+            '  Console.WriteLine("DS RUN")
             Dim pWavePen As New Pen(Brushes.DeepSkyBlue)
 
             ' Set the pen's width.

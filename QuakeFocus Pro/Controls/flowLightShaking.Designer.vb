@@ -54,11 +54,11 @@ Partial Class flowLightShaking
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Gen Shin Gothic Bold", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.LimeGreen
-        Me.Label3.Location = New System.Drawing.Point(3, 4)
+        Me.Label3.Location = New System.Drawing.Point(2, 2)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(195, 18)
+        Me.Label3.Size = New System.Drawing.Size(207, 21)
         Me.Label3.TabIndex = 2
         Me.Label3.Text = "Light Shaking Detected In:"
         '

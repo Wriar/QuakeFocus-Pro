@@ -83,7 +83,8 @@ Public Class frmReplay
     End Sub
 
     Private Sub btnStop_Click(sender As Object, e As EventArgs) Handles btnStop.Click
-
+        My.Settings.dataImgChannel = "http://www.kmoni.bosai.go.jp/"
+        My.Settings.dataChannel = "http://www.kmoni.bosai.go.jp/data/map_img"
         apiTimer.rwTime = "0"
         btnStop.Enabled = False
         btnRewind.Enabled = True

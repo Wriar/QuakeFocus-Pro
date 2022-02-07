@@ -488,7 +488,7 @@ Public Class apiTimer
             '   Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/" & jsonPartURL & ".json"
             Dim constructedURL As String = DataStructureRaw.kmoniBasePath & jsonPartURL & ".json"
             'For Live USE + Simulation Use
-
+            Console.WriteLine("Constructed JSOn URL " & constructedURL)
             'FOR DEBUGGING TSTFLAG1
 
             ' Dim constructedURL As String = "http://www.kmoni.bosai.go.jp/webservice/hypo/eew/20210320181258.json"
@@ -651,7 +651,8 @@ Public Class apiTimer
 
     Private Sub jsonImporter_Tick(sender As Object, e As EventArgs) Handles jsonImporter.Tick
         Dim eThread As New Thread(AddressOf eewJsonImport)
-        '  eThread.Start()
+        'DBGFLAG
+        eThread.Start()
 
         ' MsgBox(magunitude)
     End Sub
@@ -670,7 +671,8 @@ Public Class apiTimer
 
     Public hasZoomedMap As Boolean = False
     Public hasLightDetectZoomed As Boolean = False
-
+    Public ldZoom2 As Boolean = False
+    Public sdFound As Boolean = False
     Public selfDetectionExist As Boolean = False
 
     Private Sub pushJson_Tick(sender As Object, e As EventArgs) Handles pushJson.Tick
@@ -724,6 +726,8 @@ Public Class apiTimer
 
                 'TODO.
             Else
+                hasZoomedMap = False
+                hasLightDetectZoomed = False
 
                 'There is no worry about EEW.
                 viewPage.EewBanner1.Visible = False
@@ -746,12 +750,7 @@ Public Class apiTimer
 
             'Zoom map to extent
 
-            If hasZoomedMap = False Then
-                hasZoomedMap = True
-                viewPage.SfMap1.SetZoomAndCentre(200, New EGIS.ShapeFileLib.PointD(DataStructureRaw.longitude, DataStructureRaw.latitude))
-            Else
-                'Map already zoomed
-            End If
+
             'Get the location data. This data can remain static
 
             Try
@@ -816,6 +815,9 @@ Public Class apiTimer
 
     End Sub
     Dim prevReportID As String
+    Public ldPointX As String
+    Public ldPointY As String
+
     Sub ClearDataStruct()
         DataStructureRaw.reportTime = Nothing
         DataStructureRaw.requestTime = Nothing

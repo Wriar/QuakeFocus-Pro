@@ -59,4 +59,7 @@ Public Class translationSource
         Return 9999 'not found
     End Function
 
+#Region "Fast Epicenter Translation"
+
+#End Region
 End Class
